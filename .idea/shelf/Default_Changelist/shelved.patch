@@ -1,0 +1,529 @@
+Index: .idea/workspace.xml
+===================================================================
+--- .idea/workspace.xml	(date 1591162555000)
++++ .idea/workspace.xml	(date 1591162555000)
+@@ -1,523 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ChangeListManager">
+-    <list default="true" id="316037a9-f7f7-4e7a-9e0d-511da91d0922" name="Default Changelist" comment="">
+-      <change afterPath="$PROJECT_DIR$/application/views/Student/Schedule.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/config/config.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/controllers/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Student.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/models/Student_Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/Student_Model.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/views/Student/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Student/Dashboard.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/views/Student/Grades.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Student/Grades.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/views/Student/Information.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Student/Information.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/application/views/Student/Subject.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Student/Subject.php" afterDir="false" />
+-    </list>
+-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+-    <option name="SHOW_DIALOG" value="false" />
+-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-    <option name="LAST_RESOLUTION" value="IGNORE" />
+-  </component>
+-  <component name="FUSProjectUsageTrigger">
+-    <session id="-1993487800">
+-      <usages-collector id="statistics.lifecycle.project">
+-        <counts>
+-          <entry key="project.closed" value="5" />
+-          <entry key="project.open.time.0" value="3" />
+-          <entry key="project.open.time.10" value="1" />
+-          <entry key="project.open.time.12" value="1" />
+-          <entry key="project.open.time.13" value="1" />
+-          <entry key="project.open.time.16" value="1" />
+-          <entry key="project.open.time.18" value="1" />
+-          <entry key="project.open.time.2" value="1" />
+-          <entry key="project.open.time.20" value="1" />
+-          <entry key="project.opened" value="10" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.extensions.open">
+-        <counts>
+-          <entry key="css" value="3" />
+-          <entry key="js" value="4" />
+-          <entry key="map" value="1" />
+-          <entry key="php" value="103" />
+-          <entry key="rnc" value="1" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.types.open">
+-        <counts>
+-          <entry key="CSS" value="3" />
+-          <entry key="JavaScript" value="4" />
+-          <entry key="PHP" value="103" />
+-          <entry key="RNG Compact" value="1" />
+-          <entry key="SourceMap" value="1" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.extensions.edit">
+-        <counts>
+-          <entry key="css" value="25" />
+-          <entry key="js" value="9" />
+-          <entry key="php" value="12423" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.types.edit">
+-        <counts>
+-          <entry key="CSS" value="25" />
+-          <entry key="JavaScript" value="9" />
+-          <entry key="PHP" value="12423" />
+-        </counts>
+-      </usages-collector>
+-    </session>
+-    <session id="-1180983276">
+-      <usages-collector id="statistics.lifecycle.project">
+-        <counts>
+-          <entry key="project.closed" value="5" />
+-          <entry key="project.open.time.0" value="2" />
+-          <entry key="project.open.time.1" value="2" />
+-          <entry key="project.open.time.13" value="2" />
+-          <entry key="project.opened" value="6" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.extensions.open">
+-        <counts>
+-          <entry key="htaccess" value="1" />
+-          <entry key="php" value="16" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.types.open">
+-        <counts>
+-          <entry key="PHP" value="16" />
+-          <entry key="htaccess" value="1" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.extensions.edit">
+-        <counts>
+-          <entry key="htaccess" value="1" />
+-          <entry key="php" value="467" />
+-        </counts>
+-      </usages-collector>
+-      <usages-collector id="statistics.file.types.edit">
+-        <counts>
+-          <entry key="PHP" value="467" />
+-          <entry key="htaccess" value="1" />
+-        </counts>
+-      </usages-collector>
+-    </session>
+-  </component>
+-  <component name="FileEditorManager">
+-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/application/views/Student/Dashboard.php">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="247">
+-              <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="65" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="true">
+-        <entry file="file://$PROJECT_DIR$/application/views/Student/Grades.php">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="478">
+-              <caret line="109" column="40" lean-forward="true" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/application/views/Student/Schedule.php">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="131">
+-              <caret line="100" column="81" selection-start-line="100" selection-start-column="73" selection-end-line="100" selection-end-column="81" />
+-              <folding>
+-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+-              </folding>
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/application/controllers/Student.php">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="-460">
+-              <caret line="152" column="31" selection-start-line="152" selection-start-column="20" selection-end-line="152" selection-end-column="31" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/application/models/Student_Model.php">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="194">
+-              <caret line="127" selection-start-line="127" selection-end-line="127" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/application/views/Student/Subject.php">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="359">
+-              <caret line="191" column="26" lean-forward="true" selection-start-line="171" selection-start-column="20" selection-end-line="191" selection-end-column="26" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-    </leaf>
+-  </component>
+-  <component name="FileTemplateManagerImpl">
+-    <option name="RECENT_TEMPLATES">
+-      <list>
+-        <option value="JavaScript File" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="FindInProjectRecents">
+-    <findStrings>
+-      <find>autoc</find>
+-      <find>auto</find>
+-      <find>autocomplete</find>
+-      <find>init_autocomplete();</find>
+-      <find>init_autocomplete</find>
+-      <find>ui-autocomplete</find>
+-      <find>subject_information_data</find>
+-      <find>get</find>
+-      <find>getCourseMajorData</find>
+-      <find>loadStudentSY</find>
+-    </findStrings>
+-  </component>
+-  <component name="Git.Settings">
+-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-  </component>
+-  <component name="IdeDocumentHistory">
+-    <option name="CHANGED_PATHS">
+-      <list>
+-        <option value="$PROJECT_DIR$/application/views/Student/Login.php" />
+-        <option value="$PROJECT_DIR$/assets/js/grades.js" />
+-        <option value="$PROJECT_DIR$/application/models/Evaluation_Model.php" />
+-        <option value="$PROJECT_DIR$/application/controllers/Evaluation.php" />
+-        <option value="$PROJECT_DIR$/application/views/Enrollment/Curriculum.php" />
+-        <option value="$PROJECT_DIR$/assets/plugins/build/js/custom.js" />
+-        <option value="$PROJECT_DIR$/application/views/Enrollment/Curriculum/Subject.php" />
+-        <option value="$PROJECT_DIR$/assets/plugins/autocomplete/jquery-ui.css" />
+-        <option value="$PROJECT_DIR$/application/views/Enrollment/Curriculum/Programs.php" />
+-        <option value="$PROJECT_DIR$/application/views/Enrollment/Curriculum/Curriculum.php" />
+-        <option value="$PROJECT_DIR$/application/views/Masterfile/Subject/Information.php" />
+-        <option value="$PROJECT_DIR$/application/views/Masterfile/Subject/PreRequisites.php" />
+-        <option value="$PROJECT_DIR$/application/views/Masterfile/Curriculum/Curriculum.php" />
+-        <option value="$PROJECT_DIR$/application/views/Masterfile/Curriculum/Subject.php" />
+-        <option value="$PROJECT_DIR$/application/config/database.php" />
+-        <option value="$PROJECT_DIR$/application/views/Masterfile/Login.php" />
+-        <option value="$PROJECT_DIR$/application/controllers/File_Management.php" />
+-        <option value="$PROJECT_DIR$/application/models/File_Management_Model.php" />
+-        <option value="$PROJECT_DIR$/application/views/Masterfile/Curriculum/Programs.php" />
+-        <option value="$PROJECT_DIR$/.htaccess" />
+-        <option value="$PROJECT_DIR$/application/config/config.php" />
+-        <option value="$PROJECT_DIR$/application/views/Student/Dashboard.php" />
+-        <option value="$PROJECT_DIR$/application/views/Student/Information.php" />
+-        <option value="$PROJECT_DIR$/application/views/Student/Subject.php" />
+-        <option value="$PROJECT_DIR$/application/models/Student_Model.php" />
+-        <option value="$PROJECT_DIR$/application/controllers/Student.php" />
+-        <option value="$PROJECT_DIR$/application/views/Student/Schedule.php" />
+-        <option value="$PROJECT_DIR$/application/views/Student/Grades.php" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+-  <component name="JsGulpfileManager">
+-    <detection-done>true</detection-done>
+-    <sorting>DEFINITION_ORDER</sorting>
+-  </component>
+-  <component name="NodePackageJsonFileManager">
+-    <packageJsonPaths>
+-      <path value="$PROJECT_DIR$/assets/plugins/Chart.js/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/DateJS/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/Flot/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/animate.css/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/bootstrap-daterangepicker/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/bootstrap-progressbar/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/bootstrap/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/jqvmap/package.json" />
+-      <path value="$PROJECT_DIR$/assets/plugins/switchery/package.json" />
+-    </packageJsonPaths>
+-  </component>
+-  <component name="ProjectFrameBounds">
+-    <option name="x" value="-7" />
+-    <option name="y" value="2" />
+-    <option name="width" value="1369" />
+-    <option name="height" value="733" />
+-  </component>
+-  <component name="ProjectView">
+-    <navigator proportions="" version="1">
+-      <foldersAlwaysOnTop value="true" />
+-    </navigator>
+-    <panes>
+-      <pane id="ProjectPane">
+-        <subPane>
+-          <expand>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-              <item name="application" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-              <item name="application" type="462c0819:PsiDirectoryNode" />
+-              <item name="config" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-              <item name="application" type="462c0819:PsiDirectoryNode" />
+-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-              <item name="application" type="462c0819:PsiDirectoryNode" />
+-              <item name="models" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-              <item name="application" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-            <path>
+-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
+-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
+-              <item name="application" type="462c0819:PsiDirectoryNode" />
+-              <item name="views" type="462c0819:PsiDirectoryNode" />
+-              <item name="Student" type="462c0819:PsiDirectoryNode" />
+-            </path>
+-          </expand>
+-          <select />
+-        </subPane>
+-      </pane>
+-      <pane id="Scope" />
+-    </panes>
+-  </component>
+-  <component name="PropertiesComponent">
+-    <property name="WebServerToolWindowFactoryState" value="false" />
+-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+-  </component>
+-  <component name="RecentsManager">
+-    <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\xampp\htdocs\CvSU-CCC\application\views\Enrollment\Curriculum" />
+-    </key>
+-  </component>
+-  <component name="RunDashboard">
+-    <option name="ruleStates">
+-      <list>
+-        <RuleState>
+-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+-        </RuleState>
+-        <RuleState>
+-          <option name="name" value="StatusDashboardGroupingRule" />
+-        </RuleState>
+-      </list>
+-    </option>
+-  </component>
+-  <component name="SvnConfiguration">
+-    <configuration />
+-  </component>
+-  <component name="TaskManager">
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="316037a9-f7f7-4e7a-9e0d-511da91d0922" name="Default Changelist" comment="" />
+-      <created>1588570112198</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1588570112198</updated>
+-      <workItem from="1588570113773" duration="12589000" />
+-      <workItem from="1588584182537" duration="10719000" />
+-      <workItem from="1588596248376" duration="5471000" />
+-      <workItem from="1588645997628" duration="42463000" />
+-      <workItem from="1589247129315" duration="33772000" />
+-      <workItem from="1589852967785" duration="25000" />
+-      <workItem from="1589853068010" duration="2327000" />
+-      <workItem from="1589872146396" duration="1293000" />
+-      <workItem from="1589887284658" duration="610000" />
+-      <workItem from="1590456821082" duration="3020000" />
+-      <workItem from="1590461329947" duration="1008000" />
+-      <workItem from="1590462720413" duration="2210000" />
+-      <workItem from="1590483303204" duration="663000" />
+-      <workItem from="1590632624135" duration="869000" />
+-      <workItem from="1591077237829" duration="1372000" />
+-      <workItem from="1591078630894" duration="6666000" />
+-    </task>
+-    <servers />
+-  </component>
+-  <component name="TimeTrackingManager">
+-    <option name="totallyTimeSpent" value="125077000" />
+-  </component>
+-  <component name="ToolWindowManager">
+-    <frame x="-7" y="2" width="1369" height="733" extended-state="0" />
+-    <editor active="true" />
+-    <layout>
+-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916527" visible="true" weight="0.2169595" />
+-      <window_info id="Structure" order="1" sideWeight="0.5008347" side_tool="true" weight="0.26126814" />
+-      <window_info id="Favorites" order="2" side_tool="true" />
+-      <window_info anchor="bottom" id="Message" order="0" />
+-      <window_info anchor="bottom" id="Find" order="1" weight="0.32888147" />
+-      <window_info anchor="bottom" id="Run" order="2" />
+-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+-      <window_info anchor="bottom" id="TODO" order="6" />
+-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+-      <window_info anchor="bottom" id="Version Control" order="9" />
+-      <window_info anchor="bottom" id="Terminal" order="10" />
+-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+-      <window_info anchor="right" id="Database" order="3" />
+-    </layout>
+-  </component>
+-  <component name="TypeScriptGeneratedFilesManager">
+-    <option name="version" value="1" />
+-  </component>
+-  <component name="VcsContentAnnotationSettings">
+-    <option name="myLimit" value="2678400000" />
+-  </component>
+-  <component name="editorHistoryManager">
+-    <entry file="file://$PROJECT_DIR$/application/config/autoload.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-903" />
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/assets/js/grades.js">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="493">
+-          <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/assets/plugins/jquery/dist/jquery.min.map">
+-      <provider selected="true" editor-type-id="text-editor" />
+-      <provider editor-type-id="sourcemapFileViewerProvider" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/assets/plugins/build/js/custom.js">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="95">
+-          <caret line="5051" column="23" lean-forward="true" selection-start-line="5051" selection-start-column="23" selection-end-line="5051" selection-end-column="23" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/assets/plugins/autocomplete/jquery.autocomplete.min.js">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/assets/plugins/autocomplete/jquery-ui.css">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="156">
+-          <caret line="103" column="19" lean-forward="true" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/core-scripting.rnc">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-13">
+-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Masterfile/Subject/PreRequisites.php" />
+-    <entry file="file://$PROJECT_DIR$/application/views/Masterfile/Curriculum/Curriculum.php" />
+-    <entry file="file://$PROJECT_DIR$/application/views/Masterfile/Curriculum/Subject.php" />
+-    <entry file="file://$PROJECT_DIR$/application/views/Student/Login.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="170">
+-          <caret line="10" column="108" selection-end-line="78" selection-end-column="7" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Masterfile/Login.php" />
+-    <entry file="file://$PROJECT_DIR$/application/views/Masterfile/Subject/Information.php" />
+-    <entry file="file://$PROJECT_DIR$/application/controllers/File_Management.php" />
+-    <entry file="file://$PROJECT_DIR$/application/models/File_Management_Model.php" />
+-    <entry file="file://$PROJECT_DIR$/application/views/Masterfile/Curriculum/Programs.php" />
+-    <entry file="file://$PROJECT_DIR$/application/config/database.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1343">
+-          <caret line="79" column="31" selection-start-line="79" selection-start-column="31" selection-end-line="79" selection-end-column="31" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/phpstorm.php">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/.htaccess">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="34">
+-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="40" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/config/config.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="187">
+-          <caret line="25" column="64" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Student/Information.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="115">
+-          <caret line="101" column="81" selection-start-line="101" selection-start-column="81" selection-end-line="101" selection-end-column="81" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Student/Subject.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="359">
+-          <caret line="191" column="26" lean-forward="true" selection-start-line="171" selection-start-column="20" selection-end-line="191" selection-end-column="26" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/models/Student_Model.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="194">
+-          <caret line="127" selection-start-line="127" selection-end-line="127" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Student/Dashboard.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="247">
+-          <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="65" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/controllers/Student.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-460">
+-          <caret line="152" column="31" selection-start-line="152" selection-start-column="20" selection-end-line="152" selection-end-column="31" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Student/Schedule.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="131">
+-          <caret line="100" column="81" selection-start-line="100" selection-start-column="73" selection-end-line="100" selection-end-column="81" />
+-          <folding>
+-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/application/views/Student/Grades.php">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="478">
+-          <caret line="109" column="40" lean-forward="true" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
+-        </state>
+-      </provider>
+-    </entry>
+-  </component>
+-</project>
+\ No newline at end of file
