@@ -99,20 +99,20 @@
                             <li><a href="<?php echo base_url();?>student/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                             <li><a href="<?php echo base_url();?>student/information"><i class="fa fa-user"></i> Student Information </a></li>
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
-                            <li><a href="<?php echo base_url();?>student/"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
+                            <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="<?php echo base_url();?>student/evaluation">Evaluation</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>student/assessment">Assessment</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>student/payment">Payment</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>student/regform">Registration Form</a>
-                                    </li>
-                                </ul>
-                            </li>
+<!--                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>-->
+<!--                                <ul class="nav child_menu">-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/evaluation">Evaluation</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/assessment">Assessment</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/payment">Payment</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/regform">Registration Form</a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
                         </ul>
 
                     </div>
@@ -218,11 +218,11 @@
 
                     </table>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-success pull-right">Request for schedule code</button>
-                        </div>
-                    </div>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <button type="submit" class="btn btn-success pull-right">Request for schedule code</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
 
 
@@ -246,249 +246,6 @@
     </div>
 </div>
 
-
-
-<!-- SYSTEM MODAL -->
-
-<div class="modal fade update-student-information" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" id="load_modal_fields_large">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Student Information <small>Update Record</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a data-dismiss="modal"><i class="fa fa-close"></i> close</a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <br />
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>admin/j_gallery_add" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">First Name :
-                                    </label>
-                                    <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="student_fn" name="student_fn" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_fn;?>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Middle Name :
-                                    </label>
-                                    <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="student_mn" name="student_mn" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_mn;?>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name :
-                                    </label>
-                                    <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="student_ln" name="student_ln" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_ln;?>">
-                                    </div>
-                                </div>
-
-
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success">Request for information update</button>
-                                        <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade update-personal-information" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" id="load_modal_fields_large">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Personal Information <small>Update Record</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a data-dismiss="modal"><i class="fa fa-close"></i> close</a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <br />
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>admin/j_gallery_add" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-
-                                <?php foreach ($sfData as $sfRow){?>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Province :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="province" name="province" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->province; ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Municipality :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="municipality" name="municipality" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->municipality; ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Barangay :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="barangay" name="barangay" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->barangay; ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Street Name :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <input type="text" id="street" name="street" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->street; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Date of Birth :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <input type="text" id="dob" name="dob" data-provide="datepicker" class="datepicker form-control col-md-7 col-xs-12" value="<?php  $date=date_create($sfRow->dateOfBirth); echo date_format($date, 'm/d/Y'); ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Sex :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="gender" name="gender" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->gender; ?></option>
-                                                <option>MALE</option>
-                                                <option>FEMALE</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Civil Status :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="status" name="status" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->status; ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Citizenship :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="citizenship" name="citizenship" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->citizenship; ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Religion :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="religion" name="religion" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->religion; ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                <?php } ?>
-
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success">Request for information update</button>
-                                        <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade update-guardian-information" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" id="load_modal_fields_large">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Guardian Information <small>Update Record</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a data-dismiss="modal"><i class="fa fa-close"></i> close</a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <br />
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>admin/j_gallery_add" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-                                <?php foreach ($sfData as $sfRow){?>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Guardian Name :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <input type="text" id="guardian" name="guardian" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->guardian; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Guardian Contact Number :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <input type="text" id="mobilePhone" name="mobilePhone" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->mobilePhone; ?>">
-                                        </div>
-                                    </div>
-                                <?php } ?>
-
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success">Request for information update</button>
-                                        <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <!-- jQuery -->
 <script src="<?php echo base_url();?>assets/plugins/jquery/dist/jquery.min.js"></script>

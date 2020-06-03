@@ -126,4 +126,18 @@ class Student_Model extends CI_Model
     }
 
 
+
+    public function getScheduleData($currentStudent, $schoolyear, $semester){
+        $this->db->select('enrollscheduletbl.subjectcode, enrollscheduletbl.section, enrollscheduletbl.instructor, enrollscheduletbl.room1, enrollscheduletbl.room2, enrollscheduletbl.room3, enrollscheduletbl.room4, enrollscheduletbl.timein1, enrollscheduletbl.timeout1, enrollscheduletbl.day1, enrollscheduletbl.timein2, enrollscheduletbl.timeout2, enrollscheduletbl.day2, enrollscheduletbl.timein3, enrollscheduletbl.timeout3, enrollscheduletbl.day3, enrollscheduletbl.timein4, enrollscheduletbl.timeout4, enrollscheduletbl.day4, enrollsubjectstbl.subjectTitle');
+        $this->db->from('enrollsubjectenrolled');
+        $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollsubjectenrolled.schedcode', 'left');
+        $this->db->join('enrollsubjectstbl','enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectcode','left');
+        $this->db->where('enrollsubjectenrolled.studentnumber', $currentStudent);
+        $this->db->where('enrollsubjectenrolled.schoolyear', $schoolyear);
+        $this->db->where('enrollsubjectenrolled.semester', $semester);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
 }

@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = ' https://203.177.216.246/CvSU-CCC-Student-Portal-CCC/';
+$config['base_url'] = ' http://localhost/CvSU-CCC-Student-Portal/';
 
 /*
 |--------------------------------------------------------------------------

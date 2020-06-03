@@ -35,10 +35,6 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/alertify/css/alertify.core.css" />
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/alertify/css/alertify.bootstrap.css" id="toggleCSS" />
 
-    <!-- P-Notify -->
-    <link href="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 
     <!-- Datatables -->
     <link href="<?php echo base_url();?>assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -164,108 +160,45 @@
         <div class="right_col" role="main">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Dashboard</h2>
+                    <h2>Class Schedule</h2>
                     <ul class="nav navbar-right panel_toolbox">
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="card-body">
-                    <div class="col-md-12">
-                        <div class="col-md-7">
 
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>School Calendar</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="card-body">
-                                    <div id='calendar'></div>
-                                </div>
-                            </div>
+                <div class="card-body">
+
+                    <div class="col-md-12" style="padding: 20px 0">
+                        <div class="col-md-2">
+                            <label>Student Number</label>
+                            <p><?php echo $this->session->student_id;?></p>
                         </div>
 
-                        <div class="col-md-5" style="padding-top: 8px">
-                            <div class="col-md-12">
-                                <div class="x_panel">
-                                    <div class="x_title">
-                                        <h2>Announcements</h2>
-                                        <ul class="nav navbar-right panel_toolbox">
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="x_content">
-<!--                                        <article class="media event">-->
-<!--                                            <a class="pull-left date">-->
-<!--                                                <p class="month">April</p>-->
-<!--                                                <p class="day">23</p>-->
-<!--                                            </a>-->
-<!--                                            <div class="media-body">-->
-<!--                                                <a class="title" href="#">Item One Title</a>-->
-<!--                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                            </div>-->
-<!--                                        </article>-->
-<!--                                        <article class="media event">-->
-<!--                                            <a class="pull-left date">-->
-<!--                                                <p class="month">April</p>-->
-<!--                                                <p class="day">23</p>-->
-<!--                                            </a>-->
-<!--                                            <div class="media-body">-->
-<!--                                                <a class="title" href="#">Item Two Title</a>-->
-<!--                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                            </div>-->
-<!--                                        </article>-->
-<!--                                        <article class="media event">-->
-<!--                                            <a class="pull-left date">-->
-<!--                                                <p class="month">April</p>-->
-<!--                                                <p class="day">23</p>-->
-<!--                                            </a>-->
-<!--                                            <div class="media-body">-->
-<!--                                                <a class="title" href="#">Item Two Title</a>-->
-<!--                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                            </div>-->
-<!--                                        </article>-->
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            <label>Student Name</label>
+                            <p><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></p>
+                        </div>
 
-                            <div class="col-md-12">
-                                <div class="x_panel">
-                                    <div class="x_title">
-                                        <h2>News</h2>
-                                        <ul class="nav navbar-right panel_toolbox">
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="x_content">
-<!--                                        <article class="media event">-->
-<!--                                            <a class="pull-left date">-->
-<!--                                                <p class="month">April</p>-->
-<!--                                                <p class="day">23</p>-->
-<!--                                            </a>-->
-<!--                                            <div class="media-body">-->
-<!--                                                <a class="title" href="#">Item One Title</a>-->
-<!--                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                            </div>-->
-<!--                                        </article>-->
-<!--                                        <article class="media event">-->
-<!--                                            <a class="pull-left date">-->
-<!--                                                <p class="month">April</p>-->
-<!--                                                <p class="day">23</p>-->
-<!--                                            </a>-->
-<!--                                            <div class="media-body">-->
-<!--                                                <a class="title" href="#">Item Two Title</a>-->
-<!--                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                            </div>-->
-<!--                                        </article>-->
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <label>School Year</label>
+                            <p><?php echo $this->session->schoolyear;?></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Semester</label>
+                            <p><?php echo $this->session->semester;?> Semester</p>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div style="margin: 20px 23px" id="calendarnew"></div>
+                    </div>
+
+
+
                 </div>
             </div>
+
 
         </div>
 
@@ -284,6 +217,7 @@
 </div>
 
 
+
 <!-- jQuery -->
 <script src="<?php echo base_url();?>assets/plugins/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -293,27 +227,14 @@
 <!-- NProgress -->
 <script src="<?php echo base_url();?>assets/plugins/nprogress/nprogress.js"></script>
 
-<!-- gauge.js -->
-<script src="<?php echo base_url();?>assets/plugins/gauge.js/dist/gauge.min.js"></script>
 <!-- bootstrap-progressbar -->
 <script src="<?php echo base_url();?>assets/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url();?>assets/plugins/iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="<?php echo base_url();?>assets/plugins/skycons/skycons.js"></script>
+
 
 <!-- Chart.js -->
 <script src="<?php echo base_url();?>assets/plugins/Chart.js/dist/Chart.min.js"></script>
-<!-- Flot -->
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.pie.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.time.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.stack.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="<?php echo base_url();?>assets/plugins/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/flot.curvedlines/curvedLines.js"></script>
 
 <!-- DateJS -->
 <script src="<?php echo base_url();?>assets/plugins/DateJS/build/date.js"></script>
@@ -326,6 +247,7 @@
 <script src="<?php echo base_url();?>assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- Alertify -->
 <script src="<?php echo base_url();?>assets/plugins/alertify/js/alertify.js"></script>
+
 
 <!-- Datatables -->
 <script src="<?php echo base_url();?>assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -342,11 +264,6 @@
 <script src="<?php echo base_url();?>assets/plugins/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 
 
-<!-- PNotify -->
-<script src="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.buttons.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.nonblock.js"></script>
-
 <!-- Switchery -->
 <script src="<?php echo base_url();?>assets/plugins/switchery/dist/switchery.min.js"></script>
 
@@ -354,47 +271,92 @@
 <script src="<?php echo base_url();?>assets/plugins/select2/select2.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>assets/plugins/multi_select/multi_select.js" type="text/javascript"></script>
 
+<script src='<?php echo base_url();?>/assets/plugins/calendar/moment.min.js'></script>
+<script src='<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.js'></script>
+
 
 <!-- Custom Theme Scripts -->
 <script src="<?php echo base_url();?>assets/plugins/build/js/custom.js"></script>
 
 <script type="text/javascript">
 
+
+    var subjectschedule =[];
+    const defaultdate = '2020-05-04';
+    var eventlist = [];
+
+
+    function getDate(d){
+        const day = ['S','M','T','W','TH','F','SAT'];
+        var defdate = new Date(defaultdate);
+
+        var dayindex =0;
+        for(var i = 0;i<day.length;i++){
+            if(day[i] == d){
+                dayindex = i;
+            }
+        }
+        var datediff = dayindex -defdate.getDay();
+        var res = defaultdate.split("-");
+        var newdate = res[0]+"-"+res[1]+"-0"+(Number(res[2])+datediff);
+        return newdate;
+    }
+
+
+    function formatevents(){
+
+        subjectschedule.forEach(sched =>{
+            console.log(sched.schedules);
+            sched.schedules.forEach(sc =>{
+
+                var e ={
+                    title:sched.title+"\n"+sc.room,
+                    allday:false,
+                    color: sched.color,
+                    textColor:"White",
+                    start:getDate(sc.day)+"T"+sc.start,
+                    end:getDate(sc.day)+"T"+sc.end
+
+                };
+                eventlist.push(e);
+            });
+        });
+    }
+
     $( document ).ready(function() {
         $("#notif_fade").fadeOut(5000);
-    });
 
-</script>
+        $.ajax({
+            type: "POST",
+            url  : "<?php echo base_url();?>student/getSchedule",
+            dataType : "JSON",
+            success: function(data){
+                console.log(data);
+                subjectschedule = data ;
+                formatevents();
 
+                $('#calendarnew').fullCalendar({
+                    header: false,
+                    defaultDate: '2020-05-04',
+                    columnFormat: 'dddd',
+                    allDaySlot: false,
+                    textColor: "#D0CFCF",
+                    hiddenDays: [0],
+                    defaultView: 'agendaWeek',
+                    minTime:'07:00:00',
+                    maxTime:'22:00:00',
+                    editatble: true,
+                    slotLabelFormat:'h:mm a',
+                    events:eventlist
 
-<script src='<?php echo base_url();?>/assets/plugins/calendar/moment.min.js'></script>
-<script src='<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.js'></script>
+                });
 
-<script>
-
-    $(function() {
-
-        $('#calendar').fullCalendar({
-            defaultView: 'month',
-
+            }
         });
 
+
     });
 
-    $('#calendar').fullCalendar({
-        viewRender: function(currentView) {
-            var minDate = moment();
-            var navigationContainer = currentView.el.parent().prev()
-            var cantGoBefore = currentView.start <= minDate;
-
-            $(".fc-prev-button", navigationContainer).prop('disabled', cantGoBefore);
-            $(".fc-prev-button", navigationContainer).toggleClass('fc-state-disabled', cantGoBefore);
-        },
-
-        events: [
-
-        ]
-    });
 
 </script>
 

@@ -94,20 +94,20 @@
                             <li><a href="<?php echo base_url();?>student/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                             <li><a href="<?php echo base_url();?>student/information"><i class="fa fa-user"></i> Student Information </a></li>
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
-                            <li><a href="<?php echo base_url();?>student/"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
+                            <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="<?php echo base_url();?>student/evaluation">Evaluation</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>student/assessment">Assessment</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>student/payment">Payment</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>student/regform">Registration Form</a>
-                                    </li>
-                                </ul>
-                            </li>
+<!--                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>-->
+<!--                                <ul class="nav child_menu">-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/evaluation">Evaluation</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/assessment">Assessment</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/payment">Payment</a>-->
+<!--                                    </li>-->
+<!--                                    <li><a href="--><?php //echo base_url();?><!--student/regform">Registration Form</a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
                         </ul>
                         </ul>
                     </div>
