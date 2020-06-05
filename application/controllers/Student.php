@@ -34,6 +34,7 @@ class Student extends CI_Controller
                     'student_image'      => $result['student_image'],
                     'schoolyear'         => $result['schoolyear'],
                     'semester'           => $result['semester'],
+                    'curriculum'         => $result['curriculum'],
                     'logged_in' 	     => TRUE
                 );
 

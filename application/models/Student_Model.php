@@ -13,6 +13,7 @@ class Student_Model extends CI_Model
         $student_image = array();
         $schoolyear = array();
         $semester = array();
+        $curriculum = array();;
 
         $password = md5($this->input->post("password", TRUE));
 
@@ -33,6 +34,7 @@ class Student_Model extends CI_Model
             $student_ln = $rs->lastName;
             $student_course = $rs->course;
             $student_image = $rs->image;
+            $curriculum = $rs->curriculumid;
         }
 
         $currentSYS = $this->db->get('legend');
@@ -52,7 +54,8 @@ class Student_Model extends CI_Model
             'student_course' => $student_course,
             'student_image' => $student_image,
             'schoolyear' => $schoolyear,
-            'semester' => $semester
+            'semester' => $semester,
+            'curriculum' => $curriculum
         );
 
     }
