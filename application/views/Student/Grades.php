@@ -249,7 +249,7 @@
                                                     <td><?php echo $rs->schedcode;?></td>
                                                     <td><?php echo $rs->subjectcode;?></td>
                                                     <td><?php echo $rs->units;?></td>
-                                                    <td><?php echo $rs->mygrade;?></td>
+                                                    <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} else {echo $rs->mygrade;} ?></td>
                                                     <td>
                                                         <?php
                                                         switch($rs->mygrade){
@@ -262,6 +262,7 @@
                                                             case '2.50':{echo $rs->units;}break;
                                                             case '2.75':{echo $rs->units;}break;
                                                             case '3.00':{echo $rs->units;}break;
+                                                            case 'S':{echo $rs->units;}break;
                                                             case '4.00':{echo '0.00';}break;
                                                             case '5.00':{echo '0.00';}break;
                                                             case '6.00':{echo '0.00';}break;
@@ -282,6 +283,7 @@
                                                                 case '2.50':{echo 'PASSED';}break;
                                                                 case '2.75':{echo 'PASSED';}break;
                                                                 case '3.00':{echo 'PASSED';}break;
+                                                                case 'S':{echo 'PASSED';}break;
                                                                 case '4.00':{echo 'Incomplete';}break;
                                                                 case '5.00':{echo 'FAILED';}break;
                                                                 case '6.00':{echo 'DROPPED';}break;
