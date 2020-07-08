@@ -99,6 +99,7 @@
                             <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
 
                         </ul>
+                        </ul>
                     </div>
 
                 </div>
@@ -154,153 +155,59 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Student Grades<small>  </small></h2>
+                            <h2>Enrollment<small> Student Evaluation </small></h2>
                             <ul class="nav navbar-right panel_toolbox">
+                                <!--                                <li><a href="--><?php //echo base_url();?><!--enrollment/checklist" class="load_modal_details" target="_blank" >Student Checklist</i></a></li>-->
                             </ul>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="card-body">
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>student/view_grades" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-lg-2 col-2">
-                                        <div class="form-group">
-                                            <label >Schoolyear </label>
-                                            <select id="schoolyear" name="schoolyear" class="form-control" onchange="myFunction(this)">
-                                                <option hidden>--------------</option>
-                                                <?php foreach ($syData as $syRow) { ?>
-                                                    <option><?php echo $syRow->schoolyear; ?></option>
-                                                <?php } ?>
-                                            </select>
+                            <table id="datatable" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Student Number</th>
+                                    <th>Full Name</th>
+                                    <th>Course / Year & Section</th>
+                                    <th>School Year</th>
+                                    <th>Semester</th>
+                                    <th>Status</th>
+                                    <th>Option</th>
+                                </tr>
+                                </thead>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-3">
-                                        <div class="form-group">
-                                            <label >Semester</label>
-                                            <select id="semester" name="semester" class="form-control">
-                                                <option hidden>--------------</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-3">
-                                        <div class="form-group">
-                                            <button style="margin-top: 23px;" type="submit" class="btn btn-success">Display Grades</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="card">
-
-                                <div class="col-md-12" style="padding: 20px 0 10px">
-                                    <div class="col-md-2">
-                                        <label>Student Number</label>
-                                        <p><?php echo $this->session->student_id;?></p>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label>Student Name</label>
-                                        <p><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></p>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label>School Year</label>
-                                        <p><?php echo $SY;?></p>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label>Semester</label>
-                                        <p><?php echo $Sem;?> Semester</p>
-                                    </div>
-                                </div>
-
-                                <div class="card-body">
-                                    <table id="gradetable" class="table table-bordered table-striped">
-                                        <thead>
+                                <tbody>
+                                <?php
+                                if($evalData){
+                                    foreach ($evalData as $rs) {
+                                        ?>
                                         <tr>
-                                            <th>SchedCode</th>
-                                            <th>CourseCode</th>
-                                            <th>Units</th>
-                                            <th>Grade</th>
-                                            <th>CreditUnits</th>
-                                            <th>Remarks</th>
+                                            <td><?php echo $rs->studentNumber;?></td>
+                                            <td><?php echo $rs->studentName;?></td>
+                                            <td><?php echo $rs->course;?> <?php echo $rs->yearLevel;?><?php echo $rs->section;?></td>
+                                            <td><?php echo $rs->schoolyear;?></td>
+                                            <td><?php echo $rs->semester;?></td>
+                                            <td><?php echo $rs->status;?></td>
+                                            <th>
+                                                <a href=""></i>Evaluate</a>
+                                                |
+                                                <a href="<?php echo base_url();?>enrollment/checklist/<?php echo $rs->studentNumber;?>" target="_blank">Checklist</a>
+                                            </th>
                                         </tr>
-                                        </thead>
-                                        <tbody id="gradetablebody">
-                                        <?php
-                                        $row=0;
-                                        if($gradesData){
-                                            foreach ($gradesData as $rs) {
-                                                $row+=1;
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $rs->schedcode;?></td>
-                                                    <td><?php echo $rs->subjectcode;?></td>
-                                                    <td><?php echo $rs->units;?></td>
-                                                    <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} else {echo $rs->mygrade;} ?></td>
-                                                    <td>
-                                                        <?php
-                                                        switch($rs->mygrade){
-                                                            case '1.00':{echo $rs->units;}break;
-                                                            case '1.25':{echo $rs->units;}break;
-                                                            case '1.50':{echo $rs->units;}break;
-                                                            case '1.75':{echo $rs->units;}break;
-                                                            case '2.00':{echo $rs->units;}break;
-                                                            case '2.25':{echo $rs->units;}break;
-                                                            case '2.50':{echo $rs->units;}break;
-                                                            case '2.75':{echo $rs->units;}break;
-                                                            case '3.00':{echo $rs->units;}break;
-                                                            case 'S':{echo $rs->units;}break;
-                                                            case '4.00':{echo '0.00';}break;
-                                                            case '5.00':{echo '0.00';}break;
-                                                            case '6.00':{echo '0.00';}break;
-                                                            case '8.00':{echo '0.00';}break;
-                                                            case 'DRP':{echo '0.00';}break;
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                            switch($rs->mygrade){
-                                                                case '1.00':{echo 'PASSED';}break;
-                                                                case '1.25':{echo 'PASSED';}break;
-                                                                case '1.50':{echo 'PASSED';}break;
-                                                                case '1.75':{echo 'PASSED';}break;
-                                                                case '2.00':{echo 'PASSED';}break;
-                                                                case '2.25':{echo 'PASSED';}break;
-                                                                case '2.50':{echo 'PASSED';}break;
-                                                                case '2.75':{echo 'PASSED';}break;
-                                                                case '3.00':{echo 'PASSED';}break;
-                                                                case 'S':{echo 'PASSED';}break;
-                                                                case '4.00':{echo 'Incomplete';}break;
-                                                                case '5.00':{echo 'FAILED';}break;
-                                                                case '6.00':{echo 'DROPPED';}break;
-                                                                case '8.00':{echo 'WITHHELD';}break;
-                                                                case 'DRP':{echo 'DROPPED';}break;
-                                                            }
-                                                        ?>
-                                                    </td>
-                                                </tr>
-                                        <?php }}?>
-                                        </tbody>
+                                    <?php } }?>
+                                </tbody>
+                            </table>
 
-                                    </table>
-                                    <?php if($row!=0){ ?>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-success pull-right">Print Student Grades</button>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
 
 
         <!-- footer content -->
@@ -381,26 +288,6 @@
     });
 
 
-    function myFunction(obj)
-    {
-        $('#semester').empty()
-
-        var dropDown = document.getElementById("schoolyear");
-        var schoolyear = dropDown.options[dropDown.selectedIndex].value;
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url();?>student/getSemester",
-            data: { 'schoolyear': schoolyear  },
-
-            success: function(data){
-                console.log(data);
-                var opts = $.parseJSON(data);
-                $.each(opts, function(i, d) {
-                    $('#semester').append('<option value='+ d.semester +'>' + d.semester + ' SEMESTER</option>');
-                });
-            }
-        });
-    }
 
 </script>
 

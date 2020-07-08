@@ -96,18 +96,8 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="<?php echo base_url();?>enrollment/evaluation">Evaluation</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>enrollment/assessment">Assessment</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>enrollment/payment">Payment</a>
-                                    </li>
-                                    <li><a href="<?php echo base_url();?>enrollment/regform">Registration Form</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
+
                         </ul>
                         </ul>
                     </div>
@@ -167,69 +157,193 @@
                         <div class="x_title">
                             <h2>Enrollment<small> Student Evaluation </small></h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <li><a href="<?php echo base_url();?>enrollment/checklist" class="load_modal_details" target="_blank" >Student Checklist</i></a></li>
+
                             </ul>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="card-body">
-                            <?php foreach ($ysData as $ysRow) {?>
-                                <h2><?php if($ysRow->yearlevel==1){echo 'First';}elseif($ysRow->yearlevel==2){echo 'Second';}elseif($ysRow->yearlevel==3){echo 'Third';}else{echo 'Fourth';}?> Year <small><?php echo $ysRow->semester;?> SEMESTER</small></h2>
+
+                            <div class="col-md-12" style="padding: 20px 0 10px">
+                                <div class="col-md-2">
+                                    <label>Student Number</label>
+                                    <p><?php echo $this->session->student_id;?></p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Student Name</label>
+                                    <p><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></p>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>School Year</label>
+                                    <p><?php echo $SY;?></p>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Semester</label>
+                                    <p><?php echo $Sem;?> SEMESTER</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="padding: 0 0 10px">
+                                <div class="col-md-6">
+                                    <label>Course</label>
+                                    <?php $sectioncount=0;
+                                    foreach ($YLSData as $ylsData){
+                                        $sectioncount ++;
+                                        $Course = '';
+                                        $Major = '';
+                                        $Section = '';
+                                        $Course = substr($ylsData->section, 0, 2);
+                                        if($Course == "SE"){
+
+                                            $YL = substr($ylsData->section, 2, 1);
+                                            $Section = substr($ylsData->section, 3, 1);
+
+                                            $MI = $Course = substr($ylsData->section, 4, 1);
+                                            if($MI == 'M'){
+                                                $Major = " - MATHEMATICS";
+                                            }else {
+                                                $Major = " - ENGLISH";
+                                            }
+
+
+                                        }
+
+                                        elseif($Course == "BE"){
+
+                                            $YL = substr($ylsData->section, 5, 1);
+                                            $Section = substr($ylsData->section, 6, 1);
+                                        }
+
+                                        else{
+                                            $YL = substr($ylsData->section, 2, 1);
+                                            $Section = substr($ylsData->section, 3, 1);
+                                        }
+
+                                    } ?>
+
+                                    <?php foreach ($courseData as $cData){ if($cData->courseCode == $this->session->student_course) { ?>
+                                        <p><?php echo $cData->courseTitle; ?> <?php echo $Major; ?></p>
+                                    <?php } } ?>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Year Level</label>
+                                    <p><?php if($YL == 1){echo "1ST";} elseif($YL == 2){echo "2ND";} elseif($YL == 3){echo "3RD";} elseif($YL == 4){echo "4TH";}?> YEAR</p>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Section</label>
+                                    <p><?php echo $Section; ?></p>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-12">
                                 <table id="" class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Course Code </th>
-                                        <th>Course Description </th>
-                                        <th>Lecture Units </th>
-                                        <th>Lab Units </th>
-                                        <th>Pre-requisites </th>
-                                        <th>SY/Sem Taken</th>
-                                        <th>Instructor</th>
-                                        <th>Final Grade</th>
+                                        <th>SchedCode</th>
+                                        <th>CourseCode</th>
+                                        <th>Units</th>
+                                        <th>Grade</th>
+                                        <th>CreditUnits</th>
+                                        <th>Remarks</th>
                                     </tr>
                                     </thead>
 
-                                    <tbody>
+                                    <tbody id="gradetablebody">
                                     <?php
-                                    if($sData){
-                                        foreach ($sData as $rs) { if(($rs->yearlevel==$ysRow->yearlevel)&&($rs->semester==$ysRow->semester)){
+                                    $row=0;
+                                    if($gradesData){
+                                        foreach ($gradesData as $rs) {
+                                            $row+=1;
                                             ?>
                                             <tr>
+                                                <td><?php echo $rs->schedcode;?></td>
                                                 <td><?php echo $rs->subjectcode;?></td>
-                                                <td><?php echo $rs->subjectTitle;?></td>
-                                                <td><?php echo $rs->lectUnits;?></td>
-                                                <td><?php echo $rs->labunits;?></td>
+                                                <td><?php echo $rs->units;?></td>
+                                                <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} else {echo $rs->mygrade;} ?></td>
                                                 <td>
                                                     <?php
-                                                    if($rs->pr1!='N/A'){echo $rs->pr1;};
-                                                    if($rs->pr2!='N/A'){echo ' / '.$rs->pr2;};
-                                                    if($rs->pr3!='N/A'){echo ' / '.$rs->pr3;};
-                                                    if($rs->pr4!='N/A'){echo ' / '.$rs->pr4;};
-                                                    if($rs->pr5!='N/A'){echo ' / '.$rs->pr5;};
-                                                    if($rs->pr6!='N/A'){echo ' / '.$rs->pr6;};
-                                                    if($rs->pr7!='N/A'){echo ' / '.$rs->pr7;};
-                                                    if($rs->pr8!='N/A'){echo ' / '.$rs->pr8;};
-                                                    if($rs->pr9!='N/A'){echo ' / '.$rs->pr9;};
-                                                    if($rs->pr10!='N/A'){echo ' / '.$rs->pr10;};
+                                                    switch($rs->mygrade){
+                                                        case '1.00':{echo $rs->units;}break;
+                                                        case '1.25':{echo $rs->units;}break;
+                                                        case '1.50':{echo $rs->units;}break;
+                                                        case '1.75':{echo $rs->units;}break;
+                                                        case '2.00':{echo $rs->units;}break;
+                                                        case '2.25':{echo $rs->units;}break;
+                                                        case '2.50':{echo $rs->units;}break;
+                                                        case '2.75':{echo $rs->units;}break;
+                                                        case '3.00':{echo $rs->units;}break;
+                                                        case 'S':{echo $rs->units;}break;
+                                                        case '4.00':{echo '0.00';}break;
+                                                        case '5.00':{echo '0.00';}break;
+                                                        case '6.00':{echo '0.00';}break;
+                                                        case '8.00':{echo '0.00';}break;
+                                                        case 'DRP':{echo '0.00';}break;
+                                                    }
                                                     ?>
                                                 </td>
-                                                <td></td>
-                                                <td></td>
-                                                <th>
-
-                                                </th>
+                                                <td>
+                                                    <?php
+                                                    switch($rs->mygrade){
+                                                        case '1.00':{echo 'PASSED';}break;
+                                                        case '1.25':{echo 'PASSED';}break;
+                                                        case '1.50':{echo 'PASSED';}break;
+                                                        case '1.75':{echo 'PASSED';}break;
+                                                        case '2.00':{echo 'PASSED';}break;
+                                                        case '2.25':{echo 'PASSED';}break;
+                                                        case '2.50':{echo 'PASSED';}break;
+                                                        case '2.75':{echo 'PASSED';}break;
+                                                        case '3.00':{echo 'PASSED';}break;
+                                                        case 'S':{echo 'PASSED';}break;
+                                                        case '4.00':{echo 'Incomplete';}break;
+                                                        case '5.00':{echo 'FAILED';}break;
+                                                        case '6.00':{echo 'DROPPED';}break;
+                                                        case '8.00':{echo 'WITHHELD';}break;
+                                                        case 'DRP':{echo 'DROPPED';}break;
+                                                    }
+                                                    ?>
+                                                </td>
 
                                             </tr>
-                                        <?php } } }?>
+                                        <?php }}?>
                                     </tbody>
                                 </table>
-                            <?php } ?>
+                            </div>
+
+
+                            <div class="col-md-12">
+
+                                <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/evaluation" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                    <input style="display:none" id="studentNumber" name="studentNumber" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_id; ?>">
+                                    <input style="display:none" id="studentName" name="studentName" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?>">
+                                    <input style="display:none" id="course" name="course" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_course;?>">
+                                    <input style="display:none" id="schoolyear" name="schoolyear" class="form-control col-md-7 col-xs-12" value="<?php echo $SY;?>">
+                                    <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $Sem;?>">
+                                    <input style="display:none" id="yearLevel" name="yearLevel" class="form-control col-md-7 col-xs-12" value="<?php echo $YL;?>">
+                                    <input style="display:none" id="section" name="section" class="form-control col-md-7 col-xs-12" value="<?php echo $Section;?>">
+                                    <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php if($sectioncount > 1){echo "IRREGULAR";} else{echo "REGULAR";} ?>">
+                                    <button type="submit" class="btn btn-success pull-right">Request for Evaluation</button>
+                                </form>
+
+                            </div>
+
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
 
 
         <!-- footer content -->

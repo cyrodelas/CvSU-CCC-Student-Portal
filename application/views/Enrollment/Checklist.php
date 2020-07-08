@@ -67,7 +67,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Enrollment<small> Student Evaluation </small></h2>
+                <h2><?php echo $studentNum; ?><small> <?php echo $studentName; ?> - <?php foreach ($courseData as $rs) {if($rs->courseCode==$course){echo $rs->courseTitle;}}  ?> </small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                 </ul>
                 <div class="clearfix"></div>
@@ -116,14 +116,14 @@
                                     </td>
                                     <?php  ?>
                                     <td>
-                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->schoolyear;   ?> / <?php echo $sgRow->semester; }} ?>
+                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->schoolyear;   ?> / <?php echo $sgRow->semester; echo " ";}} ?>
                                     </td>
                                     <td>
                                         <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->instructor; }} ?>
                                     </td>
 
                                     <th>
-                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->mygrade; }} ?>
+                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->mygrade;  echo " "; }} ?>
                                     </th>
 
                                 </tr>

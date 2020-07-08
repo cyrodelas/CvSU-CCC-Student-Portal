@@ -109,7 +109,8 @@ class Student_Model extends CI_Model
     }
 
     public function loadStudentGrades($sy, $sem, $currentStudent){
-        $this->db->select('*');
+        $this->db->select('schedcode, subjectcode, units, mygrade');
+        $this->db->distinct();
         $this->db->from('enrollgradestbl');
         $this->db->where('studentnumber', $currentStudent);
         $this->db->where('schoolyear', $sy);
