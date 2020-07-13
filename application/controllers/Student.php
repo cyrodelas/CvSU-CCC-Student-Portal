@@ -88,16 +88,29 @@ class Student extends CI_Controller
     }
 
     public function subject(){
+        $currentUser = $this->session->student_id;
+        $currentSY = $this->session->schoolyear;
+        $currentSem = $this->session->semester;
+
         $query = $this->Student_Model->loadEnrolledSubject();
         $module['subjData'] = $query;
+
+        $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
+        $module['YLSData'] = $query;
 
         $this->load->view('Student/Subject', $module);
     }
 
+
     public function schedule(){
+        $currentUser = $this->session->student_id;
+        $currentSY = $this->session->schoolyear;
+        $currentSem = $this->session->semester;
 
+        $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
+        $module['YLSData'] = $query;
 
-        $this->load->view('Student/Schedule');
+        $this->load->view('Student/Schedule', $module);
     }
 
 
@@ -114,6 +127,11 @@ class Student extends CI_Controller
 
         $query = $this->Student_Model->loadStudentGrades($currentSY, $currentSem, $currentUser);
         $module['gradesData'] = $query;
+
+        $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
+        $module['YLSData'] = $query;
+
+
         $module['SY'] = $currentSY;
         $module['Sem'] = $currentSem;
 
@@ -132,6 +150,10 @@ class Student extends CI_Controller
 
         $query = $this->Student_Model->loadStudentGrades($currentSY, $currentSem, $currentUser);
         $module['gradesData'] = $query;
+
+        $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
+        $module['YLSData'] = $query;
+
         $module['SY'] = $currentSY;
         $module['Sem'] = $currentSem;
 

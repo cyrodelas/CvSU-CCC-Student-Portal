@@ -100,18 +100,6 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-<!--                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>-->
-<!--                                <ul class="nav child_menu">-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/evaluation">Evaluation</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/assessment">Assessment</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/payment">Payment</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/regform">Registration Form</a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
                         </ul>
 
                     </div>
@@ -158,45 +146,128 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Class Schedule</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
+            <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
+                <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
+                <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
+                <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
+            </div>
 
-                <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
 
-                    <div class="col-md-12" style="padding: 20px 0">
-                        <div class="col-md-2">
-                            <label>Student Number</label>
-                            <p><?php echo $this->session->student_id;?></p>
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Student Information</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                            </ul>
+                            <div class="clearfix"></div>
                         </div>
 
-                        <div class="col-md-4">
-                            <label>Student Name</label>
-                            <p><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></p>
-                        </div>
+                        <div class="x_content">
+                            <div class="row">
+                                <div id ="studentinformation" class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="table-reponsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope='row'>Student Number</th>
+                                                    <td id=""><?php echo $this->session->student_id;?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Student Name</th>
+                                                    <td id=""><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>School Year</th>
+                                                    <td id=""><?php echo $this->session->schoolyear;?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Semester</th>
+                                                    <td id=""><?php echo $this->session->semester;?> SEMESTER</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Course</th>
+                                                    <?php $sectioncount=0;
+                                                    foreach ($YLSData as $ylsData){
+                                                        $sectioncount ++;
+                                                        $Course = '';
+                                                        $Major = '';
+                                                        $Section = '';
+                                                        $Course = substr($ylsData->section, 0, 2);
+                                                        if($Course == "SE"){
 
-                        <div class="col-md-3">
-                            <label>School Year</label>
-                            <p><?php echo $this->session->schoolyear;?></p>
-                        </div>
+                                                            $YL = substr($ylsData->section, 2, 1);
+                                                            $Section = substr($ylsData->section, 3, 1);
 
-                        <div class="col-md-3">
-                            <label>Semester</label>
-                            <p><?php echo $this->session->semester;?> Semester</p>
+                                                            $MI = $Course = substr($ylsData->section, 4, 1);
+                                                            if($MI == 'M'){
+                                                                $Major = " - MATHEMATICS";
+                                                            }else {
+                                                                $Major = " - ENGLISH";
+                                                            }
+
+
+                                                        }
+
+                                                        elseif($Course == "BE"){
+                                                            $courseName = substr($ylsData->section, 0, 5);
+                                                            $YL = substr($ylsData->section, 5, 1);
+                                                            $Section = substr($ylsData->section, 6, 1);
+                                                        }
+
+                                                        else{
+                                                            $courseName = 'BS'. $Course;
+                                                            $YL = substr($ylsData->section, 2, 1);
+                                                            $Section = substr($ylsData->section, 3, 1);
+                                                        }
+
+                                                    } ?>
+
+                                                    <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Year Level</th>
+                                                    <td id=""><?php echo $YL;?> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Section</th>
+                                                    <td id=""><?php echo $Section;?> </td>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div style="margin: 20px 23px" id="calendarnew"></div>
-                    </div>
-
-
-
                 </div>
+
+                <div class="col-md-7">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Class Schedule</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <div class="row">
+                                <div id="calendarnew"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 

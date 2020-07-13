@@ -80,6 +80,7 @@ class Enrollment_Model extends CI_Model
             'studentNumber'     =>  $this->input->post('studentNumber', true),
             'studentName'       =>  $this->input->post('studentName', true),
             'course'            =>  $this->input->post('course', true),
+            'major'             =>  $this->input->post('major', true),
             'schoolyear'        =>  $this->input->post('schoolyear', true),
             'semester'          =>  $this->input->post('semester', true),
             'yearLevel'         =>  $this->input->post('yearLevel', true),
@@ -190,5 +191,13 @@ class Enrollment_Model extends CI_Model
         return $query->result();
     }
 
+
+    public function getSubjectData($subjectCode){
+        $this->db->select('*');
+        $this->db->from('enrollsubjectstbl');
+        $this->db->where('subjectcode', $subjectCode);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }

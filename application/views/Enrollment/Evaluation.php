@@ -324,6 +324,7 @@
                                     <input style="display:none" id="studentNumber" name="studentNumber" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_id; ?>">
                                     <input style="display:none" id="studentName" name="studentName" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?>">
                                     <input style="display:none" id="course" name="course" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_course;?>">
+                                    <input style="display:none" id="major" name="major" class="form-control col-md-7 col-xs-12" value="<?php echo $Major;?>">
                                     <input style="display:none" id="schoolyear" name="schoolyear" class="form-control col-md-7 col-xs-12" value="<?php echo $SY;?>">
                                     <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $Sem;?>">
                                     <input style="display:none" id="yearLevel" name="yearLevel" class="form-control col-md-7 col-xs-12" value="<?php echo $YL;?>">

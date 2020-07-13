@@ -68,6 +68,40 @@ class Enrollment extends CI_Controller
         $this->load->view('Enrollment/EvaluationList', $module);
     }
 
+    public function evaluate_student(){
+
+        $studentID = $this->input->post('studentNumber', true);
+
+        $module['studentNumber'] = $this->input->post('studentNumber', true);
+        $module['studentName'] = $this->input->post('studentName', true);
+        $module['course'] = $this->input->post('course', true);
+        $module['major'] = $this->input->post('major', true);
+        $module['yearLevel'] = $this->input->post('yearLevel', true);
+        $module['section'] = $this->input->post('section', true);
+        $module['schoolyear'] = $this->input->post('schoolyear', true);
+        $module['semester'] = $this->input->post('semester', true);
+        $module['status'] = $this->input->post('status', true);
+
+        $query = $this->Enrollment_Model->courselist();
+        $module['courseData'] = $query;
+
+        $gCurriculum = $this->Enrollment_Model->getCurriculumID($studentID);
+        $cID = $gCurriculum['curriculumID'];
+
+        $query = $this->Enrollment_Model->courselist();
+        $module['courseData'] = $query;
+        $query = $this->Enrollment_Model->loadYearAndSemester($cID);
+        $module['ysData'] = $query;
+        $query = $this->Enrollment_Model->loadSubject($cID);
+        $module['sData'] = $query;
+        $query = $this->Enrollment_Model->loadSubjectCode();
+        $module['scData'] = $query;
+        $query = $this->Enrollment_Model->loadStudentGrade($studentID);
+        $module['sgData'] = $query;
+
+        $this->load->view('Enrollment/EvaluationForm', $module);
+    }
+
 
     public function checklist($studentID){
 
@@ -90,6 +124,12 @@ class Enrollment extends CI_Controller
         $module['sgData'] = $query;
 
         $this->load->view('Enrollment/Checklist', $module);
+    }
+
+    public function getSubjectInfo(){
+        $subjectCode = $this->input->post('subjectcode');
+        $result = $this->Enrollment_Model->getSubjectData($subjectCode);
+        echo json_encode($result);
     }
 
 }

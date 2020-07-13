@@ -151,71 +151,164 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-5">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Student Grades<small>  </small></h2>
+                            <h2>Navigation</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <form method="post" id="frm_validation" action="<?php echo base_url();?>student/view_grades" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-4">
+                                                    <div class="form-group">
+                                                        <label >Schoolyear </label>
+                                                        <select id="schoolyear" name="schoolyear" class="form-control" onchange="myFunction(this)">
+                                                            <option hidden>--------------</option>
+                                                            <?php foreach ($syData as $syRow) { ?>
+                                                                <option><?php echo $syRow->schoolyear; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-4">
+                                                    <div class="form-group">
+                                                        <label >Semester</label>
+                                                        <select id="semester" name="semester" class="form-control">
+                                                            <option hidden>--------------</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-3">
+                                                    <div class="form-group">
+                                                        <button style="margin-top: 23px;" type="submit" class="btn btn-success">Display Grades</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Student Information</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <div class="row">
+                                <div id ="studentinformation" class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="table-reponsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope='row'>Student Number</th>
+                                                    <td id=""><?php echo $this->session->student_id;?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Student Name</th>
+                                                    <td id=""><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>School Year</th>
+                                                    <td id=""><?php echo $SY;?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Semester</th>
+                                                    <td id=""><?php echo $Sem;?> SEMESTER</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Course</th>
+                                                    <?php $sectioncount=0;
+                                                    foreach ($YLSData as $ylsData){
+                                                        $sectioncount ++;
+                                                        $Course = '';
+                                                        $Major = '';
+                                                        $Section = '';
+                                                        $Course = substr($ylsData->section, 0, 2);
+                                                        if($Course == "SE"){
+
+                                                            $YL = substr($ylsData->section, 2, 1);
+                                                            $Section = substr($ylsData->section, 3, 1);
+
+                                                            $MI = $Course = substr($ylsData->section, 4, 1);
+                                                            if($MI == 'M'){
+                                                                $Major = " - MATHEMATICS";
+                                                            }else {
+                                                                $Major = " - ENGLISH";
+                                                            }
+
+
+                                                        }
+
+                                                        elseif($Course == "BE"){
+                                                            $courseName = substr($ylsData->section, 0, 5);
+                                                            $YL = substr($ylsData->section, 5, 1);
+                                                            $Section = substr($ylsData->section, 6, 1);
+                                                        }
+
+                                                        else{
+                                                            $courseName = 'BS'. $Course;
+                                                            $YL = substr($ylsData->section, 2, 1);
+                                                            $Section = substr($ylsData->section, 3, 1);
+                                                        }
+
+                                                    } ?>
+
+                                                    <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Year Level</th>
+                                                    <td id=""><?php echo $YL;?> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Section</th>
+                                                    <td id=""><?php echo $Section;?> </td>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-7">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Student Grades</h2>
                             <ul class="nav navbar-right panel_toolbox">
                             </ul>
                             <div class="clearfix"></div>
                         </div>
 
-                        <div class="card-body">
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>student/view_grades" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-lg-2 col-2">
-                                        <div class="form-group">
-                                            <label >Schoolyear </label>
-                                            <select id="schoolyear" name="schoolyear" class="form-control" onchange="myFunction(this)">
-                                                <option hidden>--------------</option>
-                                                <?php foreach ($syData as $syRow) { ?>
-                                                    <option><?php echo $syRow->schoolyear; ?></option>
-                                                <?php } ?>
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-3">
-                                        <div class="form-group">
-                                            <label >Semester</label>
-                                            <select id="semester" name="semester" class="form-control">
-                                                <option hidden>--------------</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-3">
-                                        <div class="form-group">
-                                            <button style="margin-top: 23px;" type="submit" class="btn btn-success">Display Grades</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="card">
-
-                                <div class="col-md-12" style="padding: 20px 0 10px">
-                                    <div class="col-md-2">
-                                        <label>Student Number</label>
-                                        <p><?php echo $this->session->student_id;?></p>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label>Student Name</label>
-                                        <p><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></p>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label>School Year</label>
-                                        <p><?php echo $SY;?></p>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label>Semester</label>
-                                        <p><?php echo $Sem;?> Semester</p>
-                                    </div>
-                                </div>
-
-                                <div class="card-body">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <table id="gradetable" class="table table-bordered table-striped">
                                         <thead>
                                         <tr>
@@ -262,44 +355,43 @@
                                                     </td>
                                                     <td>
                                                         <?php
-                                                            switch($rs->mygrade){
-                                                                case '1.00':{echo 'PASSED';}break;
-                                                                case '1.25':{echo 'PASSED';}break;
-                                                                case '1.50':{echo 'PASSED';}break;
-                                                                case '1.75':{echo 'PASSED';}break;
-                                                                case '2.00':{echo 'PASSED';}break;
-                                                                case '2.25':{echo 'PASSED';}break;
-                                                                case '2.50':{echo 'PASSED';}break;
-                                                                case '2.75':{echo 'PASSED';}break;
-                                                                case '3.00':{echo 'PASSED';}break;
-                                                                case 'S':{echo 'PASSED';}break;
-                                                                case '4.00':{echo 'Incomplete';}break;
-                                                                case '5.00':{echo 'FAILED';}break;
-                                                                case '6.00':{echo 'DROPPED';}break;
-                                                                case '8.00':{echo 'WITHHELD';}break;
-                                                                case 'DRP':{echo 'DROPPED';}break;
-                                                            }
+                                                        switch($rs->mygrade){
+                                                            case '1.00':{echo 'PASSED';}break;
+                                                            case '1.25':{echo 'PASSED';}break;
+                                                            case '1.50':{echo 'PASSED';}break;
+                                                            case '1.75':{echo 'PASSED';}break;
+                                                            case '2.00':{echo 'PASSED';}break;
+                                                            case '2.25':{echo 'PASSED';}break;
+                                                            case '2.50':{echo 'PASSED';}break;
+                                                            case '2.75':{echo 'PASSED';}break;
+                                                            case '3.00':{echo 'PASSED';}break;
+                                                            case 'S':{echo 'PASSED';}break;
+                                                            case '4.00':{echo 'Incomplete';}break;
+                                                            case '5.00':{echo 'FAILED';}break;
+                                                            case '6.00':{echo 'DROPPED';}break;
+                                                            case '8.00':{echo 'WITHHELD';}break;
+                                                            case 'DRP':{echo 'DROPPED';}break;
+                                                        }
                                                         ?>
                                                     </td>
                                                 </tr>
-                                        <?php }}?>
+                                            <?php }}?>
                                         </tbody>
 
                                     </table>
-                                    <?php if($row!=0){ ?>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-success pull-right">Print Student Grades</button>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
+
+
+
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
+
             </div>
+
+
         </div>
 
 
@@ -396,7 +488,7 @@
                 console.log(data);
                 var opts = $.parseJSON(data);
                 $.each(opts, function(i, d) {
-                    $('#semester').append('<option value='+ d.semester +'>' + d.semester + ' SEMESTER</option>');
+                    $('#semester').append('<option value='+ d.semester +'>' + d.semester + '</option>');
                 });
             }
         });

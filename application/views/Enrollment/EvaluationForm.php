@@ -152,57 +152,268 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-5">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Enrollment<small> Student Evaluation </small></h2>
+                            <h2>Student Information</h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <!--                                <li><a href="--><?php //echo base_url();?><!--enrollment/checklist" class="load_modal_details" target="_blank" >Student Checklist</i></a></li>-->
+
                             </ul>
                             <div class="clearfix"></div>
                         </div>
 
-                        <div class="card-body">
-                            <table id="datatable" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Student Number</th>
-                                    <th>Full Name</th>
-                                    <th>Course / Year & Section</th>
-                                    <th>School Year</th>
-                                    <th>Semester</th>
-                                    <th>Status</th>
-                                    <th>Option</th>
-                                </tr>
-                                </thead>
+                        <div class="x_content">
+                            <div class="row">
+                                <div id ="studentinformation" class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="table-reponsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope='row'>Student Number</th>
+                                                        <td id=""><?php echo $studentNumber;?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope='row'>Student Name</th>
+                                                        <td id=""><?php echo $studentName;?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope='row'>School Year</th>
+                                                        <td id=""><?php echo $schoolyear;?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope='row'>Semester</th>
+                                                        <td id=""><?php echo $semester;?> <?php echo $major;?> SEMESTER</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope='row'>Course</th>
+                                                        <td id=""><?php echo $course;?> <?php echo $major;?> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope='row'>Year Level</th>
+                                                        <td id="">
+                                                            <?php
+                                                            if($status == 'REGULAR'){
+                                                                if($yearLevel == 1){
+                                                                    echo "1ST";
+                                                                }
+                                                                elseif($yearLevel == 2){
+                                                                    echo "2ND";
+                                                                }
+                                                                elseif($yearLevel == 3){
+                                                                    echo "3RD";
+                                                                }
+                                                                elseif($yearLevel == 4){
+                                                                    echo "4TH";
+                                                                }
+                                                            }
+                                                            ?> YEAR
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope='row'>Section</th>
+                                                        <td id=""><?php echo $section;?></td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
 
-                                <tbody>
-                                <?php
-                                if($evalData){
-                                    foreach ($evalData as $rs) {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $rs->studentNumber;?></td>
-                                            <td><?php echo $rs->studentName;?></td>
-                                            <td><?php echo $rs->course;?> <?php echo $rs->yearLevel;?><?php echo $rs->section;?></td>
-                                            <td><?php echo $rs->schoolyear;?></td>
-                                            <td><?php echo $rs->semester;?></td>
-                                            <td><?php echo $rs->status;?></td>
-                                            <th>
-                                                <a href=""></i>Evaluate</a>
-                                                |
-                                                <a href="<?php echo base_url();?>enrollment/checklist/<?php echo $rs->studentNumber;?>" target="_blank">Checklist</a>
-                                            </th>
-                                        </tr>
-                                    <?php } }?>
-                                </tbody>
-                            </table>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Subject Information</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                            </ul>
+                            <div class="clearfix"></div>
                         </div>
 
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group input-group-sm">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="inputsubjectcode" id="inputsubjectcode">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type='hidden' name ="searchsubjecturl" id = "searchsubjecturl" value="<?php echo base_url();?>enrollment/getSubjectInfo">
+                                            <button id="searchsujectcode" class="btn btn-info btn-flat"> Search Subject  </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <div class="table-reponsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope='row'>Subject Code</th>
+                                                    <td id="tblsubjectcode"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Subject Name</th>
+                                                    <td id="tblsubjectname"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope='row'>Units</th>
+                                                    <td id="tblsubjectunit"></td>
+                                                </tr>
+                                                </thead>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-bottom:20px">
+                                <div class="col-sm-12">
+                                    <div class="item form-group">
+                                        <div class="col-md-12 col-sm-12">
+                                            <button id="submitbutton" class="btn btn-success col-md-12">Add Subject</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
+                <div class="col-md-7">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Student Evaluation</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a href="<?php echo base_url();?>enrollment/checklist/<?php echo $studentNumber; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Student Checklist</i></a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <?php if($semester == 'FIRST') { ?>
+
+                                    <?php } else {?>
+
+                                        <div class="row" style="padding-bottom: 10px;">
+
+                                            <div class="col-md-4">
+                                                <label>School Year</label>
+                                                <input type="text" readonly="readonly" id="schoolyear" name="schoolyear" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo (intval(substr($schoolyear, 0, 4)) + 1) . "-" . (intval(substr($schoolyear, 5, 4)) + 1); ?>">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Semester</label>
+                                                <?php $nextSem = 'FIRST';?>
+                                                <input type="text" readonly="readonly" id="semester" name="semester" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $nextSem; ?> SEMESTER">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row" style="padding-bottom: 20px;">
+                                            <div class="col-md-4">
+                                                <label>Year Level</label>
+                                                <select id="yearlevel" name="yearlevel" class="form-control col-md-12 col-xs-12" onchange="YearLevelOnChange(this)">
+                                                    <option hidden>
+                                                        <?php
+                                                        if($status == 'REGULAR'){
+                                                            $yearLevel ++;
+                                                            if($yearLevel == 1){
+                                                                echo "1ST";
+                                                            }
+                                                            elseif($yearLevel == 2){
+                                                                echo "2ND";
+                                                            }
+                                                            elseif($yearLevel == 3){
+                                                                echo "3RD";
+                                                            }
+                                                            elseif($yearLevel == 4){
+                                                                echo "4TH";
+                                                            }
+                                                        }
+                                                        ?> YEAR
+                                                    </option>
+                                                    <option value="1">1ST YEAR</option>
+                                                    <option value="2">2ND YEAR</option>
+                                                    <option value="3">3RD YEAR</option>
+                                                    <option value="4">4TH YEAR</option>
+                                                </select>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Section</label>
+                                                <select id="section" name="section" class="form-control col-md-12 col-xs-12" onchange="YearLevelOnChange(this)">
+                                                    <option hidden><?php echo $section; ?></option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Status</label>
+                                                <select id="status" name="status" class="form-control col-md-12 col-xs-12" onchange="OnChangeStatus(this)">
+                                                    <option hidden><?php echo $status; ?></option>
+                                                    <option>REGULAR</option>
+                                                    <option>IRREGULAR</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    <?php } ?>
+
+                                    <?php foreach ($ysData as $ysRow) {?>
+                                        <?php if(($ysRow->yearlevel==$yearLevel) && ($ysRow->semester==$nextSem)){ ?>
+                                            <table id="subjectlist" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Schedule Code </th>
+                                                    <th>Course Code </th>
+                                                    <th>Course Description </th>
+                                                    <th>Units </th>
+                                                    <th>Option </th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <?php
+                                                if($sData){
+                                                    foreach ($sData as $rs) { if(($rs->yearlevel==$ysRow->yearlevel)&&($rs->semester==$ysRow->semester)){
+                                                        ?>
+                                                        <tr id="<?php echo $rs->subjectcode;?>">
+                                                            <td></td>
+                                                            <td><?php echo $rs->subjectcode;?></td>
+                                                            <td><?php echo $rs->subjectTitle;?></td>
+                                                            <td><?php echo number_format(intval($rs->lectUnits) + intval($rs->labunits), 2);?></td>
+                                                            <th><a href="Javascript:deleteTableRow(<?php echo $rs->subjectcode;?>)"><i class="fa fa-trash"></i> remove</a></th>
+                                                        </tr>
+                                                    <?php } } } ?>
+                                                </tbody>
+                                            </table>
+                                        <?php } } ?>
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
 
@@ -285,7 +496,68 @@
 
     $( document ).ready(function() {
         $("#notif_fade").fadeOut(5000);
+
+        $('#subjectlist').dataTable( {
+            "bPaginate": false,
+            "bFilter": false,
+            "bInfo": false,
+            "columnDefs": [
+                {
+                    "targets": [4],
+                    "visible": false
+                }]
+        } );
+
+
+
     });
+
+    function OnChangeStatus(obj) {
+        var dropDown = document.getElementById("status");
+        sVal = dropDown.options[dropDown.selectedIndex].value;
+
+        if(sVal==='IRREGULAR'){
+            var table = $('#subjectlist').DataTable();
+            table.clear().draw();
+            table.destroy();
+            table.column(0).visible(false);
+        }
+    }
+
+    function deleteTableRow(subjectCode){
+        $('#subjectlist').DataTable().row(subjectCode).remove().draw();
+    }
+
+
+    $('#searchsujectcode').click(function(){
+        var searchsubj = $('#searchsubjecturl').val();
+        var subjectcode =$('#inputsubjectcode').val();
+
+        $.ajax({
+            type: "POST",
+            url  : searchsubj,
+            dataType : "JSON",
+            data : {subjectcode:subjectcode},
+            success: function(data){
+                console.log(data);
+                $("#tblsubjectcode").text(data[0].subjectcode);
+                $("#tblsubjectname").text(data[0].subjectTitle);
+                var totalUnits = parseInt(data[0].lectUnits) + parseInt(data[0].labunits)
+                var unitsDecimal = totalUnits.toFixed(2)
+                $("#tblsubjectunit").text(unitsDecimal);
+            }});
+    });
+
+    $('#submitbutton').click(function(){
+        var subjectcode = $('#tblsubjectcode').text();
+        var subjectname = $('#tblsubjectname').text();
+        var subjectunit = $('#tblsubjectunit').text();
+
+        var row =  $('#subjectlist').DataTable().row.add([subjectcode, subjectname, subjectunit, '<a href="Javascript:deleteTableRow('+subjectcode+')" style="font-weight: 600"><i class="fa fa-trash"></i> remove</a>']).draw();
+        row.nodes().to$().attr('id', subjectcode)
+
+    });
+
 
 
 

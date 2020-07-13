@@ -157,7 +157,6 @@
                         <div class="x_title">
                             <h2>Enrollment<small> Student Evaluation </small></h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <!--                                <li><a href="--><?php //echo base_url();?><!--enrollment/checklist" class="load_modal_details" target="_blank" >Student Checklist</i></a></li>-->
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -184,14 +183,26 @@
                                         <tr>
                                             <td><?php echo $rs->studentNumber;?></td>
                                             <td><?php echo $rs->studentName;?></td>
-                                            <td><?php echo $rs->course;?> <?php echo $rs->yearLevel;?><?php echo $rs->section;?></td>
+                                            <td><?php echo $rs->course;?><?php echo $rs->major;?> <?php echo $rs->yearLevel;?><?php echo $rs->section;?></td>
                                             <td><?php echo $rs->schoolyear;?></td>
                                             <td><?php echo $rs->semester;?></td>
                                             <td><?php echo $rs->status;?></td>
                                             <th>
-                                                <a href=""></i>Evaluate</a>
-                                                |
-                                                <a href="<?php echo base_url();?>enrollment/checklist/<?php echo $rs->studentNumber;?>" target="_blank">Checklist</a>
+
+                                                <form method="post" id="student_<?php echo $rs->studentNumber;?>" action="<?php echo base_url();?>enrollment/evaluate_student" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                                    <input style="display:none" id="studentNumber" name="studentNumber" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->studentNumber; ?>">
+                                                    <input style="display:none" id="studentName" name="studentName" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->studentName; ?>">
+                                                    <input style="display:none" id="course" name="course" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->course; ?>">
+                                                    <input style="display:none" id="major" name="major" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->major; ?>">
+                                                    <input style="display:none" id="yearLevel" name="yearLevel" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->yearLevel; ?>">
+                                                    <input style="display:none" id="section" name="section" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->section; ?>">
+                                                    <input style="display:none" id="schoolyear" name="schoolyear" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->schoolyear; ?>">
+                                                    <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->semester; ?>">
+                                                    <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->status; ?>">
+                                                </form>
+
+                                                <a href="#!" onclick="event.preventDefault();document.getElementById('student_<?php echo $rs->studentNumber;?>').submit();">Evaluate Students</a>
+
                                             </th>
                                         </tr>
                                     <?php } }?>

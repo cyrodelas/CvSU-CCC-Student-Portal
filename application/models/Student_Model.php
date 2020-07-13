@@ -129,7 +129,24 @@ class Student_Model extends CI_Model
         return $query->result();
     }
 
+    public function getYearLevelandSection($sy, $sem, $currentStudent){
+        $this->db->select('DISTINCT(enrollscheduletbl.section), COUNT(enrollscheduletbl.section) AS NoOfSubject');
+        $this->db->from('enrollgradestbl');
+        $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollgradestbl.schedcode');
+        $this->db->where('enrollgradestbl.studentnumber', $currentStudent);
+        $this->db->where('enrollgradestbl.schoolyear', $sy);
+        $this->db->where('enrollgradestbl.semester', $sem);
+        $this->db->order_by('NoOfSubject', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function courselist(){
+        $this->db->select('*');
+        $this->db->from('enrollcoursetbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
     public function getScheduleData($currentStudent, $schoolyear, $semester){
         $this->db->select('enrollscheduletbl.subjectcode, enrollscheduletbl.section, enrollscheduletbl.instructor, enrollscheduletbl.room1, enrollscheduletbl.room2, enrollscheduletbl.room3, enrollscheduletbl.room4, enrollscheduletbl.timein1, enrollscheduletbl.timeout1, enrollscheduletbl.day1, enrollscheduletbl.timein2, enrollscheduletbl.timeout2, enrollscheduletbl.day2, enrollscheduletbl.timein3, enrollscheduletbl.timeout3, enrollscheduletbl.day3, enrollscheduletbl.timein4, enrollscheduletbl.timeout4, enrollscheduletbl.day4, enrollsubjectstbl.subjectTitle');
