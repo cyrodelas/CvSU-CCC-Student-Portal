@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="316037a9-f7f7-4e7a-9e0d-511da91d0922" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers/Enrollment.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Enrollment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/models/Enrollment_Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/Enrollment_Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/initCalendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/initCalendar.js" afterDir="false" />
     </list>
     <ignored path="C:\xampp\htdocs\CvSU-CCC-Student-Portal\.idea\shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,15 +85,15 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="htaccess" value="1" />
-          <entry key="js" value="1" />
-          <entry key="php" value="93" />
+          <entry key="js" value="2" />
+          <entry key="php" value="94" />
           <entry key="rnc" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JavaScript" value="1" />
-          <entry key="PHP" value="93" />
+          <entry key="JavaScript" value="2" />
+          <entry key="PHP" value="94" />
           <entry key="RNG Compact" value="2" />
           <entry key="htaccess" value="1" />
         </counts>
@@ -101,12 +101,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="htaccess" value="1" />
-          <entry key="php" value="8135" />
+          <entry key="js" value="77" />
+          <entry key="php" value="8527" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="8135" />
+          <entry key="JavaScript" value="77" />
+          <entry key="PHP" value="8527" />
           <entry key="htaccess" value="1" />
         </counts>
       </usages-collector>
@@ -114,11 +116,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers/Enrollment.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="251" column="33" selection-start-line="251" selection-start-column="20" selection-end-line="251" selection-end-column="33" />
+            <state relative-caret-position="64">
+              <caret line="238" column="57" lean-forward="true" selection-start-line="238" selection-start-column="57" selection-end-line="238" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -126,17 +128,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/models/Enrollment_Model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="296" column="5" selection-start-line="296" selection-start-column="5" selection-end-line="296" selection-end-column="5" />
+            <state relative-caret-position="248">
+              <caret line="288" column="88" selection-start-line="288" selection-start-column="74" selection-end-line="288" selection-end-column="88" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/initCalendar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+            <state>
+              <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
             </state>
           </provider>
         </entry>
@@ -144,8 +146,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/Enrollment/Schedule.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="46" lean-forward="true" selection-start-line="4" selection-end-line="15" selection-end-column="46" />
+            <state relative-caret-position="282">
+              <caret line="387" column="188" selection-start-line="387" selection-start-column="188" selection-end-line="387" selection-end-column="188" />
             </state>
           </provider>
         </entry>
@@ -154,7 +156,10 @@
         <entry file="file://$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="333">
-              <caret line="43" column="6" lean-forward="true" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="6" />
+              <caret line="34" column="88" selection-start-line="34" selection-start-column="78" selection-end-line="34" selection-end-column="88" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -184,6 +189,7 @@
       <find>loadEnrolledSubject</find>
       <find>getYearLevelandSection</find>
       <find>CheckEnrollmentProcess</find>
+      <find>getScheduleBySectionWithTitle</find>
       <find>updateEvalProcess</find>
     </findStrings>
   </component>
@@ -226,10 +232,11 @@
         <option value="$PROJECT_DIR$/application/views/Student/Schedule.php" />
         <option value="$PROJECT_DIR$/application/views/Student/Grades.php" />
         <option value="$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php" />
-        <option value="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" />
         <option value="$PROJECT_DIR$/application/models/Enrollment_Model.php" />
-        <option value="$PROJECT_DIR$/application/controllers/Enrollment.php" />
         <option value="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" />
+        <option value="$PROJECT_DIR$/assets/js/initCalendar.js" />
+        <option value="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Enrollment.php" />
       </list>
     </option>
   </component>
@@ -405,7 +412,7 @@
       <workItem from="1594012750079" duration="616000" />
       <workItem from="1594020102354" duration="838000" />
       <workItem from="1594167485502" duration="49576000" />
-      <workItem from="1594771983119" duration="12201000" />
+      <workItem from="1594771983119" duration="17956000" />
     </task>
     <task id="LOCAL-00001" summary="Updated codes">
       <created>1591341322890</created>
@@ -418,7 +425,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200876000" />
+    <option name="totallyTimeSpent" value="206631000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -644,38 +651,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Enrollment_Model.php">
+    <entry file="file://$PROJECT_DIR$/assets/js/initCalendar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="296" column="5" selection-start-line="296" selection-start-column="5" selection-end-line="296" selection-end-column="5" />
+        <state>
+          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/Enrollment.php">
+    <entry file="file://$PROJECT_DIR$/application/models/Enrollment_Model.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="251" column="33" selection-start-line="251" selection-start-column="20" selection-end-line="251" selection-end-column="33" />
+        <state relative-caret-position="248">
+          <caret line="288" column="88" selection-start-line="288" selection-start-column="74" selection-end-line="288" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/Schedule.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="387" column="188" selection-start-line="387" selection-start-column="188" selection-end-line="387" selection-end-column="188" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="333">
-          <caret line="43" column="6" lean-forward="true" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="6" />
+          <caret line="34" column="88" selection-start-line="34" selection-start-column="78" selection-end-line="34" selection-end-column="88" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/Schedule.php">
+    <entry file="file://$PROJECT_DIR$/application/controllers/Enrollment.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="46" lean-forward="true" selection-start-line="4" selection-end-line="15" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/initCalendar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        <state relative-caret-position="64">
+          <caret line="238" column="57" lean-forward="true" selection-start-line="238" selection-start-column="57" selection-end-line="238" selection-end-column="57" />
         </state>
       </provider>
     </entry>

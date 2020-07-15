@@ -241,19 +241,27 @@ class Enrollment extends CI_Controller
         echo json_encode($result);
     }
 
-    public function viewschedSection($schoolyear, $semester, $section){
+    public function viewschedSection($schoolyear, $semester, $studentid){
         $module['schoolyear'] = $schoolyear;
         $module['semester'] = $semester;
-        $module['section'] = $section;
+        $module['studentid'] = $studentid;
         $this->load->view('Enrollment/ViewSchedRegular', $module);
     }
 
 
-    public function loadSchedules($schoolyear, $semester, $section){
+    public function loadSchedules(){
+
+        $schoolyear = $this->input->post('schoolyear1');
+        $semester = $this->input->post('semester1');
+        $studentNumber = $this->input->post('studentid1');
+
         $fresult = array();
-        $result = $this->Schedule_model->getScheduleBySectionWithTitle($schoolyear, $semester, $section);
+        $result = $this->Enrollment_Model->getScheduleBySectionWithTitle($schoolyear, $semester, $studentNumber);
         $i1=0;
-        foreach($result as $res){
+
+        $decodeData = json_decode(json_encode($result), true);
+
+        foreach($decodeData as $res){
             $subj = array();
             $subj['title'] = $res['subjectcode'];
             $subj['subjtitle'] =$res['subjectTitle'];
@@ -299,9 +307,13 @@ class Enrollment extends CI_Controller
 
         echo json_encode($fresult);
 
+
     }
 
-
+    public function color($i){
+        $color = array("#06214c","#ff8000","#00b33c","#002db3","#cc8800","#0000cc","#803300","#00802b","#990099","#34d26");
+        return $color[$i];
+    }
 
 
 }

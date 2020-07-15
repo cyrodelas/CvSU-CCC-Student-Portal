@@ -1,10 +1,5 @@
- /*
-
-;*/
 
 var subjectschedule =[];
-
-
 
 
 const defaultdate = '2020-05-04';
@@ -90,21 +85,26 @@ function createTR(subjectschedules){
 
 $(document).ready(function(){
 
-    var section = $('#section').text();
-    console.log(section);
     var loadschedurl = $('#loadschedule').val();
+    var schoolyear = $('#schoolyear').val();
+    var semester = $('#semester').val();
+    var studentid = $('#studentid').val();
+
+    console.log(loadschedurl);
+    console.log(schoolyear);
+    console.log(semester);
+    console.log(studentid);
+
     $.ajax({
         type: "POST",
         url  : loadschedurl,
         dataType : "JSON",
-        data : {section:section},
+        data : {schoolyear1:schoolyear, semester1:semester, studentid1:studentid},
         success: function(data){
             console.log(data);
             subjectschedule = data ;
             createTR(subjectschedule);
             formatevents();
-
-
 
             $('#calendarsched').fullCalendar({
                 header: false,
@@ -125,17 +125,6 @@ $(document).ready(function(){
       
         }
     });
-    
-    
-
-
-
-
-
-
-  
-
-
 
 
 });

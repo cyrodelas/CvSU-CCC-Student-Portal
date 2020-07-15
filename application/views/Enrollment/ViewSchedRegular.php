@@ -29,20 +29,11 @@
 </head>
 <body>
 
-<div class="row">
-    <div class="col-md-9 col-lg-5">
-        <div class="card"  >
-            <div class="card-body">
-                <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>enrollment/loadSchedules">
-                <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $schoolyear;?>">
-                <input type='hidden' name ="semester" id = "semester" value="<?php echo $semester;?>">
-                <input type='hidden' name ="section" id = "section" value="<?php echo $section;?>">
-                <div  id='calendarsched' ></div>
-            </div>
-        </div>
-    </div>
-</div>
-
+    <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>enrollment/loadSchedules">
+    <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $schoolyear;?>">
+    <input type='hidden' name ="semester" id = "semester" value="<?php echo $semester;?>">
+    <input type='hidden' name ="studentid" id = "studentid" value="<?php echo $studentid;?>">
+    <div style="width: 100%"  id='calendarsched' ></div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>

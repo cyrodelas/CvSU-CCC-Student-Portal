@@ -250,8 +250,9 @@
                     <div class="x_title">
                         <h2>Evaluated Subject</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="<?php echo base_url();?>enrollment/viewschedSection/<?php echo $nextSchoolyear; ?>/<?php echo $nextSemester; ?>/<?php echo $CYS; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Class Schedule</i></a></li>
+                            <li><a href="#" onclick="myFunction()"> <i class="fa fa-list"></i> Class Schedule</i></a></li>
                         </ul>
+
                         <div class="clearfix"></div>
                     </div>
 
@@ -382,6 +383,10 @@
     $( document ).ready(function() {
         $("#notif_fade").fadeOut(5000);
     });
+
+    function myFunction() {
+        var myWindow = window.open("<?php echo base_url();?>enrollment/viewschedSection/<?php echo $nextSchoolyear; ?>/<?php echo $nextSemester; ?>/<?php echo $this->session->student_id;?>", "Class Schedule", "width=865,height=700");
+    }
 
 
 </script>

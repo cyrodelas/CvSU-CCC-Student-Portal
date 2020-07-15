@@ -286,14 +286,16 @@ class Enrollment_Model extends CI_Model
         return $query->result();
     }
 
-    public function getScheduleBySectionWithTitle($schoolyear,$semester,$section){
-        $arraywhere = array('semester'=>$semester,'schoolyear'=>$schoolyear,'section'=>$section);
-        $this->db->where($arraywhere);
-        $this->db->select('enrollscheduletemp.subjectcode,section,instructor,room1,room2,room3,room4,timein1,timeout1,day1,timein2,timeout2,day2,timein3,timeout3,day3,timein4,timeout4,day4,subjectTitle');
-        $this->db->join('enrollsubjectstbl','enrollsubjectstbl.subjectcode=enrollscheduletemp.subjectcode','inner');
-        $query =  $this->db->get('enrollscheduletemp');
-        $result = $query->db();
-        return $result;
+    public function getScheduleBySectionWithTitle($schoolyear, $semester, $studentNumber){
+        $this->db->select('enrollscheduletbl.subjectcode, enrollscheduletbl.section, enrollscheduletbl.instructor, enrollscheduletbl.room1, enrollscheduletbl.room2, enrollscheduletbl.room3, enrollscheduletbl.room4, enrollscheduletbl.timein1, enrollscheduletbl.timeout1, enrollscheduletbl.day1, enrollscheduletbl.timein2, enrollscheduletbl.timeout2, enrollscheduletbl.day2, enrollscheduletbl.timein3, enrollscheduletbl.timeout3, enrollscheduletbl.day3, enrollscheduletbl.timein4, enrollscheduletbl.timeout4, enrollscheduletbl.day4, enrollsubjectstbl.subjectTitle');
+        $this->db->from('enrollscheduletbl');
+        $this->db->join('enrollevaluatesubjectstbl', 'enrollevaluatesubjectstbl.schedcode = enrollscheduletbl.schedcode');
+        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+        $this->db->where('enrollscheduletbl.schoolyear', $schoolyear);
+        $this->db->where('enrollscheduletbl.semester', $semester);
+        $this->db->where('enrollevaluatesubjectstbl.studentNumber', $studentNumber);
+        $query = $this->db->get();
+        return $query->result();
     }
 
 }
