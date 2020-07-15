@@ -7,7 +7,7 @@ class Enrollment_Model extends CI_Model
 
         $result = array();
         $status = array();
-
+        $student = array();
 
         $this->db->where('studentNumber', $currentUser);
         $enrollPhase = $this->db->get("enrollment_tracker");
@@ -34,10 +34,12 @@ class Enrollment_Model extends CI_Model
 
             $rs = $enrollPhase->row();
             $status = $rs->process;
+            $student = $rs->status;
             $result = "Existing";
             return array(
                 'result'    =>  $result,
-                'status'    =>  $status
+                'status'    =>  $status,
+                'student'   =>  $student
             );
         }
 
@@ -105,9 +107,10 @@ class Enrollment_Model extends CI_Model
 
     //General Usage
 
-    public function updateEvalProcess($studentNumber, $process){
+    public function updateEvalProcess($studentNumber, $process, $status){
 
         $this->db->set('process', $process);
+        $this->db->set('status', $status);
         $this->db->where('studentNumber', $studentNumber);
         $this->db->update('enrollment_tracker');
         $result = ($this->db->affected_rows() != 1) ? false : true;
@@ -259,7 +262,38 @@ class Enrollment_Model extends CI_Model
     }
 
 
+    public function getYearLevelandSectionEval($sy, $sem, $currentStudent){
+        $this->db->select('DISTINCT(enrollscheduletbl.section), COUNT(enrollscheduletbl.section) AS NoOfSubject');
+        $this->db->from('enrollevaluatesubjectstbl');
+        $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollevaluatesubjectstbl.schedcode');
+        $this->db->where('enrollevaluatesubjectstbl.studentNumber', $currentStudent);
+        $this->db->where('enrollevaluatesubjectstbl.schoolyear', $sy);
+        $this->db->where('enrollevaluatesubjectstbl.semester', $sem);
+        $this->db->order_by('NoOfSubject', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function getSubjectlistEvaluation($sy, $sem, $currentStudent){
+        $this->db->select('enrollscheduletbl.*, enrollsubjectstbl.subjectTitle');
+        $this->db->from('enrollevaluatesubjectstbl');
+        $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollevaluatesubjectstbl.schedcode');
+        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+        $this->db->where('enrollevaluatesubjectstbl.studentNumber', $currentStudent);
+        $this->db->where('enrollevaluatesubjectstbl.schoolyear', $sy);
+        $this->db->where('enrollevaluatesubjectstbl.semester', $sem);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function getScheduleBySectionWithTitle($schoolyear,$semester,$section){
+        $arraywhere = array('semester'=>$semester,'schoolyear'=>$schoolyear,'section'=>$section);
+        $this->db->where($arraywhere);
+        $this->db->select('enrollscheduletemp.subjectcode,section,instructor,room1,room2,room3,room4,timein1,timeout1,day1,timein2,timeout2,day2,timein3,timeout3,day3,timein4,timeout4,day4,subjectTitle');
+        $this->db->join('enrollsubjectstbl','enrollsubjectstbl.subjectcode=enrollscheduletemp.subjectcode','inner');
+        $query =  $this->db->get('enrollscheduletemp');
+        $result = $query->db();
+        return $result;
+    }
 
 }

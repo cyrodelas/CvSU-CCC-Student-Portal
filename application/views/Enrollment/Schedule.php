@@ -144,18 +144,161 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+            <div class="col-md-5">
 
-            <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
-                <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
-                <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
-                <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Student Information</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="row">
+                            <div id ="studentinformation" class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="table-reponsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th scope='row'>Student Number</th>
+                                                <td id=""><?php echo $this->session->student_id;?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope='row'>Student Name</th>
+                                                <td id=""><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope='row'>School Year</th>
+                                                <?php $nextSchoolyear = ''; if($this->session->semester == 'FIRST') {$nextSchoolyear = $this->session->schoolyear;} else {$nextSchoolyear = (intval(substr($this->session->schoolyear, 0, 4)) + 1) . "-" . (intval(substr($this->session->schoolyear, 5, 4)) + 1);}?>
+                                                <td id=""><?php echo $nextSchoolyear ;?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope='row'>Semester</th>
+                                                <?php $nextSemester = ''; if($this->session->semester == 'FIRST') {$nextSemester = 'SECOND';} else {$nextSemester = 'FIRST';}?>
+                                                <td id=""><?php echo $nextSemester; ?> SEMESTER</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope='row'>Course</th>
+                                                <?php $sectioncount=0;
+                                                foreach ($YLSData as $ylsData){
+                                                    $CYS = $ylsData->section;
+                                                    $sectioncount ++;
+                                                    $Course = '';
+                                                    $Major = '';
+                                                    $Section = '';
+                                                    $Course = substr($ylsData->section, 0, 2);
+                                                    if($Course == "SE"){
+
+                                                        $YL = substr($ylsData->section, 2, 1);
+                                                        $Section = substr($ylsData->section, 3, 1);
+
+                                                        $MI = $Course = substr($ylsData->section, 4, 1);
+                                                        if($MI == 'M'){
+                                                            $Major = " - MATHEMATICS";
+                                                        }else {
+                                                            $Major = " - ENGLISH";
+                                                        }
+
+
+                                                    }
+
+                                                    elseif($Course == "BE"){
+                                                        $courseName = substr($ylsData->section, 0, 5);
+                                                        $YL = substr($ylsData->section, 5, 1);
+                                                        $Section = substr($ylsData->section, 6, 1);
+                                                    }
+
+                                                    else{
+                                                        $courseName = 'BS'. $Course;
+                                                        $YL = substr($ylsData->section, 2, 1);
+                                                        $Section = substr($ylsData->section, 3, 1);
+                                                    }
+
+                                                } ?>
+
+                                                <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <th scope='row'>Year Level</th>
+                                                <td id=""><?php echo $YL;?> </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope='row'>Section</th>
+                                                <td id=""><?php echo $Section;?> </td>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
 
+            <div class="col-md-7">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Evaluated Subject</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a href="<?php echo base_url();?>enrollment/viewschedSection/<?php echo $nextSchoolyear; ?>/<?php echo $nextSemester; ?>/<?php echo $CYS; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Class Schedule</i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <table id="subjectlist" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Schedule Code </th>
+                                        <th>Course Code </th>
+                                        <th>Course Description </th>
+                                        <th>Units </th>
+                                        <th>Instructor </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <?php
+                                    if($seData){
+                                        foreach ($seData as $rs) {
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $rs->schedcode;?>
+                                                </td>
+                                                <td><?php echo $rs->subjectCode;?></td>
+                                                <td><?php echo $rs->subjectTitle;?></td>
+                                                <td><?php echo number_format(intval($rs->units) + intval($rs->labunits), 2);?></td>
+                                                <td><?php echo $rs->instructor;?></td>
+                                            </tr>
+                                        <?php } }  ?>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
+
+
         </div>
 
 
@@ -239,7 +382,7 @@
     $( document ).ready(function() {
         $("#notif_fade").fadeOut(5000);
     });
-    
+
 
 </script>
 

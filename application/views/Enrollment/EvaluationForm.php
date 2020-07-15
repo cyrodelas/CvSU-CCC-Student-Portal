@@ -393,6 +393,7 @@
                                             <input type="text" style="display: none;" name="studentNumber" value="<?php echo $studentNumber;?>">
                                             <input type="text" style="display: none;" name="schoolyear" value="<?php echo $nextYear; ?>">
                                             <input type="text" style="display: none;" name="semester" value="<?php echo $nextSem; ?>">
+                                            <input type="text" style="display: none;" name="status" value="<?php echo $status; ?>">
 
                                             <?php
                                             if($sccData){
