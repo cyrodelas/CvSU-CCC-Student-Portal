@@ -8,6 +8,7 @@ class Enrollment extends CI_Controller
     {
         parent::__construct();
         $this->load->model("Enrollment_Model");
+        date_default_timezone_set('Asia/Manila');
     }
 
 
@@ -39,6 +40,10 @@ class Enrollment extends CI_Controller
             $this->load->view('Enrollment/EvalPending');
         }
 
+        if($query['status'] == 'POST-EVALUATION') {
+            $this->load->view('Enrollment/Schedule');
+        }
+
     }
 
     public function evaluation(){
@@ -46,7 +51,9 @@ class Enrollment extends CI_Controller
         $result = $this->Enrollment_Model->addEvaluationRequest();
 
         if($result['result']==true){
-            $updateProcess = $this->Enrollment_Model->updateEvalProcess();
+            $studentNumber = $this->input->post('studentNumber', true);
+            $process ='EVALUATION';
+            $updateProcess = $this->Enrollment_Model->updateEvalProcess($studentNumber, $process);
             $this->session->set_flashdata("success", "Course added to the curriculum.");
         } else {
             $this->session->set_flashdata("error", "Error on saving data to the database.");
@@ -82,6 +89,62 @@ class Enrollment extends CI_Controller
         $module['semester'] = $this->input->post('semester', true);
         $module['status'] = $this->input->post('status', true);
 
+        $semester = $this->input->post('semester', true);
+        $schoolyear = $this->input->post('schoolyear', true);
+        $course = $this->input->post('course', true);
+        $major = $this->input->post('major', true);
+        $yearlevel = $this->input->post('yearLevel', true);
+        $section = $this->input->post('section', true);
+
+        if($semester=='FIRST'){
+            $nextSchoolYear = $schoolyear;
+            $nextSemester = 'SECOND';
+
+            if(strlen($course)==3){
+                $nextCourse = substr($course, 1, 2);
+                $nextMajor = substr($major, 0, 1);
+                $nextYearlevel = $yearlevel;
+                $nextSection = $section;
+                $YCS = $nextCourse.$nextYearlevel.$nextSection.$nextMajor;
+            } elseif(strlen($course)==5){
+                $nextCourse = substr($course, 1, 4);
+                $nextYearlevel = $yearlevel;
+                $nextSection = $section;
+                $YCS = $nextCourse.$nextYearlevel.$nextSection;
+            } else {
+                $nextCourse = substr($course, 2, 2);
+                $nextYearlevel = $yearlevel;
+                $nextSection = $section;
+                $YCS = $nextCourse.$nextYearlevel.$nextSection;
+            }
+
+
+        } else {
+            $nextSchoolYear = (intval(substr($schoolyear, 0, 4)) + 1) . "-" . (intval(substr($schoolyear, 5, 4)) + 1);
+            $nextSemester = 'FIRST';
+
+            if(strlen($course)==3){
+                $nextCourse = substr($course, 1, 2);
+                $nextMajor = substr($major, 0, 1);
+                $nextYearlevel = intval($yearlevel) + 1;
+                $nextSection = $section;
+                $YCS = $nextCourse.$nextYearlevel.$nextSection.$nextMajor;
+            } elseif(strlen($course)==5){
+                $nextCourse = substr($course, 1, 4);
+                $nextYearlevel = intval($yearlevel) + 1;
+                $nextSection = $section;
+                $YCS = $nextCourse.$nextYearlevel.$nextSection;
+            } else {
+                $nextCourse = substr($course, 2, 2);
+                $nextYearlevel = intval($yearlevel) + 1;
+                $nextSection = $section;
+                $YCS = $nextCourse.$nextYearlevel.$nextSection;
+            }
+
+        }
+
+
+
         $query = $this->Enrollment_Model->courselist();
         $module['courseData'] = $query;
 
@@ -99,8 +162,32 @@ class Enrollment extends CI_Controller
         $query = $this->Enrollment_Model->loadStudentGrade($studentID);
         $module['sgData'] = $query;
 
+        $query = $this->Enrollment_Model->loadSchedCodes($nextSchoolYear, $nextSemester, $YCS);
+        $module['sccData'] = $query;
+
+
         $this->load->view('Enrollment/EvaluationForm', $module);
     }
+
+
+    public function evaluateStudent(){
+        $result = $this->Enrollment_Model->addEvaluationData();
+
+        if($result['result']==true){
+            $studentNumber = $this->input->post('studentNumber', true);
+            $process ='POST-EVALUATION';
+            $updateProcess = $this->Enrollment_Model->updateEvalProcess($studentNumber, $process);
+            $deleteOnList = $this->Enrollment_Model->deleteEvaluationListData($studentNumber);
+
+            $this->session->set_flashdata("success", "Course added to the curriculum.");
+        } else {
+            $this->session->set_flashdata("error", "Error on saving data to the database.");
+        }
+        redirect("enrollment/evaluation_list", "refresh");
+
+    }
+
+
 
 
     public function checklist($studentID){

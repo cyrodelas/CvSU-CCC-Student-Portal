@@ -303,13 +303,16 @@
                                 <div class="col-sm-12">
                                     <?php if($semester == 'FIRST') { ?>
 
+
+
                                     <?php } else {?>
 
                                         <div class="row" style="padding-bottom: 10px;">
 
                                             <div class="col-md-4">
                                                 <label>School Year</label>
-                                                <input type="text" readonly="readonly" id="schoolyear" name="schoolyear" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo (intval(substr($schoolyear, 0, 4)) + 1) . "-" . (intval(substr($schoolyear, 5, 4)) + 1); ?>">
+                                                <?php $nextYear = (intval(substr($schoolyear, 0, 4)) + 1) . "-" . (intval(substr($schoolyear, 5, 4)) + 1); ?>
+                                                <input type="text" readonly="readonly" id="schoolyear" name="schoolyear" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $nextYear; ?>">
                                             </div>
 
                                             <div class="col-md-4">
@@ -323,7 +326,7 @@
                                         <div class="row" style="padding-bottom: 20px;">
                                             <div class="col-md-4">
                                                 <label>Year Level</label>
-                                                <select id="yearlevel" name="yearlevel" class="form-control col-md-12 col-xs-12" onchange="YearLevelOnChange(this)">
+                                                <select id="yearlevel" name="yearlevel" class="form-control col-md-12 col-xs-12">
                                                     <option hidden>
                                                         <?php
                                                         if($status == 'REGULAR'){
@@ -372,40 +375,51 @@
 
                                     <?php } ?>
 
-                                    <?php foreach ($ysData as $ysRow) {?>
-                                        <?php if(($ysRow->yearlevel==$yearLevel) && ($ysRow->semester==$nextSem)){ ?>
-                                            <table id="subjectlist" class="table table-striped table-bordered table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>Schedule Code </th>
-                                                    <th>Course Code </th>
-                                                    <th>Course Description </th>
-                                                    <th>Units </th>
-                                                    <th>Option </th>
-                                                </tr>
-                                                </thead>
+                                    <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/evaluateStudent" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
 
-                                                <tbody>
-                                                <?php
-                                                if($sData){
-                                                    foreach ($sData as $rs) { if(($rs->yearlevel==$ysRow->yearlevel)&&($rs->semester==$ysRow->semester)){
-                                                        ?>
-                                                        <tr id="<?php echo $rs->subjectcode;?>">
-                                                            <td></td>
-                                                            <td><?php echo $rs->subjectcode;?></td>
-                                                            <td><?php echo $rs->subjectTitle;?></td>
-                                                            <td><?php echo number_format(intval($rs->lectUnits) + intval($rs->labunits), 2);?></td>
-                                                            <th><a href="Javascript:deleteTableRow(<?php echo $rs->subjectcode;?>)"><i class="fa fa-trash"></i> remove</a></th>
-                                                        </tr>
-                                                    <?php } } } ?>
-                                                </tbody>
-                                            </table>
-                                        <?php } } ?>
+                                        <table id="subjectlist" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>Schedule Code </th>
+                                                <th>Course Code </th>
+                                                <th>Course Description </th>
+                                                <th>Units </th>
+                                                <th>Option </th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            <input type="text" style="display: none;" name="studentNumber" value="<?php echo $studentNumber;?>">
+                                            <input type="text" style="display: none;" name="schoolyear" value="<?php echo $nextYear; ?>">
+                                            <input type="text" style="display: none;" name="semester" value="<?php echo $nextSem; ?>">
+
+                                            <?php
+                                            if($sccData){
+                                                foreach ($sccData as $rs) {
+                                                    ?>
+                                                    <tr id="<?php echo $rs->subjectCode;?>">
+                                                        <td>
+                                                            <?php echo $rs->schedcode;?>
+                                                            <input type="text" style="display: none;" name="schedcode[]" value="<?php echo $rs->schedcode;?>">
+                                                        </td>
+                                                        <td><?php echo $rs->subjectCode;?></td>
+                                                        <td><?php echo $rs->subjectTitle;?></td>
+                                                        <td><?php echo number_format(intval($rs->units) + intval($rs->labunits), 2);?></td>
+                                                        <th><a href="Javascript:deleteTableRow(<?php echo $rs->subjectCode;?>)"><i class="fa fa-trash"></i> remove</a></th>
+                                                    </tr>
+                                                <?php } }  ?>
+                                            </tbody>
+                                        </table>
 
 
+                                        <button type="submit" style="margin-top: 15px" class="btn btn-success col-md-4 pull-right">Evaluate Student</button>
 
+                                    </form>
 
                                 </div>
+
+
                             </div>
 
                         </div>
@@ -555,6 +569,11 @@
 
         var row =  $('#subjectlist').DataTable().row.add([subjectcode, subjectname, subjectunit, '<a href="Javascript:deleteTableRow('+subjectcode+')" style="font-weight: 600"><i class="fa fa-trash"></i> remove</a>']).draw();
         row.nodes().to$().attr('id', subjectcode)
+
+        $('#inputsubjectcode').val("");
+        $('#tblsubjectcode').text("");
+        $('#tblsubjectname').text("");
+        $('#tblsubjectunit').text("");
 
     });
 

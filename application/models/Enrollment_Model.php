@@ -8,6 +8,7 @@ class Enrollment_Model extends CI_Model
         $result = array();
         $status = array();
 
+
         $this->db->where('studentNumber', $currentUser);
         $enrollPhase = $this->db->get("enrollment_tracker");
 
@@ -97,11 +98,16 @@ class Enrollment_Model extends CI_Model
 
     }
 
-    public function updateEvalProcess(){
 
-        $studentNumber = $this->input->post('studentNumber', true);
 
-        $this->db->set('process', "EVALUATION");
+
+
+
+    //General Usage
+
+    public function updateEvalProcess($studentNumber, $process){
+
+        $this->db->set('process', $process);
         $this->db->where('studentNumber', $studentNumber);
         $this->db->update('enrollment_tracker');
         $result = ($this->db->affected_rows() != 1) ? false : true;
@@ -109,6 +115,7 @@ class Enrollment_Model extends CI_Model
         return array(
             'result'    => $result
         );
+
     }
 
 
@@ -191,6 +198,17 @@ class Enrollment_Model extends CI_Model
         return $query->result();
     }
 
+    public function loadSchedCodes($schoolyear, $semester, $section){
+        $this->db->select('enrollscheduletbl.*, enrollsubjectstbl.subjectTitle');
+        $this->db->from('enrollscheduletbl');
+        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+        $this->db->where('enrollscheduletbl.schoolyear', $schoolyear);
+        $this->db->where('enrollscheduletbl.semester', $semester);
+        $this->db->where('enrollscheduletbl.section', $section);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
     public function getSubjectData($subjectCode){
         $this->db->select('*');
@@ -199,5 +217,49 @@ class Enrollment_Model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function addEvaluationData(){
+
+        $data = array();
+
+        $studentNumber = $this->input->post('studentNumber');
+        $schedcodes = $this->input->post('schedcode');
+        $schoolyear = $this->input->post('schoolyear');
+        $semester = $this->input->post('semester');
+
+        foreach($schedcodes AS $schedcode)
+        {
+            $data[] = array(
+                'studentNumber'     => $studentNumber,
+                'schedcode'         => $schedcode,
+                'schoolyear'        => $schoolyear,
+                'semester'          => $semester,
+                'dateEvaluated'     => date('Y-m-d H:i:s')
+
+            );
+        }
+
+        $result = $this->db->insert_batch('enrollevaluatesubjectstbl', $data);
+        $result = ($this->db->affected_rows() > 0) ? true : false;
+
+        return array(
+            'result'    => $result
+        );
+
+    }
+
+    public function deleteEvaluationListData($studentNumber){
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->delete('enrollment_evaluation');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+
+
+
 
 }
