@@ -101,6 +101,33 @@ class Enrollment_Model extends CI_Model
     }
 
 
+    public function getFeeList($schoolyear, $semester, $course, $yearAdmitted, $semAdmitted){
+        $this->db->select('*');
+        $this->db->from('enrollfeestbl');
+        $this->db->where('schoolyear', $schoolyear);
+        $this->db->where('semester', $semester);
+        $this->db->where('course', $course);
+        $this->db->where('yearadmitted', $yearAdmitted);
+        $this->db->where('semesteradmitted', $semAdmitted);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getScholarship(){
+        $this->db->select('*');
+        $this->db->from('enrollscholarshiptbl');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getScholarshipData($scholarship_id){
+        $this->db->select('*');
+        $this->db->from('enrollscholarshiptbl');
+        $this->db->where('id', $scholarship_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 
 
@@ -111,6 +138,7 @@ class Enrollment_Model extends CI_Model
 
         $this->db->set('process', $process);
         $this->db->set('status', $status);
+
         $this->db->where('studentNumber', $studentNumber);
         $this->db->update('enrollment_tracker');
         $result = ($this->db->affected_rows() != 1) ? false : true;
@@ -193,7 +221,8 @@ class Enrollment_Model extends CI_Model
 
 
     public function loadStudentGrade($studentID){
-        $this->db->select('*');
+        $this->db->select('enrollscheduletbl.*, enrollgradestbl.schedcode, enrollgradestbl.subjectcode, enrollgradestbl.units, enrollgradestbl.mygrade');
+        $this->db->distinct();
         $this->db->from('enrollgradestbl');
         $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollgradestbl.schedcode');
         $this->db->where('enrollgradestbl.studentnumber', $studentID);

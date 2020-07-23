@@ -134,7 +134,6 @@
                             </ul>
                         </li>
 
-
                     </ul>
                 </nav>
             </div>
@@ -143,7 +142,7 @@
 
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" style="padding-bottom: 50px">
             <div class="col-md-5">
 
                 <div class="x_panel">
@@ -234,6 +233,9 @@
                                             </thead>
                                         </table>
                                     </div>
+
+                                    <a href="<?php echo base_url();?>enrollment/studentAssestment/<?php echo $this->session->student_id;?>" class="btn btn-success col-md-12">PROCEED TO ASSESSMENT</a>
+
                                 </div>
 
                             </div>

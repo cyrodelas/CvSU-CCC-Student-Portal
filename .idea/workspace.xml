@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="316037a9-f7f7-4e7a-9e0d-511da91d0922" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/application/views/Enrollment/Assessment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers/Enrollment.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Enrollment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/Student.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/models/Enrollment_Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/Enrollment_Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/Student_Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/Student_Model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/initCalendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/initCalendar.js" afterDir="false" />
     </list>
     <ignored path="C:\xampp\htdocs\CvSU-CCC-Student-Portal\.idea\shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,32 +69,34 @@
     <session id="-1180983276">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="22" />
           <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.1" value="7" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.13" value="3" />
-          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.17" value="2" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.40" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="22" />
+          <entry key="project.opened" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="htaccess" value="1" />
           <entry key="js" value="2" />
-          <entry key="php" value="94" />
+          <entry key="php" value="111" />
           <entry key="rnc" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JavaScript" value="2" />
-          <entry key="PHP" value="94" />
+          <entry key="PHP" value="111" />
           <entry key="RNG Compact" value="2" />
           <entry key="htaccess" value="1" />
         </counts>
@@ -102,13 +105,13 @@
         <counts>
           <entry key="htaccess" value="1" />
           <entry key="js" value="77" />
-          <entry key="php" value="8527" />
+          <entry key="php" value="12337" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="77" />
-          <entry key="PHP" value="8527" />
+          <entry key="PHP" value="12337" />
           <entry key="htaccess" value="1" />
         </counts>
       </usages-collector>
@@ -116,50 +119,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers/Student.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="38" column="69" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/controllers/Enrollment.php">
+        <entry file="file://$PROJECT_DIR$/application/models/Student_Model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="238" column="57" lean-forward="true" selection-start-line="238" selection-start-column="57" selection-end-line="238" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/models/Enrollment_Model.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="288" column="88" selection-start-line="288" selection-start-column="74" selection-end-line="288" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/js/initCalendar.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/Enrollment/Schedule.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="387" column="188" selection-start-line="387" selection-start-column="188" selection-end-line="387" selection-end-column="188" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="34" column="88" selection-start-line="34" selection-start-column="78" selection-end-line="34" selection-end-column="88" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="402">
+              <caret line="64" column="29" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -191,6 +164,9 @@
       <find>CheckEnrollmentProcess</find>
       <find>getScheduleBySectionWithTitle</find>
       <find>updateEvalProcess</find>
+      <find>getSubjectlistEvaluation</find>
+      <find>loadStudentGrade</find>
+      <find>checklist</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -226,17 +202,18 @@
         <option value="$PROJECT_DIR$/application/views/Enrollment/Checklist.php" />
         <option value="$PROJECT_DIR$/application/views/Enrollment/EvaluationList.php" />
         <option value="$PROJECT_DIR$/application/views/Enrollment/Evaluation.php" />
-        <option value="$PROJECT_DIR$/application/models/Student_Model.php" />
         <option value="$PROJECT_DIR$/application/views/Student/Subject.php" />
-        <option value="$PROJECT_DIR$/application/controllers/Student.php" />
         <option value="$PROJECT_DIR$/application/views/Student/Schedule.php" />
         <option value="$PROJECT_DIR$/application/views/Student/Grades.php" />
-        <option value="$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php" />
-        <option value="$PROJECT_DIR$/application/models/Enrollment_Model.php" />
         <option value="$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php" />
         <option value="$PROJECT_DIR$/assets/js/initCalendar.js" />
+        <option value="$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php" />
         <option value="$PROJECT_DIR$/application/views/Enrollment/Schedule.php" />
         <option value="$PROJECT_DIR$/application/controllers/Enrollment.php" />
+        <option value="$PROJECT_DIR$/application/models/Student_Model.php" />
+        <option value="$PROJECT_DIR$/application/controllers/Student.php" />
+        <option value="$PROJECT_DIR$/application/views/Enrollment/Assessment.php" />
+        <option value="$PROJECT_DIR$/application/models/Enrollment_Model.php" />
       </list>
     </option>
   </component>
@@ -259,9 +236,8 @@
       <path value="$PROJECT_DIR$/assets/plugins/switchery/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="y" value="2" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
     <option name="width" value="1369" />
     <option name="height" value="733" />
   </component>
@@ -270,6 +246,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -320,22 +297,10 @@
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="Student" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CvSU-CCC-Student-Portal" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CvSU-CCC-Student-Portal" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -412,7 +377,10 @@
       <workItem from="1594012750079" duration="616000" />
       <workItem from="1594020102354" duration="838000" />
       <workItem from="1594167485502" duration="49576000" />
-      <workItem from="1594771983119" duration="17956000" />
+      <workItem from="1594771983119" duration="18553000" />
+      <workItem from="1594818234422" duration="13000" />
+      <workItem from="1594860868636" duration="1890000" />
+      <workItem from="1595204983359" duration="31030000" />
     </task>
     <task id="LOCAL-00001" summary="Updated codes">
       <created>1591341322890</created>
@@ -425,7 +393,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="206631000" />
+    <option name="totallyTimeSpent" value="240161000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -437,10 +405,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="2" width="1369" height="733" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916527" visible="true" weight="0.27960274" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916527" visible="true" weight="0.290469" />
       <window_info id="Structure" order="1" sideWeight="0.5008347" side_tool="true" weight="0.26126814" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -539,13 +507,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/Student/Information.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="168" column="69" selection-start-line="168" selection-start-column="51" selection-end-line="168" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/config/autoload.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-299">
@@ -595,13 +556,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/Student/Grades.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="167" column="227" lean-forward="true" selection-start-line="167" selection-start-column="40" selection-end-line="167" selection-end-column="227" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -630,62 +584,87 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Student_Model.php">
+    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="141" column="5" lean-forward="true" selection-start-line="131" selection-start-column="3" selection-end-line="141" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/Student.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="110" column="36" lean-forward="true" selection-start-line="109" selection-start-column="8" selection-end-line="110" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="295" column="223" lean-forward="true" selection-start-line="295" selection-start-column="32" selection-end-line="295" selection-end-column="223" />
+        <state relative-caret-position="517">
+          <caret line="34" column="88" selection-start-line="34" selection-start-column="78" selection-end-line="34" selection-end-column="88" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/initCalendar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Enrollment_Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="288" column="88" selection-start-line="288" selection-start-column="74" selection-end-line="288" selection-end-column="88" />
+        <state relative-caret-position="517">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/Enrollment/Schedule.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="387" column="188" selection-start-line="387" selection-start-column="188" selection-end-line="387" selection-end-column="188" />
+        <state relative-caret-position="-2860">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/ViewSchedRegular.php">
+    <entry file="file://$PROJECT_DIR$/application/views/Student/Information.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="34" column="88" selection-start-line="34" selection-start-column="78" selection-end-line="34" selection-end-column="88" />
+        <state relative-caret-position="132">
+          <caret line="174" column="20" lean-forward="true" selection-start-line="174" selection-start-column="20" selection-end-line="203" selection-end-column="26" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#8935#8960#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/EvaluationForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="320" column="218" lean-forward="true" selection-start-line="320" selection-start-column="48" selection-end-line="320" selection-end-column="218" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Enrollment_Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="223" column="48" selection-start-line="223" selection-start-column="48" selection-end-line="223" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/Enrollment.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="238" column="57" lean-forward="true" selection-start-line="238" selection-start-column="57" selection-end-line="238" selection-end-column="57" />
+        <state relative-caret-position="299">
+          <caret line="274" column="58" selection-start-line="274" selection-start-column="42" selection-end-line="274" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/Enrollment/Assessment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6190">
+          <caret line="308" column="102" selection-start-line="308" selection-start-column="102" selection-end-line="308" selection-end-column="102" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#2;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#2;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/Student/Grades.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="288" column="46" lean-forward="true" selection-start-line="217" selection-start-column="40" selection-end-line="288" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/Student.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="38" column="69" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Student_Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="64" column="29" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="29" />
         </state>
       </provider>
     </entry>

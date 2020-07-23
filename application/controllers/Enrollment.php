@@ -60,9 +60,45 @@ class Enrollment extends CI_Controller
             $query = $this->Enrollment_Model->getSubjectlistEvaluation($nextSchoolyear, $nextSemester, $currentUser);
             $module['seData'] = $query;
 
-
             $this->load->view('Enrollment/Schedule', $module);
         }
+
+        if($query['status'] == 'ASSESSMENT') {
+
+            $currentUser = $this->session->student_id;
+            $currentSem = $this->session->semester;
+
+            if($currentSem=='FIRST') {
+                $nextSchoolyear = $this->session->schoolyear;
+                $nextSemester = 'SECOND';
+            } else {
+                $nextSchoolyear = (intval(substr($this->session->schoolyear, 0, 4)) + 1) . "-" . (intval(substr($this->session->schoolyear, 5, 4)) + 1);
+                $nextSemester = 'FIRST';
+            }
+
+            $query = $this->Enrollment_Model->getYearLevelandSectionEval($nextSchoolyear, $nextSemester, $currentUser);
+            $module['YLSData'] = $query;
+            $query = $this->Enrollment_Model->getSubjectlistEvaluation($nextSchoolyear, $nextSemester, $currentUser);
+            $module['seData'] = $query;
+
+            $query = $this->Enrollment_Model->getScholarship();
+            $module['schData'] = $query;
+
+
+            $schoolyear ='2019-2020';
+            $semester ='SECOND';
+            $course ='BSIT';
+            $yearAdmitted ='2019-2020';
+            $semAdmitted ='FIRST';
+
+            $query = $this->Enrollment_Model->getFeeList($schoolyear, $semester, $course, $yearAdmitted, $semAdmitted);
+            $module['feeData'] = $query;
+
+            $this->load->view('Enrollment/Assessment', $module);
+
+        }
+
+
 
     }
 
@@ -81,6 +117,13 @@ class Enrollment extends CI_Controller
         }
         redirect("enrollment/process", "refresh");
 
+    }
+
+
+    public function getScholarship(){
+        $scholarship_id = $this->input->post('scholarshipID',TRUE);
+        $query = $this->Enrollment_Model->getScholarshipData($scholarship_id);
+        echo json_encode($query);
     }
 
 
@@ -314,6 +357,17 @@ class Enrollment extends CI_Controller
         $color = array("#06214c","#ff8000","#00b33c","#002db3","#cc8800","#0000cc","#803300","#00802b","#990099","#34d26");
         return $color[$i];
     }
+
+
+
+    public function studentAssestment($studentNumber){
+        $process ='ASSESSMENT';
+        $status = 'REGULAR';
+        $updateProcess = $this->Enrollment_Model->updateEvalProcess($studentNumber, $process, $status);
+
+        redirect("enrollment/process", "refresh");
+    }
+
 
 
 }

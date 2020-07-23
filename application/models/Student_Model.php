@@ -13,7 +13,10 @@ class Student_Model extends CI_Model
         $student_image = array();
         $schoolyear = array();
         $semester = array();
-        $curriculum = array();;
+        $curriculum = array();
+        $yearAdmitted = array();
+        $semesterAdmitted = array();
+
 
         $password = md5($this->input->post("password", TRUE));
 
@@ -35,6 +38,8 @@ class Student_Model extends CI_Model
             $student_course = $rs->course;
             $student_image = $rs->image;
             $curriculum = $rs->curriculumid;
+            $yearAdmitted = $rs->yearAdmitted;
+            $semesterAdmitted = $rs->SemesterAdmitted;
         }
 
         $currentSYS = $this->db->get('legend');
@@ -55,7 +60,9 @@ class Student_Model extends CI_Model
             'student_image' => $student_image,
             'schoolyear' => $schoolyear,
             'semester' => $semester,
-            'curriculum' => $curriculum
+            'curriculum' => $curriculum,
+            'yearAdmitted' => $yearAdmitted,
+            'semesterAdmitted' => $semesterAdmitted
         );
 
     }
