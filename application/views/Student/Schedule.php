@@ -1,6 +1,13 @@
-<?php if (!isset($_SESSION['student_id'])) {
+<?php
+if (!isset($_SESSION['student_id'])) {
     redirect('student', 'refresh');
-} ?>
+}
+
+if($this->session->defaultPass==1){
+    redirect('student/password', 'refresh');
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +89,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2>
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <br><?php echo $this->session->student_ln;?></h2>
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -131,7 +138,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-cogs pull-right"></i> Account Settings</a></li>
+                                <li><a href="<?php echo base_url();?>student/password"><i class="fa fa-cogs pull-right"></i> Change Password</a></li>
                                 <li><a href="<?php echo base_url();?>student/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
@@ -261,7 +268,11 @@
 
                         <div class="x_content">
                             <div class="row">
-                                <div id="calendarnew"></div>
+                                <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>student/loadSchedules">
+                                <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $this->session->schoolyear;?>">
+                                <input type='hidden' name ="semester" id = "semester" value="<?php echo $this->session->semester;?>">
+                                <input type='hidden' name ="studentid" id = "studentid" value="<?php echo $this->session->student_id;?>">
+                                <div id='calendarsched' ></div>
                             </div>
 
                         </div>
@@ -345,93 +356,10 @@
 <script src='<?php echo base_url();?>/assets/plugins/calendar/moment.min.js'></script>
 <script src='<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.js'></script>
 
+<script src='<?php echo base_url();?>assets/js/initCalendar.js'></script> <!-- Script with all important stuff-->
 
 <!-- Custom Theme Scripts -->
 <script src="<?php echo base_url();?>assets/plugins/build/js/custom.js"></script>
-
-<script type="text/javascript">
-
-
-    var subjectschedule =[];
-    const defaultdate = '2020-05-04';
-    var eventlist = [];
-
-
-    function getDate(d){
-        const day = ['S','M','T','W','TH','F','SAT'];
-        var defdate = new Date(defaultdate);
-
-        var dayindex =0;
-        for(var i = 0;i<day.length;i++){
-            if(day[i] == d){
-                dayindex = i;
-            }
-        }
-        var datediff = dayindex -defdate.getDay();
-        var res = defaultdate.split("-");
-        var newdate = res[0]+"-"+res[1]+"-0"+(Number(res[2])+datediff);
-        return newdate;
-    }
-
-
-    function formatevents(){
-
-        subjectschedule.forEach(sched =>{
-            console.log(sched.schedules);
-            sched.schedules.forEach(sc =>{
-
-                var e ={
-                    title:sched.title+"\n"+sc.room,
-                    allday:false,
-                    color: sched.color,
-                    textColor:"White",
-                    start:getDate(sc.day)+"T"+sc.start,
-                    end:getDate(sc.day)+"T"+sc.end
-
-                };
-                eventlist.push(e);
-            });
-        });
-    }
-
-    $( document ).ready(function() {
-        $("#notif_fade").fadeOut(5000);
-
-        $.ajax({
-            type: "POST",
-            url  : "<?php echo base_url();?>student/getSchedule",
-            dataType : "JSON",
-            success: function(data){
-                console.log(data);
-                subjectschedule = data ;
-                formatevents();
-
-                $('#calendarnew').fullCalendar({
-                    header: false,
-                    defaultDate: '2020-05-04',
-                    columnFormat: 'dddd',
-                    allDaySlot: false,
-                    textColor: "#D0CFCF",
-                    hiddenDays: [0],
-                    defaultView: 'agendaWeek',
-                    minTime:'07:00:00',
-                    maxTime:'22:00:00',
-                    editatble: true,
-                    slotLabelFormat:'h:mm a',
-                    events:eventlist
-
-                });
-
-            }
-        });
-
-
-    });
-
-
-</script>
-
-
 
 </body>
 </html>

@@ -3,10 +3,6 @@ if (!isset($_SESSION['student_id'])) {
     redirect('student', 'refresh');
 }
 
-if($this->session->defaultPass==1){
-    redirect('student/password', 'refresh');
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -154,7 +150,6 @@ if($this->session->defaultPass==1){
 
         <!-- page content -->
         <div class="right_col" role="main">
-
             <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
                 <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
                 <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
@@ -162,152 +157,48 @@ if($this->session->defaultPass==1){
             </div>
 
             <div class="row">
-                <div class="col-md-5">
-
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Student Information</h2>
-                            <ul class="nav navbar-right panel_toolbox">
+                            <h2>Settings <small> Change Password</small></h2>
 
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="x_content">
-                            <div class="row">
-                                <div id ="studentinformation" class="col-md-12">
-                                    <div class="col-md-12">
-                                        <div class="table-reponsive">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th scope='row'>Student Number</th>
-                                                    <td id=""><?php echo $this->session->student_id;?></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope='row'>Student Name</th>
-                                                    <td id=""><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope='row'>School Year</th>
-                                                    <td id=""><?php echo $this->session->schoolyear;?></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope='row'>Semester</th>
-                                                    <td id=""><?php echo $this->session->semester;?> SEMESTER</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope='row'>Course</th>
-                                                    <?php $sectioncount=0;
-                                                    foreach ($YLSData as $ylsData){
-                                                        $sectioncount ++;
-                                                        $Course = '';
-                                                        $Major = '';
-                                                        $Section = '';
-                                                        $Course = substr($ylsData->section, 0, 2);
-                                                        if($Course == "SE"){
+                            <br />
+                            <form id="story-form" method="post" action="<?php echo base_url();?>student/changepassword" data-toggle="validator"  class="form-horizontal form-label-left" enctype="multipart/form-data">
 
-                                                            $YL = substr($ylsData->section, 2, 1);
-                                                            $Section = substr($ylsData->section, 3, 1);
-
-                                                            $MI = $Course = substr($ylsData->section, 4, 1);
-                                                            if($MI == 'M'){
-                                                                $Major = " - MATHEMATICS";
-                                                            }else {
-                                                                $Major = " - ENGLISH";
-                                                            }
-
-
-                                                        }
-
-                                                        elseif($Course == "BE"){
-                                                            $courseName = substr($ylsData->section, 0, 5);
-                                                            $YL = substr($ylsData->section, 5, 1);
-                                                            $Section = substr($ylsData->section, 6, 1);
-                                                        }
-
-                                                        else{
-                                                            $courseName = 'BS'. $Course;
-                                                            $YL = substr($ylsData->section, 2, 1);
-                                                            $Section = substr($ylsData->section, 3, 1);
-                                                        }
-
-                                                    } ?>
-
-                                                    <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
-
-
-                                                </tr>
-                                                <tr>
-                                                    <th scope='row'>Year Level</th>
-                                                    <td id=""><?php echo $YL;?> </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope='row'>Section</th>
-                                                    <td id=""><?php echo $Section;?> </td>
-                                                </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">New Password :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="password" id="newPassword" name="newPassword" required="required" class="form-control col-md-7 col-xs-12">
                                     </div>
-
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-md-7">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Enrolled Subjects</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="x_content">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="gradetable" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Schedule Code</th>
-                                            <th>Course Code</th>
-                                            <th>Course Title</th>
-                                            <th>Units</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="gradetablebody">
-                                        <?php
-                                        if($subjData){
-                                            foreach ($subjData as $rs) {
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $rs->schedcode;?></td>
-                                                    <td><?php echo $rs->subjectCode;?></td>
-                                                    <td><?php echo $rs->subjectTitle;?></td>
-                                                    <td><?php echo number_format($rs->units, 2);?></td>
-                                                </tr>
-                                            <?php }}?>
-                                        </tbody>
-
-                                    </table>
-
-
-
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Confirm Password :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="password" id="confirmPassword" name="confirmPassword" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
                                 </div>
-                            </div>
 
+
+
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-3">
+                                        <button type="submit" class="btn btn-success">Change Password</button>
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
 
 
@@ -401,11 +292,6 @@ if($this->session->defaultPass==1){
 <script src="<?php echo base_url();?>assets/plugins/build/js/custom.js"></script>
 
 <script type="text/javascript">
-
-    $('.datepicker').daterangepicker({
-        format: 'mm/dd/yyyy',
-        singleDatePicker: true,
-    });
 
 
     $( document ).ready(function() {

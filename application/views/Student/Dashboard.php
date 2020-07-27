@@ -1,6 +1,13 @@
-<?php if (!isset($_SESSION['student_id'])) {
+<?php
+if (!isset($_SESSION['student_id'])) {
     redirect('student', 'refresh');
-} ?>
+}
+
+if($this->session->defaultPass==1){
+    redirect('student/password', 'refresh');
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +93,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2>
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <br><?php echo $this->session->student_ln;?></h2>
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -104,18 +111,6 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-<!--                            <li><a><i class="fa fa-tasks"></i> Enrollment <span class="fa fa-chevron-down"></span></a>-->
-<!--                                <ul class="nav child_menu">-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/evaluation">Evaluation</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/assessment">Assessment</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/payment">Payment</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="--><?php //echo base_url();?><!--student/regform">Registration Form</a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
                         </ul>
 
                     </div>
@@ -147,7 +142,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-cogs pull-right"></i> Account Settings</a></li>
+                                <li><a href="<?php echo base_url();?>student/password"><i class="fa fa-cogs pull-right"></i> Change Password</a></li>
                                 <li><a href="<?php echo base_url();?>student/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>

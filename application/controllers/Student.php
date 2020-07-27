@@ -20,10 +20,16 @@ class Student extends CI_Controller
         $this->form_validation->set_rules('password','Password','trim|required|max_length[16]');
 
         if($this->form_validation->run() == TRUE){
+            $defaultPass = 0;
+            $passVal = $this->input->post("password", TRUE);
 
             $result = $this->Student_Model->validate_login();
 
             if($result['success']==TRUE){
+
+                if($passVal == '1234') {
+                    $defaultPass = 1;
+                }
 
                 $account_data = array(
                     'student_id'         => $result['student_id'],
@@ -37,12 +43,14 @@ class Student extends CI_Controller
                     'curriculum'         => $result['curriculum'],
                     'yearAdmitted'       => $result['yearAdmitted'],
                     'semesterAdmitted'   => $result['semesterAdmitted'],
+                    'defaultPass'        => $defaultPass,
                     'logged_in' 	     => TRUE
                 );
 
                 $this->session->set_userdata($account_data);
 
                 $this->session->set_flashdata("success","login sucess");
+
 
                 redirect("student/dashboard","refresh");
 
@@ -70,6 +78,38 @@ class Student extends CI_Controller
     {
         $this->session->sess_destroy();
         redirect("Student","refresh");
+    }
+
+
+    public function password(){
+        $this->load->view('Student/Password');
+    }
+
+    public function changepassword(){
+
+        $newPassword = $this->input->post("newPassword",TRUE);
+        $confirmPassword = $this->input->post("confirmPassword",TRUE);
+
+        if($newPassword == $confirmPassword) {
+            $result = $this->Student_Model->update_password();
+
+            if($result['result']==true){
+                $message = "Password successfully updated. You will be automatically logout on our portal.";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+                $this->session->sess_destroy();
+                redirect("Student","refresh");
+            } else {
+                $this->session->set_flashdata("error", "Error on changing the password.");
+                redirect("student/password", "refresh");
+            }
+        } else {
+            $this->session->set_flashdata("error", "Password didn't matched.");
+            redirect("student/password", "refresh");
+        }
+
+
+
+
     }
 
 
@@ -175,15 +215,20 @@ class Student extends CI_Controller
         return $color[$i];
     }
 
-    public function getSchedule(){
-        $currentStudent = $this->session->student_id;
-        $schoolyear = $this->session->schoolyear;
-        $semester = $this->session->semester;
+
+    public function loadSchedules(){
+
+        $schoolyear = $this->input->post('schoolyear1');
+        $semester = $this->input->post('semester1');
+        $studentNumber = $this->input->post('studentid1');
+
         $fresult = array();
-        $query = $this->Student_Model->getScheduleData($currentStudent, $schoolyear, $semester);
-        $result = json_decode(json_encode($query), true);
+        $result = $this->Student_Model->getScheduleBySectionWithTitle($schoolyear, $semester, $studentNumber);
         $i1=0;
-        foreach($result as $res){
+
+        $decodeData = json_decode(json_encode($result), true);
+
+        foreach($decodeData as $res){
             $subj = array();
             $subj['title'] = $res['subjectcode'];
             $subj['subjtitle'] =$res['subjectTitle'];
@@ -226,9 +271,11 @@ class Student extends CI_Controller
 
             $i1 ++;
         }
-        echo json_encode($fresult);
-    }
 
+        echo json_encode($fresult);
+
+
+    }
 
 
 

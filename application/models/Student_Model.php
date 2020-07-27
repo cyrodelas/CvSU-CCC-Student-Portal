@@ -67,6 +67,24 @@ class Student_Model extends CI_Model
 
     }
 
+
+    public function update_password(){
+
+        $studentNumber = $this->session->student_id;
+
+        $n_password = md5($this->input->post("newPassword",TRUE));
+
+        $this->db->set('web_password', $n_password);
+
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->update('enrollstudentinformation');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
     public function loadStudentInfo($currentStudent){
         $this->db->select('*');
         $this->db->from('enrollstudentinformation');
@@ -155,17 +173,16 @@ class Student_Model extends CI_Model
         return $query->result();
     }
 
-    public function getScheduleData($currentStudent, $schoolyear, $semester){
+    public function getScheduleBySectionWithTitle($schoolyear, $semester, $studentNumber){
         $this->db->select('enrollscheduletbl.subjectcode, enrollscheduletbl.section, enrollscheduletbl.instructor, enrollscheduletbl.room1, enrollscheduletbl.room2, enrollscheduletbl.room3, enrollscheduletbl.room4, enrollscheduletbl.timein1, enrollscheduletbl.timeout1, enrollscheduletbl.day1, enrollscheduletbl.timein2, enrollscheduletbl.timeout2, enrollscheduletbl.day2, enrollscheduletbl.timein3, enrollscheduletbl.timeout3, enrollscheduletbl.day3, enrollscheduletbl.timein4, enrollscheduletbl.timeout4, enrollscheduletbl.day4, enrollsubjectstbl.subjectTitle');
-        $this->db->from('enrollsubjectenrolled');
-        $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollsubjectenrolled.schedcode', 'left');
-        $this->db->join('enrollsubjectstbl','enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectcode','left');
-        $this->db->where('enrollsubjectenrolled.studentnumber', $currentStudent);
-        $this->db->where('enrollsubjectenrolled.schoolyear', $schoolyear);
-        $this->db->where('enrollsubjectenrolled.semester', $semester);
+        $this->db->from('enrollscheduletbl');
+        $this->db->join('enrollsubjectenrolled', 'enrollsubjectenrolled.schedcode = enrollscheduletbl.schedcode');
+        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+        $this->db->where('enrollscheduletbl.schoolyear', $schoolyear);
+        $this->db->where('enrollscheduletbl.semester', $semester);
+        $this->db->where('enrollsubjectenrolled.studentNumber', $studentNumber);
         $query = $this->db->get();
         return $query->result();
     }
-
 
 }

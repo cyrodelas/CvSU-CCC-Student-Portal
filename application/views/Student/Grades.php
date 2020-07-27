@@ -1,6 +1,13 @@
-<?php if (!isset($_SESSION['student_id'])) {
+<?php
+if (!isset($_SESSION['student_id'])) {
     redirect('student', 'refresh');
-} ?>
+}
+
+if($this->session->defaultPass==1){
+    redirect('student/password', 'refresh');
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +85,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -96,8 +103,6 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
-
                         </ul>
                     </div>
 
@@ -128,7 +133,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-cogs pull-right"></i> Account Settings</a></li>
+                                <li><a href="<?php echo base_url();?>student/password"><i class="fa fa-cogs pull-right"></i> Change Password</a></li>
                                 <li><a href="<?php echo base_url();?>student/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
@@ -206,7 +211,6 @@
                         <div class="x_title">
                             <h2>Student Information</h2>
                             <ul class="nav navbar-right panel_toolbox">
-
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -302,6 +306,7 @@
                         <div class="x_title">
                             <h2>Student Grades</h2>
                             <ul class="nav navbar-right panel_toolbox">
+                                <li><a href="<?php echo base_url();?>enrollment/checklist/<?php echo $this->session->student_id; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Student Checklist</i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -492,7 +497,10 @@
                 });
             }
         });
+
+
     }
+
 
 </script>
 
