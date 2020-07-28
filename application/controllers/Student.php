@@ -8,6 +8,8 @@ class Student extends CI_Controller
     {
         parent::__construct();
         $this->load->model("Student_Model");
+        $this->load->model("Enrollment_Model");
+
     }
     
     public function index(){
@@ -27,7 +29,7 @@ class Student extends CI_Controller
 
             if($result['success']==TRUE){
 
-                if($passVal == '1234') {
+                if($passVal == '8cN8GpmMJ99rPJyy') {
                     $defaultPass = 1;
                 }
 
@@ -90,25 +92,30 @@ class Student extends CI_Controller
         $newPassword = $this->input->post("newPassword",TRUE);
         $confirmPassword = $this->input->post("confirmPassword",TRUE);
 
-        if($newPassword == $confirmPassword) {
-            $result = $this->Student_Model->update_password();
+        $query = $this->Student_Model->checkBday();
 
-            if($result['result']==true){
-                $message = "Password successfully updated. You will be automatically logout on our portal.";
-                echo "<script type='text/javascript'>alert('$message');</script>";
-                $this->session->sess_destroy();
-                redirect("Student","refresh");
+        if($query['success']==true){
+
+            if($newPassword == $confirmPassword) {
+                $result = $this->Student_Model->update_password();
+
+                if($result['result']==true){
+                    $message = "Password successfully updated. You will be automatically logout on our portal.";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                    $this->session->sess_destroy();
+                    redirect("Student","refresh");
+                } else {
+                    $this->session->set_flashdata("error", "Error on changing the password.");
+                    redirect("student/password", "refresh");
+                }
             } else {
-                $this->session->set_flashdata("error", "Error on changing the password.");
+                $this->session->set_flashdata("error", "Password didn't matched.");
                 redirect("student/password", "refresh");
             }
         } else {
-            $this->session->set_flashdata("error", "Password didn't matched.");
+            $this->session->set_flashdata("error", "Wrong birthdate provided.");
             redirect("student/password", "refresh");
         }
-
-
-
 
     }
 
@@ -126,7 +133,63 @@ class Student extends CI_Controller
         $query = $this->Student_Model->loadStudentEnroll($currentUser);
         $module['siData'] = $query;
 
+        $query = $this->Student_Model->loadProvinceData();
+        $module['provData'] = $query;
+
+        $query = $this->Student_Model->loadReligionData();
+        $module['religionData'] = $query;
+
+
+
         $this->load->view('Student/Information', $module);
+    }
+
+    public function updateStudentInfo(){
+        $result = $this->Student_Model->updateStudentInfoData();
+
+        if($result['result']==true){
+            $this->session->set_flashdata("success", "Data updated successfully.");
+        } else {
+            $this->session->set_flashdata("error", "Error on updating data.");
+        }
+        redirect("student/information", "refresh");
+
+    }
+
+    public function updatePersonalInfo(){
+        $result = $this->Student_Model->updatePersonalInfoData();
+
+        if($result['result']==true){
+            $this->session->set_flashdata("success", "Data updated successfully.");
+        } else {
+            $this->session->set_flashdata("error", "Error on updating data.");
+        }
+        redirect("student/information", "refresh");
+    }
+
+    public function updateGuardianInfo(){
+        $result = $this->Student_Model->updateGuardianInfoData();
+
+        if($result['result']==true){
+            $this->session->set_flashdata("success", "Data updated successfully.");
+        } else {
+            $this->session->set_flashdata("error", "Error on updating data.");
+        }
+        redirect("student/information", "refresh");
+    }
+
+
+    public function getMunicipality(){
+        $provinceCode = $this->input->post('provCode',TRUE);
+        $query = $this->Student_Model->getMunicipalityData($provinceCode);
+        echo json_encode($query);
+    }
+
+    public function getBarangay(){
+        $provinceCode = $this->input->post('provCode',TRUE);
+        $municipalityCode = $this->input->post('munCode',TRUE);
+        $query = $this->Student_Model->getBarangayData($provinceCode, $municipalityCode);
+        echo json_encode($query);
     }
 
     public function subject(){
@@ -203,6 +266,34 @@ class Student extends CI_Controller
 
     }
 
+    public function checklist($studentID){
+
+        $gCurriculum = $this->Enrollment_Model->getCurriculumID($studentID);
+        $cID = $gCurriculum['curriculumID'];
+        $module['studentNum'] = $gCurriculum['studentNumber'];
+        $module['studentName'] = $gCurriculum['firstName'] ." ". $gCurriculum['lastName'];
+        $module['course'] = $gCurriculum['course'];
+
+        $query = $this->Student_Model->loadStudentSY($studentID);
+        $module['schoolYearData'] = $query;
+
+        $query = $this->Enrollment_Model->courselist();
+        $module['courseData'] = $query;
+        $query = $this->Enrollment_Model->loadYearAndSemester($cID);
+        $module['ysData'] = $query;
+        $query = $this->Enrollment_Model->loadSubject($cID);
+        $module['sData'] = $query;
+        $query = $this->Enrollment_Model->loadSubjectCode();
+        $module['scData'] = $query;
+        $query = $this->Enrollment_Model->loadStudentGrade($studentID);
+        $module['sgData'] = $query;
+
+
+
+        $this->load->view('Enrollment/Checklist', $module);
+    }
+
+
     public function getSemester(){
         $currentStudent = $this->session->student_id;
         $schoolyear = $this->input->post('schoolyear',TRUE);
@@ -275,6 +366,22 @@ class Student extends CI_Controller
         echo json_encode($fresult);
 
 
+    }
+
+    public function gradesRequest(){
+
+        $studentNumber = $this->input->post('studentID', true);
+
+        $result = $this->Student_Model->addGradesRequest();
+
+        if($result['result']==true){
+            $message = "Request was sent successfully";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        } else {
+            $message = "Error on sending request.";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
+        redirect("student/checklist/".$studentNumber, "refresh");
     }
 
 

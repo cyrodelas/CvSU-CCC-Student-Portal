@@ -169,6 +169,14 @@ if (!isset($_SESSION['student_id'])) {
                             <form id="story-form" method="post" action="<?php echo base_url();?>student/changepassword" data-toggle="validator"  class="form-horizontal form-label-left" enctype="multipart/form-data">
 
                                 <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Date of Birth :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="text" id="dob" name="dob" data-provide="datepicker" class="datepicker form-control col-md-7 col-xs-12" value="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">New Password :
                                     </label>
                                     <div class="col-md-7 col-sm-7 col-xs-12">
@@ -298,6 +306,10 @@ if (!isset($_SESSION['student_id'])) {
         $("#notif_fade").fadeOut(5000);
     });
 
+    $('.datepicker').daterangepicker({
+        format: 'mm/dd/yyyy',
+        singleDatePicker: true,
+    });
 
 </script>
 

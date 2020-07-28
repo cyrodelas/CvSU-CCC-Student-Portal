@@ -306,7 +306,7 @@ if($this->session->defaultPass==1){
                         <div class="x_title">
                             <h2>Student Grades</h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <li><a href="<?php echo base_url();?>enrollment/checklist/<?php echo $this->session->student_id; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Student Checklist</i></a></li>
+                                <li><a href="<?php echo base_url();?>student/checklist/<?php echo $this->session->student_id; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Student Checklist</i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>

@@ -68,6 +68,37 @@ class Student_Model extends CI_Model
     }
 
 
+    public function checkBday(){
+
+        $result = array();
+        $studentNumber = $this->session->student_id;
+        $postDate = date_create($this->input->post('dob', true));
+        $postDOB = date_format($postDate,'m/d/Y');;
+
+        $this->db->where('studentNumber', $studentNumber);
+
+        $admin_account = $this->db->get("enrollstudentinformation");
+
+        if ($admin_account->num_rows() == 1) {
+            $rs = $admin_account->row();
+
+            $date = date_create($rs->dateOfBirth);
+            $dob = date_format($date,'m/d/Y');
+
+            if($postDOB == $dob) {
+                $result = true;
+            } else {
+                $result = false;
+            }
+
+        }
+
+        return array(
+            'success' => $result,
+        );
+
+    }
+
     public function update_password(){
 
         $studentNumber = $this->session->student_id;
@@ -102,6 +133,133 @@ class Student_Model extends CI_Model
         return $query->result();
     }
 
+    public function loadProvinceData(){
+        $this->db->select('*');
+        $this->db->from('refprovince');
+        $this->db->order_by('provDesc', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getMunicipalityData($provinceCode){
+
+        $provCode = array();
+
+        $this->db->where('provDesc', $provinceCode);
+        $provData = $this->db->get("refprovince");
+
+        if ($provData->num_rows() == 1) {
+            $rs = $provData->row();
+            $provCode = $rs->provCode;
+        }
+
+        $this->db->select('*');
+        $this->db->from('refcitymun');
+        $this->db->where('provCode', $provCode);
+        $this->db->order_by('citymunDesc', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getBarangayData($provinceCode, $municipalityCode){
+
+        $provCode = array();
+        $munCode = array();
+
+        $this->db->where('provDesc', $provinceCode);
+        $provData = $this->db->get("refprovince");
+
+        if ($provData->num_rows() == 1) {
+            $rs = $provData->row();
+            $provCode = $rs->provCode;
+        }
+
+        $this->db->where('citymunDesc', $municipalityCode);
+        $munData = $this->db->get("refcitymun");
+
+        if ($munData->num_rows() == 1) {
+            $rs = $munData->row();
+            $munCode = $rs->citymunCode;
+        }
+
+
+        $this->db->select('*');
+        $this->db->from('refbrgy');
+        $this->db->where('provCode', $provCode);
+        $this->db->where('citymunCode', $munCode);
+        $this->db->order_by('brgyDesc', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function loadReligionData(){
+        $this->db->select('*');
+        $this->db->from('religiontbl');
+        $this->db->order_by('religion', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
+    public function updateStudentInfoData(){
+
+        $studentNumber = $this->session->student_id;
+
+        $this->db->set('firstName', $this->input->post('student_fn', true));
+        $this->db->set('middleName', $this->input->post('student_mn', true));
+        $this->db->set('lastName', $this->input->post('student_ln', true));
+
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->update('enrollstudentinformation');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+
+    }
+
+    public function updatePersonalInfoData(){
+
+        $studentNumber = $this->session->student_id;
+
+        $this->db->set('province', $this->input->post('province', true));
+        $this->db->set('municipality', $this->input->post('municipality', true));
+        $this->db->set('barangay', $this->input->post('barangay', true));
+        $this->db->set('street', $this->input->post('street', true));
+
+        $this->db->set('dateOfBirth', date(dateformatdb, strtotime($this->input->post('dob', true))));
+        $this->db->set('gender', $this->input->post('gender', true));
+        $this->db->set('status', $this->input->post('status', true));
+        $this->db->set('citizenship', $this->input->post('citizenship', true));
+        $this->db->set('religion', $this->input->post('religion', true));
+
+
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->update('enrollstudentinformation');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+    public function updateGuardianInfoData(){
+        $studentNumber = $this->session->student_id;
+
+        $this->db->set('guardian', $this->input->post('guardian', true));
+        $this->db->set('mobilePhone', $this->input->post('mobilePhone', true));
+
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->update('enrollstudentinformation');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+
 
     public function loadEnrolledSubject(){
         $this->db->select('enrollsubjectenrolled.schedcode, enrollscheduletbl.subjectCode, enrollsubjectstbl.subjectTitle, enrollscheduletbl.units');
@@ -115,11 +273,11 @@ class Student_Model extends CI_Model
         return $query->result();
     }
 
-    public function loadStudentSY($currentStudent){
+    public function loadStudentSY($studentID){
         $this->db->select('schoolyear');
         $this->db->distinct();
         $this->db->from('enrollgradestbl');
-        $this->db->where('studentnumber', $currentStudent);
+        $this->db->where('studentnumber', $studentID);
         $query = $this->db->get();
         return $query->result();
     }
@@ -184,5 +342,25 @@ class Student_Model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+
+    public function addGradesRequest(){
+        $data = array(
+            'studentNumber'     =>  $this->input->post('studentID', true),
+            'schoolyear'        =>  $this->input->post('schoolyear', true),
+            'semester'          =>  $this->input->post('semester', true),
+            'subjectCode'       =>  $this->input->post('subjectCode', true),
+            'section'           =>  $this->input->post('section', true)
+        );
+
+        $result = $this->db->insert('requestedgradestbl', $data);
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+
+    }
+
 
 }

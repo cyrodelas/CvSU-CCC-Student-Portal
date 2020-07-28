@@ -42,11 +42,6 @@ if($this->session->defaultPass==1){
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/alertify/css/alertify.core.css" />
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/alertify/css/alertify.bootstrap.css" id="toggleCSS" />
 
-    <!-- P-Notify -->
-    <link href="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
-
     <!-- Datatables -->
     <link href="<?php echo base_url();?>assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
@@ -155,13 +150,11 @@ if($this->session->defaultPass==1){
         <!-- page content -->
         <div class="right_col" role="main">
 
-
-
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Student Information</h2>
                     <ul class="nav navbar-right panel_toolbox">
-<!--                        <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-student-information"  title="update student info">Update Student Information</i></a>-->
+                        <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-student-information"  title="update student info"><i class="fa fa-list"></i> Update Student Information</i></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -173,9 +166,19 @@ if($this->session->defaultPass==1){
                             <p><?php echo $this->session->student_id;?></p>
                         </div>
 
-                        <div class="col-md-5 col-xs-5">
-                            <label>Full Name</label>
-                            <p><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></p>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Last Number</label>
+                            <p><?php echo $this->session->student_ln;?></p>
+                        </div>
+
+                        <div class="col-md-3 col-xs-3">
+                            <label>First Number</label>
+                            <p><?php echo $this->session->student_fn;?></p>
+                        </div>
+
+                        <div class="col-md-3 col-xs-3">
+                            <label>Middle Name</label>
+                            <p><?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> </p>
                         </div>
                     </div>
 
@@ -187,11 +190,11 @@ if($this->session->defaultPass==1){
                                 </p>
                             </div>
 
-                            <div class="col-md-5 col-xs-5">
+                            <div class="col-md-3 col-xs-3">
                                 <label>Course</label>
                                 <p><?php echo $siRow->courseTitle; ?></p>
                             </div>
-                            <div class="col-md-4 col-xs-4">
+                            <div class="col-md-3 col-xs-3">
                                 <label>Major</label>
                                 <p><?php echo $siRow->majorCourse; ?></p>
                             </div>
@@ -207,7 +210,7 @@ if($this->session->defaultPass==1){
                 <div class="x_title">
                     <h2>Personal Information</h2>
                     <ul class="nav navbar-right panel_toolbox">
-<!--                        <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-personal-information"  title="update student info">Update Personal Information</i></a>-->
+                        <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-personal-information"  title="update student info"><i class="fa fa-list"></i> Update Personal Information</i></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -278,7 +281,7 @@ if($this->session->defaultPass==1){
                 <div class="x_title">
                     <h2>Guardian Information</h2>
                     <ul class="nav navbar-right panel_toolbox">
-<!--                        <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-guardian-information"  title="update student info">Update Guardian Information</i></a>-->
+                        <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-guardian-information"  title="update student info"><i class="fa fa-list"></i> Update Guardian Information</i></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -337,32 +340,32 @@ if($this->session->defaultPass==1){
                         </div>
                         <div class="x_content">
                             <br />
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>admin/j_gallery_add" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">First Name :
-                                    </label>
-                                    <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="student_fn" name="student_fn" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_fn;?>">
+                            <form method="post" id="frm_validation" action="<?php echo base_url();?>student/updateStudentInfo" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                <?php foreach ($sfData as $sfRow){?>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">First Name :
+                                        </label>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <input type="text" id="student_fn" name="student_fn" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->firstName; ?>">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Middle Name :
-                                    </label>
-                                    <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="student_mn" name="student_mn" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_mn;?>">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Middle Name :
+                                        </label>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <input type="text" id="student_mn" name="student_mn" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->middleName; ?>">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name :
-                                    </label>
-                                    <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="student_ln" name="student_ln" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_ln;?>">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name :
+                                        </label>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <input type="text" id="student_ln" name="student_ln" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->lastName; ?>">
+                                        </div>
                                     </div>
-                                </div>
-
+                                <?php } ?>
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
@@ -397,7 +400,7 @@ if($this->session->defaultPass==1){
                         </div>
                         <div class="x_content">
                             <br />
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>admin/j_gallery_add" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                            <form method="post" id="frm_validation" action="<?php echo base_url();?>student/updatePersonalInfo" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
 
                                 <?php foreach ($sfData as $sfRow){?>
 
@@ -405,8 +408,11 @@ if($this->session->defaultPass==1){
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Province :
                                         </label>
                                         <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="province" name="province" class="form-control col-md-7 col-xs-12">
+                                            <select id="province" name="province" class="form-control col-md-7 col-xs-12" onchange="ProvinceOnChange(this)">
                                                 <option hidden><?php echo $sfRow->province; ?></option>
+                                                <?php foreach ($provData as $provRow){?>
+                                                    <option><?php echo $provRow->provDesc; ?></option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                     </div>
@@ -415,7 +421,7 @@ if($this->session->defaultPass==1){
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Municipality :
                                         </label>
                                         <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="municipality" name="municipality" class="form-control col-md-7 col-xs-12">
+                                            <select id="municipality" name="municipality" class="form-control col-md-7 col-xs-12" onchange="MunicipalityOnChange(this)">
                                                 <option hidden><?php echo $sfRow->municipality; ?></option>
                                             </select>
                                         </div>
@@ -465,6 +471,11 @@ if($this->session->defaultPass==1){
                                         <div class="col-md-7 col-sm-7 col-xs-12">
                                             <select id="status" name="status" class="form-control col-md-7 col-xs-12">
                                                 <option hidden><?php echo $sfRow->status; ?></option>
+                                                <option value="Single">Single</option>
+                                                <option value="Married">Married</option>
+                                                <option value="Widowed">Widowed</option>
+                                                <option value="Separated">Separated</option>
+                                                <option value="Divorced">Divorced</option>
                                             </select>
                                         </div>
                                     </div>
@@ -473,9 +484,7 @@ if($this->session->defaultPass==1){
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Citizenship :
                                         </label>
                                         <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="citizenship" name="citizenship" class="form-control col-md-7 col-xs-12">
-                                                <option hidden><?php echo $sfRow->citizenship; ?></option>
-                                            </select>
+                                            <input type="text" id="citizenship" name="citizenship" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $sfRow->citizenship; ?>">
                                         </div>
                                     </div>
 
@@ -485,6 +494,9 @@ if($this->session->defaultPass==1){
                                         <div class="col-md-7 col-sm-7 col-xs-12">
                                             <select id="religion" name="religion" class="form-control col-md-7 col-xs-12">
                                                 <option hidden><?php echo $sfRow->religion; ?></option>
+                                                <?php foreach ($religionData as $relRow){ ?>
+                                                    <option><?php echo $relRow->religion; ?></option>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
@@ -525,7 +537,7 @@ if($this->session->defaultPass==1){
                         </div>
                         <div class="x_content">
                             <br />
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>admin/j_gallery_add" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                            <form method="post" id="frm_validation" action="<?php echo base_url();?>student/updateGuardianInfo" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
                                 <?php foreach ($sfData as $sfRow){?>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Guardian Name :
@@ -570,27 +582,13 @@ if($this->session->defaultPass==1){
 <!-- NProgress -->
 <script src="<?php echo base_url();?>assets/plugins/nprogress/nprogress.js"></script>
 
-<!-- gauge.js -->
-<script src="<?php echo base_url();?>assets/plugins/gauge.js/dist/gauge.min.js"></script>
 <!-- bootstrap-progressbar -->
 <script src="<?php echo base_url();?>assets/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url();?>assets/plugins/iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="<?php echo base_url();?>assets/plugins/skycons/skycons.js"></script>
 
 <!-- Chart.js -->
 <script src="<?php echo base_url();?>assets/plugins/Chart.js/dist/Chart.min.js"></script>
-<!-- Flot -->
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.pie.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.time.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.stack.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="<?php echo base_url();?>assets/plugins/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/flot.curvedlines/curvedLines.js"></script>
 
 <!-- DateJS -->
 <script src="<?php echo base_url();?>assets/plugins/DateJS/build/date.js"></script>
@@ -619,12 +617,6 @@ if($this->session->defaultPass==1){
 <script src="<?php echo base_url();?>assets/plugins/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 
-
-<!-- PNotify -->
-<script src="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.buttons.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/pnotify/dist/pnotify.nonblock.js"></script>
-
 <!-- Switchery -->
 <script src="<?php echo base_url();?>assets/plugins/switchery/dist/switchery.min.js"></script>
 
@@ -648,6 +640,51 @@ if($this->session->defaultPass==1){
         $("#notif_fade").fadeOut(5000);
     });
 
+
+    function ProvinceOnChange(obj) {
+        $('#municipality').empty()
+        $('#barangay').empty()
+
+        var dropDown = document.getElementById("province");
+        var provCode = dropDown.options[dropDown.selectedIndex].value;
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url();?>student/getMunicipality",
+            data: {'provCode': provCode},
+
+            success: function (data) {
+                console.log(data);
+                var opts = $.parseJSON(data);
+                $.each(opts, function (i, d) {
+                    $('#municipality').append('<option>' + d.citymunDesc + '</option>');
+                });
+            }
+        });
+    }
+
+    function MunicipalityOnChange(obj) {
+        $('#barangay').empty()
+
+        var dropDownProv = document.getElementById("province");
+        var provCode = dropDownProv.options[dropDownProv.selectedIndex].value;
+
+        var dropDown = document.getElementById("municipality");
+        var munCode = dropDown.options[dropDown.selectedIndex].value;
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url();?>student/getBarangay",
+            data: {'provCode': provCode, 'munCode': munCode},
+
+            success: function (data) {
+                console.log(data);
+                var opts = $.parseJSON(data);
+                $.each(opts, function (i, d) {
+                    $('#barangay').append('<option>' + d.brgyDesc + '</option>');
+                });
+            }
+        });
+    }
 
 </script>
 

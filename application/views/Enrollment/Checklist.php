@@ -69,6 +69,7 @@
             <div class="x_title">
                 <h2><?php echo $studentNum; ?><small> <?php echo $studentName; ?> - <?php foreach ($courseData as $rs) {if($rs->courseCode==$course){echo $rs->courseTitle;}}  ?> </small></h2>
                 <ul class="nav navbar-right panel_toolbox">
+                    <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-guardian-information"  title="update student info"><i class="fa fa-list"></i> Request for missing grades</i></a>
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -139,6 +140,81 @@
 
 
 
+<div class="modal fade update-guardian-information" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="load_modal_fields_large">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Student Grades <small>Request Record</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a data-dismiss="modal"><i class="fa fa-close"></i> close</a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form method="post" id="frm_validation" action="<?php echo base_url();?>student/gradesRequest" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">School year :
+                                        </label>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <select id="schoolyear" name="schoolyear" class="form-control" onchange="myFunction(this)">
+                                                <option hidden>--------------</option>
+                                                <?php foreach ($schoolYearData as $syRow) { ?>
+                                                    <option><?php echo $syRow->schoolyear; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Semester :
+                                        </label>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <select id="semester" name="semester" class="form-control">
+                                                <option hidden>--------------</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Subject Code :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="text" id="subjectCode" name="subjectCode" required="required" class="form-control col-md-7 col-xs-12" value="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Section :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="text" id="section" name="section" required="required" class="form-control col-md-7 col-xs-12" value="">
+                                    </div>
+                                </div>
+
+                                <input style="display: none" type="text" id="studentID" name="studentID" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $studentNum; ?>">
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-3">
+                                        <button type="submit" class="btn btn-success">Request for missing subject</button>
+                                        <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 <!-- jQuery -->
@@ -203,7 +279,28 @@
         $("#notif_fade").fadeOut(5000);
     });
 
+    function myFunction(obj)
+    {
+        $('#semester').empty()
 
+        var dropDown = document.getElementById("schoolyear");
+        var schoolyear = dropDown.options[dropDown.selectedIndex].value;
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url();?>student/getSemester",
+            data: { 'schoolyear': schoolyear  },
+
+            success: function(data){
+                console.log(data);
+                var opts = $.parseJSON(data);
+                $.each(opts, function(i, d) {
+                    $('#semester').append('<option value='+ d.semester +'>' + d.semester + '</option>');
+                });
+            }
+        });
+
+
+    }
 
 </script>
 
