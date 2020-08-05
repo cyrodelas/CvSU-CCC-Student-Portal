@@ -23,6 +23,7 @@ class Student extends CI_Controller
 
         if($this->form_validation->run() == TRUE){
             $defaultPass = 0;
+
             $passVal = $this->input->post("password", TRUE);
 
             $result = $this->Student_Model->validate_login();
@@ -45,6 +46,7 @@ class Student extends CI_Controller
                     'curriculum'         => $result['curriculum'],
                     'yearAdmitted'       => $result['yearAdmitted'],
                     'semesterAdmitted'   => $result['semesterAdmitted'],
+                    'dbtype'             => $result['dbtype'],
                     'defaultPass'        => $defaultPass,
                     'logged_in' 	     => TRUE
                 );
@@ -126,9 +128,14 @@ class Student extends CI_Controller
 
     public function information(){
         $currentUser = $this->session->student_id;
+        $currentSY = $this->session->schoolyear;
+        $currentSem = $this->session->semester;
 
         $query = $this->Student_Model->loadStudentInfo($currentUser);
         $module['sfData'] = $query;
+
+        $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
+        $module['YLSData'] = $query;
 
         $query = $this->Student_Model->loadStudentEnroll($currentUser);
         $module['siData'] = $query;
@@ -288,8 +295,6 @@ class Student extends CI_Controller
         $query = $this->Enrollment_Model->loadStudentGrade($studentID);
         $module['sgData'] = $query;
 
-
-
         $this->load->view('Enrollment/Checklist', $module);
     }
 
@@ -384,6 +389,40 @@ class Student extends CI_Controller
         redirect("student/checklist/".$studentNumber, "refresh");
     }
 
+    public function resetPassword($studentNumber){
+        $result = $this->Student_Model->resetPasswordData($studentNumber);
 
+        if($result['result']==true){
+            $message = "Successful";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        } else {
+            $message = "Error";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
+    }
+
+    public function resetPassword2($studentNumber){
+        $result = $this->Student_Model->resetPasswordData2($studentNumber);
+
+        if($result['result']==true){
+            $message = "Successful";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        } else {
+            $message = "Error";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
+    }
+
+    public function displayBirthdate($studentNumber){
+        $result = $this->Student_Model->displayBirthdateData($studentNumber);
+        $message = "Date of birth : ".$result['dateOfBirth'];
+        echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+
+    public function displayBirthdate2($studentNumber){
+        $result = $this->Student_Model->displayBirthdateData2($studentNumber);
+        $message = "Date of birth : ".$result['dateOfBirth'];
+        echo "<script type='text/javascript'>alert('$message');</script>";
+    }
 
 }

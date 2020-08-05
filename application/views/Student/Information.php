@@ -161,44 +161,83 @@ if($this->session->defaultPass==1){
 
                 <div class="card-body">
                     <div class="row" style="padding-top: 10px">
-                        <div class="col-md-3 col-xs-3">
-                            <label>Student Number</label>
-                            <p><?php echo $this->session->student_id;?></p>
-                        </div>
+                        <?php foreach ($sfData as $sfRow){?>
+                            <div class="col-md-3 col-xs-3">
+                                <label>Student Number</label>
+                                <p><?php echo $sfRow->studentNumber; ?></p>
+                            </div>
 
-                        <div class="col-md-3 col-xs-3">
-                            <label>Last Number</label>
-                            <p><?php echo $this->session->student_ln;?></p>
-                        </div>
+                            <div class="col-md-3 col-xs-3">
+                                <label>Last Number</label>
+                                <p><?php echo $sfRow->lastName; ?></p>
+                            </div>
 
-                        <div class="col-md-3 col-xs-3">
-                            <label>First Number</label>
-                            <p><?php echo $this->session->student_fn;?></p>
-                        </div>
+                            <div class="col-md-3 col-xs-3">
+                                <label>First Number</label>
+                                <p><?php echo $sfRow->firstName; ?></p>
+                            </div>
 
-                        <div class="col-md-3 col-xs-3">
-                            <label>Middle Name</label>
-                            <p><?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> </p>
-                        </div>
+                            <div class="col-md-3 col-xs-3">
+                                <label>Middle Name</label>
+                                <p><?php if($sfRow->middleName!='N/A'){ echo $sfRow->middleName;}?> </p>
+                            </div>
+                        <?php } ?>
                     </div>
 
                     <div class="row" style="padding-top: 10px">
-                        <?php foreach ($siData as $siRow){?>
-                            <div class="col-md-3 col-xs-3">
-                                <label>Year Level</label>
-                                <p><?php if($siRow->ylevel==1){ echo 'First Year'; } elseif ($siRow->ylevel==2) { echo 'Second Year'; } elseif ($siRow->ylevel==3) { echo 'Third Year'; } else { echo 'Fourth Year'; } ?>
-                                </p>
-                            </div>
 
-                            <div class="col-md-3 col-xs-3">
-                                <label>Course</label>
-                                <p><?php echo $siRow->courseTitle; ?></p>
-                            </div>
-                            <div class="col-md-3 col-xs-3">
-                                <label>Major</label>
-                                <p><?php echo $siRow->majorCourse; ?></p>
-                            </div>
-                        <?php }?>
+                        <?php $sectioncount=0;
+                        foreach ($YLSData as $ylsData){
+                            $sectioncount ++;
+                            $Course = '';
+                            $Major = 'N/A';
+                            $Section = '';
+                            $Course = substr($ylsData->section, 0, 2);
+                            if($Course == "SE"){
+
+                                $YL = substr($ylsData->section, 2, 1);
+                                $Section = substr($ylsData->section, 3, 1);
+
+                                $MI = $Course = substr($ylsData->section, 4, 1);
+                                if($MI == 'M'){
+                                    $Major = " - MATHEMATICS";
+                                }else {
+                                    $Major = " - ENGLISH";
+                                }
+
+
+                            }
+
+                            elseif($Course == "BE"){
+                                $courseName = substr($ylsData->section, 0, 5);
+                                $YL = substr($ylsData->section, 5, 1);
+                                $Section = substr($ylsData->section, 6, 1);
+                            }
+
+                            else{
+                                $courseName = 'BS'. $Course;
+                                $YL = substr($ylsData->section, 2, 1);
+                                $Section = substr($ylsData->section, 3, 1);
+                            }
+
+                        } ?>
+
+
+                        <div class="col-md-3 col-xs-3">
+                            <label>Year Level</label>
+                            <p><?php if($YL==1){ echo 'First Year'; } elseif ($YL==2) { echo 'Second Year'; } elseif ($YL==3) { echo 'Third Year'; } else { echo 'Fourth Year'; } ?>
+                            </p>
+                        </div>
+
+                        <div class="col-md-3 col-xs-3">
+                            <label>Course</label>
+                            <p><?php echo $courseName; ?></p>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Major</label>
+                            <p><?php if($courseName=='BSBM') {echo 'MARKETING MANAGEMENT';} else {echo $Major;}  ?></p>
+                        </div>
+
                     </div>
                 </div>
             </div>

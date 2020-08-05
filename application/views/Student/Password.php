@@ -180,7 +180,7 @@ if (!isset($_SESSION['student_id'])) {
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">New Password :
                                     </label>
                                     <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="password" id="newPassword" name="newPassword" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="password" id="newPassword" name="newPassword" required="required" class="form-control col-md-7 col-xs-12" maxlength="8">
                                     </div>
                                 </div>
 
@@ -188,7 +188,7 @@ if (!isset($_SESSION['student_id'])) {
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Confirm Password :
                                     </label>
                                     <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="password" id="confirmPassword" name="confirmPassword" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="password" id="confirmPassword" name="confirmPassword" required="required" class="form-control col-md-7 col-xs-12" maxlength="8">
                                     </div>
                                 </div>
 

@@ -335,26 +335,27 @@ if($this->session->defaultPass==1){
                                                 <tr>
                                                     <td><?php echo $rs->schedcode;?></td>
                                                     <td><?php echo $rs->subjectcode;?></td>
-                                                    <td><?php echo $rs->units;?></td>
-                                                    <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} else {echo $rs->mygrade;} ?></td>
+                                                    <td><?php echo number_format(intval($rs->units), 2);?></td>
+                                                    <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} elseif($rs->mygrade=='NG') {echo "NO GRADE";} elseif($rs->mygrade=='DRP') {echo "DROPPED";} else {echo $rs->mygrade;} ?></td>
                                                     <td>
                                                         <?php
                                                         switch($rs->mygrade){
-                                                            case '1.00':{echo $rs->units;}break;
-                                                            case '1.25':{echo $rs->units;}break;
-                                                            case '1.50':{echo $rs->units;}break;
-                                                            case '1.75':{echo $rs->units;}break;
-                                                            case '2.00':{echo $rs->units;}break;
-                                                            case '2.25':{echo $rs->units;}break;
-                                                            case '2.50':{echo $rs->units;}break;
-                                                            case '2.75':{echo $rs->units;}break;
-                                                            case '3.00':{echo $rs->units;}break;
-                                                            case 'S':{echo $rs->units;}break;
+                                                            case '1.00':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '1.25':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '1.50':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '1.75':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '2.00':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '2.25':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '2.50':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '2.75':{echo number_format(intval($rs->units), 2);}break;
+                                                            case '3.00':{echo number_format(intval($rs->units), 2);}break;
+                                                            case 'S':{echo number_format(intval($rs->units), 2);}break;
                                                             case '4.00':{echo '0.00';}break;
                                                             case '5.00':{echo '0.00';}break;
                                                             case '6.00':{echo '0.00';}break;
                                                             case '8.00':{echo '0.00';}break;
                                                             case 'DRP':{echo '0.00';}break;
+                                                            case 'NG':{echo '0.00';}break;
                                                         }
                                                         ?>
                                                     </td>
@@ -376,6 +377,7 @@ if($this->session->defaultPass==1){
                                                             case '6.00':{echo 'DROPPED';}break;
                                                             case '8.00':{echo 'WITHHELD';}break;
                                                             case 'DRP':{echo 'DROPPED';}break;
+                                                            case 'NG':{echo 'NO GRADE';}break;
                                                         }
                                                         ?>
                                                     </td>
