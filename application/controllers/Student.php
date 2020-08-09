@@ -34,6 +34,8 @@ class Student extends CI_Controller
                     $defaultPass = 1;
                 }
 
+                $enrollment_status = 'OPEN';
+
                 $account_data = array(
                     'student_id'         => $result['student_id'],
                     'student_fn'         => $result['student_fn'],
@@ -48,6 +50,7 @@ class Student extends CI_Controller
                     'semesterAdmitted'   => $result['semesterAdmitted'],
                     'dbtype'             => $result['dbtype'],
                     'defaultPass'        => $defaultPass,
+                    'enrollment'         => $enrollment_status,
                     'logged_in' 	     => TRUE
                 );
 

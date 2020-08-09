@@ -192,6 +192,7 @@ if($this->session->defaultPass==1){
                             $Course = '';
                             $Major = 'N/A';
                             $Section = '';
+
                             $courseName = '';
 
                             if($this->session->dbtype == 1){
@@ -258,14 +259,13 @@ if($this->session->defaultPass==1){
                                 }
                             }
 
-
-
                         } ?>
 
 
                         <div class="col-md-3 col-xs-3">
                             <label>Year Level</label>
-                            <p><?php if($YL==1){ echo 'First Year'; } elseif ($YL==2) { echo 'Second Year'; } elseif ($YL==3) { echo 'Third Year'; } elseif ($YL==4) { echo 'Fourth Year'; } else { echo 'Irregular'; } ?>
+                            <p>
+                                <?php if($YL==1){ echo 'First Year'; } elseif ($YL==2) { echo 'Second Year'; } elseif ($YL==3) { echo 'Third Year'; } elseif ($YL==4) { echo 'Fourth Year'; } else { echo 'Irregular'; } ?>
                             </p>
                         </div>
 
