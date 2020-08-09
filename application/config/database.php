@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.10.38',
+	'hostname' => 'localhost', // 192.168.10.38
 	'username' => 'root',
-	'password' => 'cavitecity',
+	'password' => '', //cavitecity
 	'database' => 'cvsudatabase',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -96,11 +96,11 @@ $db['default'] = array(
 );
 
 
-$db['cvsu_old'] = array(
+$db['cvsu'] = array(
     'dsn'	=> '',
-    'hostname' => '192.168.10.38',
+    'hostname' => 'localhost', // 192.168.10.38
     'username' => 'root',
-    'password' => 'cavitecity',
+    'password' => '', //cavitecity
     'database' => 'cvsudb',
     'dbdriver' => 'mysqli',
     'dbprefix' => '',

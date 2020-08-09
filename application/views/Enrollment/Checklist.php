@@ -117,14 +117,14 @@
                                     </td>
                                     <?php  ?>
                                     <td>
-                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->schoolyear;   ?> / <?php echo $sgRow->semester; echo " ";}} ?>
+                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->schoolyear;   ?> / <?php echo $sgRow->semester; echo "<br>";}} ?>
                                     </td>
                                     <td>
-                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->instructor; }} ?>
+                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->instructor; echo "<br>";}} ?>
                                     </td>
 
                                     <th>
-                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->mygrade;  echo " "; }} ?>
+                                        <?php foreach ($sgData as $sgRow) { if($rs->subjectcode==$sgRow->subjectcode) { echo $sgRow->mygrade;  echo "<br>"; }} ?>
                                     </th>
 
                                 </tr>
@@ -185,7 +185,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Subject Code :
                                     </label>
                                     <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="subjectCode" name="subjectCode" required="required" class="form-control col-md-7 col-xs-12" value="">
+                                        <input type="text" id="subjectCode" name="subjectCode" required="required" class="form-control col-md-7 col-xs-12" maxlength="10" placeholder="example: DCIT22" value="">
                                     </div>
                                 </div>
 
@@ -193,7 +193,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Section :
                                     </label>
                                     <div class="col-md-7 col-sm-7 col-xs-12">
-                                        <input type="text" id="section" name="section" required="required" class="form-control col-md-7 col-xs-12" value="">
+                                        <input type="text" id="section" name="section" required="required" class="form-control col-md-7 col-xs-12" maxlenght="5" placeholder="example: CS1A" value="">
                                     </div>
                                 </div>
 

@@ -3,6 +3,11 @@
 class Enrollment_Model extends CI_Model
 {
 
+    function __construct(){
+        parent::__construct();
+        $this->cvsu = $this->load->database('cvsu', TRUE);
+    }
+
     public function CheckEnrollmentProcess($currentUser){
 
         $result = array();
@@ -71,10 +76,17 @@ class Enrollment_Model extends CI_Model
     }
 
     public function courselist(){
-        $this->db->select('*');
-        $this->db->from('enrollcoursetbl');
-        $query = $this->db->get();
-        return $query->result();
+        if($this->session->dbtype == 1){
+            $this->db->select('*');
+            $this->db->from('enrollcoursetbl');
+            $query = $this->db->get();
+            return $query->result();
+        }else {
+            $this->cvsu->select('CourseCode as courseCode, CourseTitle as courseTitle');
+            $this->cvsu->from('course');
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
     }
 
     public function addEvaluationRequest(){
@@ -169,16 +181,30 @@ class Enrollment_Model extends CI_Model
         $lastName = array();
         $course = array();
 
-        $this->db->where('studentNumber', $studentID);
-        $studentInfo = $this->db->get("enrollstudentinformation");
+        if($this->session->dbtype == 1){
+            $this->db->where('studentNumber', $studentID);
+            $studentInfo = $this->db->get("enrollstudentinformation");
 
-        if ($studentInfo->num_rows() > 0) {
-            $rs = $studentInfo->row();
-            $curriculumID = $rs->curriculumid;
-            $studentNumber = $rs->studentNumber;
-            $firstName = $rs->firstName;
-            $lastName = $rs->lastName;
-            $course = $rs->course;
+            if ($studentInfo->num_rows() > 0) {
+                $rs = $studentInfo->row();
+                $curriculumID = $rs->curriculumid;
+                $studentNumber = $rs->studentNumber;
+                $firstName = $rs->firstName;
+                $lastName = $rs->lastName;
+                $course = $rs->course;
+            }
+        } else{
+            $this->cvsu->where('StudentNumber', $studentID);
+            $studentInfo = $this->cvsu->get("studentinfo");
+
+            if ($studentInfo->num_rows() > 0) {
+                $rs = $studentInfo->row();
+                $curriculumID = $rs->curriculumid;
+                $studentNumber = $rs->StudentNumber;
+                $firstName = $rs->FirstName;
+                $lastName = $rs->LastName;
+                $course = $rs->CourseCode;
+            }
         }
 
         return array(
@@ -192,42 +218,85 @@ class Enrollment_Model extends CI_Model
     }
 
     public function loadYearAndSemester($cID){
-        $this->db->select('yearlevel, semester');
-        $this->db->from('enrollcurriculumcontent2');
-        $this->db->where('curriculumnid', $cID);
-        $this->db->group_by('yearlevel, semester');
-        $this->db->order_by('yearlevel, semester');
-        $query = $this->db->get();
-        return $query->result();
+        if($this->session->dbtype == 1){
+            $this->db->select('yearlevel, semester');
+            $this->db->from('enrollcurriculumcontent2');
+            $this->db->where('curriculumnid', $cID);
+            $this->db->group_by('yearlevel, semester');
+            $this->db->order_by('yearlevel, semester');
+            $query = $this->db->get();
+            return $query->result();
+        }else {
+            $this->cvsu->select('yearlevel, semester');
+            $this->cvsu->from('enrollcurriculumcontent');
+            $this->cvsu->where('curriculumnid', $cID);
+            $this->cvsu->group_by('yearlevel, semester');
+            $this->cvsu->order_by('yearlevel, semester');
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
     }
 
 
     public function loadSubject($cID){
-        $this->db->select('enrollcurriculumcontent2.subjectcode, enrollcurriculumcontent2.yearlevel, enrollcurriculumcontent2.semester, enrollsubjectstbl.*');
-        $this->db->from('enrollcurriculumcontent2');
-        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollcurriculumcontent2.subjectcode');
-        $this->db->where('enrollcurriculumcontent2.curriculumnid', $cID);
-        $query = $this->db->get();
-        return $query->result();
+        if($this->session->dbtype == 1){
+            $this->db->select('enrollcurriculumcontent2.subjectcode, enrollcurriculumcontent2.yearlevel, enrollcurriculumcontent2.semester, enrollsubjectstbl.*');
+            $this->db->from('enrollcurriculumcontent2');
+            $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollcurriculumcontent2.subjectcode');
+            $this->db->where('enrollcurriculumcontent2.curriculumnid', $cID);
+            $query = $this->db->get();
+            return $query->result();
+        }else {
+            $this->cvsu->select('enrollcurriculumcontent.subjectcode, enrollcurriculumcontent.yearlevel, enrollcurriculumcontent.semester, coursecode.Title as subjectTitle,  coursecode.Lecture as lectUnits, coursecode.Laboratory as labunits, coursecode.prerequisite as pr1, "N/A" as pr2, "N/A" as pr3, "N/A" as pr4, "N/A" as pr5, "N/A" as pr6, "N/A" as pr7, "N/A" as pr8, "N/A" as pr9, "N/A" as pr10');
+            $this->cvsu->from('enrollcurriculumcontent');
+            $this->cvsu->join('coursecode', 'coursecode.Code = enrollcurriculumcontent.subjectcode');
+            $this->cvsu->where('enrollcurriculumcontent.curriculumnid', $cID);
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
+
+
     }
 
 
     public function loadSubjectCode(){
-        $this->db->select('*');
-        $this->db->from('enrollsubjectstbl');
-        $query = $this->db->get();
-        return $query->result();
+        if($this->session->dbtype == 1){
+            $this->db->select('*');
+            $this->db->from('enrollsubjectstbl');
+            $query = $this->db->get();
+            return $query->result();
+        }else {
+            $this->cvsu->select('*');
+            $this->cvsu->from('coursecode');
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
     }
 
 
     public function loadStudentGrade($studentID){
-        $this->db->select('enrollscheduletbl.*, enrollgradestbl.schedcode, enrollgradestbl.subjectcode, enrollgradestbl.units, enrollgradestbl.mygrade');
-        $this->db->distinct();
-        $this->db->from('enrollgradestbl');
-        $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollgradestbl.schedcode');
-        $this->db->where('enrollgradestbl.studentnumber', $studentID);
-        $query = $this->db->get();
-        return $query->result();
+        if($this->session->dbtype == 1){
+            $this->db->select('enrollscheduletbl.*, enrollgradestbl.schedcode, enrollgradestbl.subjectcode, enrollgradestbl.units, enrollgradestbl.mygrade');
+            $this->db->distinct();
+            $this->db->from('enrollgradestbl');
+            $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollgradestbl.schedcode');
+            $this->db->where('enrollgradestbl.studentnumber', $studentID);
+            $query = $this->db->get();
+            return $query->result();
+        }else {
+            $this->cvsu->select('schedcode.Instructor as instructor, schedcode.year as schoolyear, schedcode.sem as semester, grades.SchedCode as schedcode, grades.CourseCode as subjectcode, grades.CreditUnits as units, grades.Grade as mygrade');
+            $this->cvsu->distinct();
+            $this->cvsu->from('grades');
+            $this->cvsu->join('schedcode', 'schedcode.SubjectCode = grades.SchedCode');
+            $this->cvsu->where('grades.StudentNumber', $studentID);
+            $this->cvsu->order_by('schedcode.year, schedcode.sem', 'ASC');
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
     }
 
     public function loadSchedCodes($schoolyear, $semester, $section){
