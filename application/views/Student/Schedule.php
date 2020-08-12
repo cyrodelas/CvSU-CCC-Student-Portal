@@ -107,6 +107,9 @@ if($this->session->defaultPass==1){
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
 
                     </div>
@@ -188,11 +191,11 @@ if($this->session->defaultPass==1){
                                                 </tr>
                                                 <tr>
                                                     <th scope='row'>School Year</th>
-                                                    <td id=""><?php echo $this->session->schoolyear;?></td>
+                                                    <td id=""><?php echo $schoolyear;?></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope='row'>Semester</th>
-                                                    <td id=""><?php echo $this->session->semester;?> SEMESTER</td>
+                                                    <td id=""><?php echo $semester;?> SEMESTER</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope='row'>Course</th>
@@ -304,7 +307,6 @@ if($this->session->defaultPass==1){
 
                                                     <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
 
-
                                                 </tr>
                                                 <tr>
                                                     <th scope='row'>Year Level</th>
@@ -338,10 +340,10 @@ if($this->session->defaultPass==1){
 
                         <div class="x_content">
                             <div class="row">
-                                <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>student/loadSchedules">
-                                <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $this->session->schoolyear;?>">
-                                <input type='hidden' name ="semester" id = "semester" value="<?php echo $this->session->semester;?>">
-                                <input type='hidden' name ="studentid" id = "studentid" value="<?php echo $this->session->student_id;?>">
+                                <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>enrollment/loadSchedules">
+                                <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $schoolyear;?>">
+                                <input type='hidden' name ="semester" id = "semester" value="<?php echo $semester;?>">
+                                <input type='hidden' name ="studentid" id = "studentid" value="<?php echo $studentid;?>">
                                 <div id='calendarsched' ></div>
                             </div>
 

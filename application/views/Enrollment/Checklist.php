@@ -67,7 +67,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><?php echo $studentNum; ?><small> <?php echo $studentName; ?> - <?php foreach ($courseData as $rs) {if($rs->courseCode==$course){echo $rs->courseTitle;}}  ?> </small></h2>
+                <h2><?php echo $studentNum;?> <small> <?php echo $studentName; ?> - <?php foreach ($courseData as $rs) {if($rs->courseCode==$course){echo $rs->courseTitle;}}  ?> </small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-guardian-information"  title="update student info"><i class="fa fa-list"></i> Request for missing grades</i></a>
                 </ul>
@@ -75,7 +75,8 @@
             </div>
 
             <div class="card-body">
-                <?php foreach ($ysData as $ysRow) {?>
+                <?php echo $Curriculum; ?>
+                <?php foreach ($ysData as $ysRow) { ?>
                     <h2><?php if($ysRow->yearlevel==1){echo 'First';}elseif($ysRow->yearlevel==2){echo 'Second';}elseif($ysRow->yearlevel==3){echo 'Third';}else{echo 'Fourth';}?> Year <small><?php echo $ysRow->semester;?> SEMESTER</small></h2>
                     <table id="" class="table table-striped table-bordered table-hover">
                         <thead>

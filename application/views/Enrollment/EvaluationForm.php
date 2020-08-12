@@ -78,7 +78,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -96,9 +96,9 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
-
-                        </ul>
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
                     </div>
 
@@ -183,17 +183,22 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope='row'>Semester</th>
-                                                        <td id=""><?php echo $semester;?> <?php echo $major;?> SEMESTER</td>
+                                                        <td id=""><?php echo $semester;?> SEMESTER</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope='row'>Course</th>
-                                                        <td id=""><?php echo $course;?> <?php echo $major;?> </td>
+                                                        <td id="tCourse"><?php echo $course;?></td>
                                                     </tr>
+
+                                                    <tr>
+                                                        <th scope='row'>Major</th>
+                                                        <td id="tMajor"><?php echo $major;?> </td>
+                                                    </tr>
+
                                                     <tr>
                                                         <th scope='row'>Year Level</th>
                                                         <td id="">
                                                             <?php
-                                                            if($status == 'REGULAR'){
                                                                 if($yearLevel == 1){
                                                                     echo "1ST";
                                                                 }
@@ -206,7 +211,6 @@
                                                                 elseif($yearLevel == 4){
                                                                     echo "4TH";
                                                                 }
-                                                            }
                                                             ?> YEAR
                                                         </td>
                                                     </tr>
@@ -319,6 +323,7 @@
                                                 <label>Semester</label>
                                                 <?php $nextSem = 'FIRST';?>
                                                 <input type="text" readonly="readonly" id="semester" name="semester" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $nextSem; ?> SEMESTER">
+                                                <input style="display: none" type="text" readonly="readonly" id="tsemester" name="tsemester" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $nextSem; ?>">
                                             </div>
 
                                         </div>
@@ -326,10 +331,9 @@
                                         <div class="row" style="padding-bottom: 20px;">
                                             <div class="col-md-4">
                                                 <label>Year Level</label>
-                                                <select id="yearlevel" name="yearlevel" class="form-control col-md-12 col-xs-12">
+                                                <select id="yearlevel" name="yearlevel" class="form-control col-md-12 col-xs-12" <?php if($status=="REGULAR"){echo 'disabled';}?> onchange="YearLevelOnChange(this)">
                                                     <option hidden>
                                                         <?php
-                                                        if($status == 'REGULAR'){
                                                             $yearLevel ++;
                                                             if($yearLevel == 1){
                                                                 echo "1ST";
@@ -343,7 +347,6 @@
                                                             elseif($yearLevel == 4){
                                                                 echo "4TH";
                                                             }
-                                                        }
                                                         ?> YEAR
                                                     </option>
                                                     <option value="1">1ST YEAR</option>
@@ -357,8 +360,8 @@
 
                                             <div class="col-md-4">
                                                 <label>Section</label>
-                                                <select id="section" name="section" class="form-control col-md-12 col-xs-12" onchange="YearLevelOnChange(this)">
-                                                    <option hidden><?php echo $section; ?></option>
+                                                <select id="section" name="section" class="form-control col-md-12 col-xs-12" disabled onchange="SectionOnChange(this)">
+                                                        <option id="secDefault" hidden><?php if($status=="REGULAR"){echo $section;} else {echo "IRREGULAR";}  ?></option>
                                                 </select>
                                             </div>
 
@@ -393,7 +396,8 @@
                                             <input type="text" style="display: none;" name="studentNumber" value="<?php echo $studentNumber;?>">
                                             <input type="text" style="display: none;" name="schoolyear" value="<?php echo $nextYear; ?>">
                                             <input type="text" style="display: none;" name="semester" value="<?php echo $nextSem; ?>">
-                                            <input type="text" style="display: none;" name="status" value="<?php echo $status; ?>">
+                                            <input type="text" style="display: none;" id="fyearlevel" name="standingYear" value="<?php echo $yearLevel++; ?>">
+                                            <input type="text" style="display: none;" id="fstatus" name="status" value="<?php echo $status; ?>">
 
                                             <?php
                                             if($sccData){
@@ -516,26 +520,109 @@
             "bPaginate": false,
             "bFilter": false,
             "bInfo": false,
-            "columnDefs": [
-                {
-                    "targets": [4],
-                    "visible": false
-                }]
+            "columnDefs": []
         } );
 
 
 
     });
 
+    function YearLevelOnChange(obj){
+
+        var dropDown = document.getElementById("yearlevel");
+        yl = dropDown.options[dropDown.selectedIndex].value;
+        coursecode = $('#tCourse').text();
+        major = $('#tMajor').text();
+
+        $('#fyearlevel').val(yl);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url(); ?>enrollment/getSectionSchedule",
+            data: {
+                'coursecode': coursecode,
+                'major': major,
+                'yl': yl
+            },
+
+            success: function(data) {
+                console.log(data);
+                var opts = $.parseJSON(data);
+                $('#section').empty();
+                $.each(opts, function(i, d) {
+
+                    var x;
+                    for (x = 1; x <= d.sectioncount; x++) {
+                        $('#section').append('<option>' + String.fromCharCode(64 + x) + '</option>');
+                    }
+
+
+                });
+            }
+        });
+    }
+
+    function SectionOnChange(obj){
+        var dropDown = document.getElementById("section");
+
+        var schoolyear = $('#schoolyear').val();
+        var semester = $('#tsemester').val();
+        var coursecode = $('#tCourse').text();
+        var major = $('#tMajor').text();
+        var yearlevel = $("#yearlevel option:selected").val();
+        var section = dropDown.options[dropDown.selectedIndex].value;
+
+        console.log(schoolyear);
+        console.log(semester);
+        console.log(coursecode);
+        console.log(major);
+        console.log(yearlevel);
+        console.log(section);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url(); ?>enrollment/getScheduleRegular",
+            data: {
+                'schoolyear': schoolyear,
+                'semester': semester,
+                'coursecode': coursecode,
+                'major': major,
+                'yearlevel': yearlevel,
+                'section': section
+            },
+
+            success: function(data) {
+                console.log(data);
+                var opts = $.parseJSON(data);
+                $.each(opts, function(i, d) {
+                    var row =  $('#subjectlist').DataTable().row.add([d.schedcode + '<input type="text" style="display: none;" name="schedcode[]" value="'+ d.schedcode +'">', d.subjectCode, d.subjectTitle, d.units, '']).draw();
+                });
+            }
+        });
+
+    }
+
+
     function OnChangeStatus(obj) {
         var dropDown = document.getElementById("status");
         sVal = dropDown.options[dropDown.selectedIndex].value;
 
         if(sVal==='IRREGULAR'){
+            $('#fstatus').val('IRREGULAR');
             var table = $('#subjectlist').DataTable();
             table.clear().draw();
             table.destroy();
-            table.column(0).visible(false);
+
+            $('#yearlevel').prop("disabled", false);
+            $("#section").html("<option>IRREGULAR</option>");
+            $('#section').val('IRREGULAR');
+            $('#section').prop("disabled", true);
+
+
+        } else {
+            $('#fstatus').val('REGULAR');
+            $('#section').prop("disabled", false);
+            $('#secDefault').text('');
         }
     }
 
@@ -568,7 +655,7 @@
         var subjectname = $('#tblsubjectname').text();
         var subjectunit = $('#tblsubjectunit').text();
 
-        var row =  $('#subjectlist').DataTable().row.add([subjectcode, subjectname, subjectunit, '<a href="Javascript:deleteTableRow('+subjectcode+')" style="font-weight: 600"><i class="fa fa-trash"></i> remove</a>']).draw();
+        var row =  $('#subjectlist').DataTable().row.add(['', subjectcode + '<input type="text" style="display: none;" name="subjectcode[]" value="'+ subjectcode +'">', subjectname, subjectunit, '<a href="Javascript:deleteTableRow('+subjectcode+')" style="font-weight: 600"><i class="fa fa-trash"></i> remove</a>']).draw();
         row.nodes().to$().attr('id', subjectcode)
 
         $('#inputsubjectcode').val("");

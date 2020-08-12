@@ -391,16 +391,16 @@ class Student_Model extends CI_Model
 
 
 
-    public function loadEnrolledSubject(){
+    public function loadEnrolledSubject($currentSY, $currentSem, $currentUser){
 
         if($this->session->dbtype == 1){
             $this->db->select('enrollsubjectenrolled.schedcode, enrollscheduletbl.subjectCode, enrollsubjectstbl.subjectTitle, enrollscheduletbl.units');
             $this->db->from('enrollsubjectenrolled');
             $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollsubjectenrolled.schedcode', 'left');
             $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
-            $this->db->where('enrollsubjectenrolled.studentnumber', $this->session->student_id);
-            $this->db->where('enrollsubjectenrolled.schoolyear', $this->session->schoolyear);
-            $this->db->where('enrollsubjectenrolled.semester', $this->session->semester);
+            $this->db->where('enrollsubjectenrolled.studentnumber', $currentUser);
+            $this->db->where('enrollsubjectenrolled.schoolyear', $currentSY);
+            $this->db->where('enrollsubjectenrolled.semester', $currentSem);
             $query = $this->db->get();
             return $query->result();
         }else{
@@ -408,9 +408,9 @@ class Student_Model extends CI_Model
             $this->cvsu->from('enrolledsubject');
             $this->cvsu->join('schedcode', 'schedcode.SubjectCode = enrolledsubject.SchedCode ', 'left');
             $this->cvsu->join('coursecode', 'coursecode.Code = schedcode.CourseCode');
-            $this->cvsu->where('enrolledsubject.StudentNumber', $this->session->student_id);
-            $this->cvsu->where('enrolledsubject.Schoolyear', $this->session->schoolyear);
-            $this->cvsu->where('enrolledsubject.semester', $this->session->semester);
+            $this->cvsu->where('enrolledsubject.StudentNumber', $currentUser);
+            $this->cvsu->where('enrolledsubject.Schoolyear', $currentSY);
+            $this->cvsu->where('enrolledsubject.semester', $currentSem);
             $query = $this->cvsu->get();
             return $query->result();
         }
@@ -501,21 +501,21 @@ class Student_Model extends CI_Model
     public function getYearLevelandSection($sy, $sem, $currentStudent){
         if($this->session->dbtype == 1){
             $this->db->select('DISTINCT(enrollscheduletbl.section), COUNT(enrollscheduletbl.section) AS NoOfSubject');
-            $this->db->from('enrollgradestbl');
-            $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollgradestbl.schedcode');
-            $this->db->where('enrollgradestbl.studentnumber', $currentStudent);
-            $this->db->where('enrollgradestbl.schoolyear', $sy);
-            $this->db->where('enrollgradestbl.semester', $sem);
+            $this->db->from('enrollsubjectenrolled');
+            $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollsubjectenrolled.schedcode');
+            $this->db->where('enrollsubjectenrolled.studentnumber', $currentStudent);
+            $this->db->where('enrollsubjectenrolled.schoolyear', $sy);
+            $this->db->where('enrollsubjectenrolled.semester', $sem);
             $this->db->order_by('NoOfSubject', 'ASC');
             $query = $this->db->get();
             return $query->result();
         }else {
             $this->cvsu->select('DISTINCT(schedcode.Section) as section, COUNT(schedcode.Section) AS NoOfSubject');
-            $this->cvsu->from('grades');
-            $this->cvsu->join('schedcode', 'schedcode.SubjectCode = grades.SchedCode');
-            $this->cvsu->where('grades.StudentNumber', $currentStudent);
-            $this->cvsu->where('grades.Schoolyear', $sy);
-            $this->cvsu->where('grades.Semester', $sem);
+            $this->cvsu->from('enrolledsubject');
+            $this->cvsu->join('schedcode', 'schedcode.SubjectCode = enrolledsubject.SchedCode');
+            $this->cvsu->where('enrolledsubject.StudentNumber', $currentStudent);
+            $this->cvsu->where('enrolledsubject.Schoolyear', $sy);
+            $this->cvsu->where('enrolledsubject.semester', $sem);
             $this->cvsu->order_by('NoOfSubject', 'ASC');
             $query = $this->cvsu->get();
             return $query->result();

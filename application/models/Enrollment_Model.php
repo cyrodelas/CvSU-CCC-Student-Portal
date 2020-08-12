@@ -13,25 +13,46 @@ class Enrollment_Model extends CI_Model
         $result = array();
         $status = array();
         $student = array();
+        $standingYear = array();
 
         $this->db->where('studentNumber', $currentUser);
         $enrollPhase = $this->db->get("enrollment_tracker");
 
         if ($enrollPhase->num_rows() == 0) {
 
+            $currentSY = $this->session->schoolyear;
+            $currentSem = $this->session->semester;
+
+            $this->db->where('studentNumber', $currentUser);
+            $this->db->where('schoolyear', $currentSY);
+            $this->db->where('semester', $currentSem);
+            $studentEnroll = $this->db->get("enrollstudentenroll");
+
+            if ($studentEnroll->num_rows() > 0) {
+                $rs = $studentEnroll->row();
+                $status = $rs->status;
+            }
+
+            $student = $status;
+
             $data = array(
                 'studentNumber'     =>  $currentUser,
-                'process'           =>  "PRE-EVALUATION"
+                'process'           =>  "PRE-EVALUATION",
+                'status'            =>  $status,
+                'standingYear'      =>  0
             );
 
             $result = $this->db->insert('enrollment_tracker', $data);
             $result = ($this->db->affected_rows() != 1) ? false : true;
 
             $status = "PRE-EVALUATION";
+            $standingYear = 0;
 
             return array(
-                'result'    =>  $result,
-                'status'    =>  $status
+                'result'         =>  $result,
+                'status'         =>  $status,
+                'student'        =>  $student,
+                'standingYear'   =>  $standingYear
             );
         }
 
@@ -41,10 +62,13 @@ class Enrollment_Model extends CI_Model
             $status = $rs->process;
             $student = $rs->status;
             $result = "Existing";
+            $standingYear = $rs->standingYear;
+
             return array(
-                'result'    =>  $result,
-                'status'    =>  $status,
-                'student'   =>  $student
+                'result'         =>  $result,
+                'status'         =>  $status,
+                'student'        =>  $student,
+                'standingYear'   =>  $standingYear
             );
         }
 
@@ -146,10 +170,11 @@ class Enrollment_Model extends CI_Model
 
     //General Usage
 
-    public function updateEvalProcess($studentNumber, $process, $status){
+    public function updateEvalProcess($studentNumber, $process, $status, $standingYear){
 
         $this->db->set('process', $process);
         $this->db->set('status', $status);
+        $this->db->set('standingYear', $standingYear);
 
         $this->db->where('studentNumber', $studentNumber);
         $this->db->update('enrollment_tracker');
@@ -169,6 +194,27 @@ class Enrollment_Model extends CI_Model
     public function loadEvalList(){
         $this->db->select('*');
         $this->db->from('enrollment_evaluation');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getSectionDataSchedule($cCode, $mID, $yl){
+        $this->db->select('sectioncount');
+        $this->db->from('enrollsectiondetails');
+        $this->db->where('coursecode', $cCode);
+        $this->db->where('major', $mID);
+        $this->db->where('yearlevel', $yl);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getScheduleRegularData($schoolyear, $semester, $section){
+        $this->db->select('enrollscheduletbl.*, enrollsubjectstbl.subjectTitle');
+        $this->db->from('enrollscheduletbl');
+        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+        $this->db->where('enrollscheduletbl.schoolyear', $schoolyear);
+        $this->db->where('enrollscheduletbl.semester', $semester);
+        $this->db->where('enrollscheduletbl.section', $section);
         $query = $this->db->get();
         return $query->result();
     }
@@ -349,6 +395,34 @@ class Enrollment_Model extends CI_Model
 
     }
 
+    public function addEvaluationManual(){
+        $data = array();
+
+        $studentNumber = $this->input->post('studentNumber');
+        $subjectcodes = $this->input->post('subjectcode');
+        $schoolyear = $this->input->post('schoolyear');
+        $semester = $this->input->post('semester');
+
+        foreach($subjectcodes AS $subjectcode)
+        {
+            $data[] = array(
+                'studentNumber'     => $studentNumber,
+                'subjectcode'       => $subjectcode,
+                'schoolyear'        => $schoolyear,
+                'semester'          => $semester,
+                'dateEvaluated'     => date('Y-m-d H:i:s')
+
+            );
+        }
+
+        $result = $this->db->insert_batch('enrollment_subjectlist', $data);
+        $result = ($this->db->affected_rows() > 0) ? true : false;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
     public function deleteEvaluationListData($studentNumber){
         $this->db->where('studentNumber', $studentNumber);
         $this->db->delete('enrollment_evaluation');
@@ -395,5 +469,236 @@ class Enrollment_Model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+
+    public function addAssessmentData(){
+
+        $data = array();
+
+        $studentNumber = $this->input->post('studentNumber');
+        $schedcodes = $this->input->post('schedcodes');
+        $schoolyear = $this->input->post('schoolyear');
+        $semester = $this->input->post('semester');
+
+        foreach($schedcodes AS $schedcode)
+        {
+            $data[] = array(
+                'studentNumber'     => $studentNumber,
+                'schedcode'         => $schedcode,
+                'schoolyear'        => $schoolyear,
+                'semester'          => $semester,
+                'dateAssess'        => date('Y-m-d H:i:s')
+
+            );
+        }
+
+        $result = $this->db->insert_batch('enrollassesssubjectstbl', $data);
+        $result = ($this->db->affected_rows() > 0) ? true : false;
+
+        return array(
+            'result'    => $result
+        );
+
+    }
+
+    public function addSubjectEnrollData(){
+
+        $data = array();
+
+        $studentNumber = $this->input->post('studentNumber');
+        $schedcodes = $this->input->post('schedcodes');
+        $schoolyear = $this->input->post('schoolyear');
+        $semester = $this->input->post('semester');
+
+        foreach($schedcodes AS $schedcode)
+        {
+            $data[] = array(
+                'studentnumber'     => $studentNumber,
+                'schedcode'         => $schedcode,
+                'schoolyear'        => $schoolyear,
+                'semester'          => $semester,
+                'edate'             => date('Y-m-d H:i:s'),
+                'status'            => 'NOT GRADED'
+
+            );
+        }
+
+        $result = $this->db->insert_batch('enrollsubjectenrolled', $data);
+        $result = ($this->db->affected_rows() > 0) ? true : false;
+
+        return array(
+            'result'    => $result
+        );
+
+    }
+
+    public function addStudentEnrollData(){
+        $data = array(
+            'studentnumber'      =>  $this->input->post('studentNumber', true),
+            'semester'           =>  $this->input->post('semester', true),
+            'schoolyear'         =>  $this->input->post('schoolyear', true),
+            'edate'              =>  date('Y-m-d H:i:s'),
+            'status'             =>  $this->input->post('status', true),
+            'scholarship'        =>  $this->input->post('tscholarship', true),
+            'majorCourse'        =>  $this->input->post('majorCourse', true),
+            'yearLevel'          =>  $this->input->post('yearLevel', true),
+            'statusII'           =>  'STUDENT',
+            'coursenow'          =>  $this->input->post('coursenow', true),
+            'notuitionenroll'    =>  'False'
+        );
+
+        $result = $this->db->insert('enrollstudentenroll', $data);
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+    public function addDivisionOfFeeData(){
+
+        $data = array(
+            'studentnumber'      =>  $this->input->post('studentNumber', true),
+            'semester'           =>  $this->input->post('semester', true),
+            'schoolyear'         =>  $this->input->post('schoolyear', true),
+            'ansci'              =>  $this->input->post('labAnSci', true),
+            'pansci'             =>  $this->input->post('labAnSci', true),
+            'biosci'             =>  $this->input->post('labBioSci', true),
+            'pbiosci'            =>  $this->input->post('labBioSci', true),
+            'cemds'              =>  $this->input->post('labCEMDS', true),
+            'pcemds'             =>  $this->input->post('labCEMDS', true),
+            'hrm'                =>  $this->input->post('labHRM', true),
+            'phrm'               =>  $this->input->post('labHRM', true),
+            'cropsci'            =>  $this->input->post('labCropSci', true),
+            'pcropsci'           =>  $this->input->post('labCropSci', true),
+            'engineering'        =>  $this->input->post('labEng', true),
+            'pengineering'       =>  $this->input->post('labEng', true),
+            'physci'             =>  $this->input->post('labPhySci', true),
+            'pphysci'            =>  $this->input->post('labPhySci', true),
+            'vetmed'             =>  $this->input->post('labVetMed', true),
+            'pvetmed'            =>  $this->input->post('labVetMed', true),
+            'speech'             =>  $this->input->post('labSpeech', true),
+            'pspeech'            =>  $this->input->post('labSpeech', true),
+            'english'            =>  $this->input->post('labEnglish', true),
+            'penglish'           =>  $this->input->post('labEnglish', true),
+            'nursing'            =>  $this->input->post('labNursing', true),
+            'pnursing'           =>  $this->input->post('labNursing', true),
+            'ccl'                =>  $this->input->post('ccl', true),
+            'pccl'               =>  $this->input->post('ccl', true),
+            'rle'                =>  $this->input->post('rle', true),
+            'prle'               =>  $this->input->post('rle', true),
+            'internet'           =>  $this->input->post('internet', true),
+            'pinternet'          =>  $this->input->post('internet', true),
+            'nstp'               =>  $this->input->post('NSTP', true),
+            'pnstp'              =>  $this->input->post('NSTP', true),
+            'ojt'                =>  $this->input->post('ojt', true),
+            'pojt'               =>  $this->input->post('ojt', true),
+            'thesis'             =>  $this->input->post('thesis', true),
+            'pthesis'            =>  $this->input->post('thesis', true),
+            'student'            =>  $this->input->post('studentTeaching', true),
+            'pstudent'           =>  $this->input->post('studentTeaching', true),
+            'late'               =>  $this->input->post('lateReg', true),
+            'plate'              =>  $this->input->post('lateReg', true),
+            'residency'          =>  $this->input->post('residency', true),
+            'presidency'         =>  $this->input->post('residency', true),
+            'foreignstudent'     =>  $this->input->post('foreignStudent', true),
+            'pforeignstudent'    =>  $this->input->post('foreignStudent', true),
+            'addedsubj'          =>  $this->input->post('addedSubj', true),
+            'paddedsubj'         =>  $this->input->post('addedSubj', true),
+            'petition'           =>  $this->input->post('petitionSubj', true),
+            'ppetition'          =>  $this->input->post('petitionSubj', true),
+            'tuition'            =>  $this->input->post('tuition', true),
+            'ptuition'           =>  $this->input->post('tuition', true),
+            'library'            =>  $this->input->post('miscLibrary', true),
+            'plibrary'           =>  $this->input->post('miscLibrary', true),
+            'medical'            =>  $this->input->post('miscMedical', true),
+            'pmedical'           =>  $this->input->post('miscMedical', true),
+            'publication'        =>  $this->input->post('miscPublication', true),
+            'ppublication'       =>  $this->input->post('miscPublication', true),
+            'registration'       =>  $this->input->post('miscRegistration', true),
+            'pregistration'      =>  $this->input->post('miscRegistration', true),
+            'guidance'           =>  $this->input->post('miscGuidance', true),
+            'pguidance'          =>  $this->input->post('miscGuidance', true),
+            'id'                 =>  $this->input->post('identification', true),
+            'pid'                =>  $this->input->post('identification', true),
+            'sfdf'               =>  $this->input->post('sfdf', true),
+            'psfdf'              =>  $this->input->post('sfdf', true),
+            'srf'                =>  $this->input->post('srf', true),
+            'psrf'               =>  $this->input->post('srf', true),
+            'athletic'           =>  $this->input->post('athletic', true),
+            'pathletic'          =>  $this->input->post('athletic', true),
+            'scuaa'              =>  $this->input->post('scuaa', true),
+            'pscuaa'             =>  $this->input->post('scuaa', true),
+            'deposit'            =>  $this->input->post('deposit', true),
+            'pdeposit'           =>  $this->input->post('deposit', true),
+            'cspear'             =>  $this->input->post('labcspear', true),
+            'pcspear'            =>  $this->input->post('labcspear', true),
+            'edfs'               =>  $this->input->post('edfs', true),
+            'pedfs'              =>  $this->input->post('edfs', true),
+            'psyc'               =>  $this->input->post('psyc', true),
+            'ppsyc'              =>  $this->input->post('psyc', true),
+            'trm'                =>  $this->input->post('trm', true),
+            'ptrm'               =>  $this->input->post('trm', true),
+            'fishery'            =>  $this->input->post('fishery', true),
+            'pfishery'           =>  $this->input->post('fishery', true)
+
+        );
+
+        $result = $this->db->insert('enrolldivisionoffeestbl', $data);
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+
+    public function addChedBilling(){
+        $data = array(
+            'schoolyear'            =>  $this->input->post('schoolyear', true),
+            'semester'              =>  $this->input->post('semester', true),
+            'studNumber'            =>  $this->input->post('student_id', true),
+            'lastN'                 =>  $this->input->post('student_ln', true),
+            'firstN'                =>  $this->input->post('student_fn', true),
+            'middleN'               =>  $this->input->post('student_mn', true),
+            'suffixN'               =>  $this->input->post('suffix', true),
+            'currentYearLevel'      =>  $this->input->post('yearlevel', true),
+            'course'                =>  $this->input->post('coursename', true),
+            'sex'                   =>  $this->input->post('gender', true),
+            'dob'                   =>  date(dateformatdb, strtotime($this->input->post('dob', true))),
+            'contactnumber'         =>  $this->input->post('mobilePhone', true),
+            'email'                 =>  $this->input->post('email', true),
+            'optprovince'           =>  $this->input->post('province', true),
+            'optmunicipality'       =>  $this->input->post('municipality', true),
+            'optbrgy'               =>  $this->input->post('barangay', true),
+            'street'                =>  $this->input->post('street', true),
+            'zipcode'               =>  $this->input->post('zip', true),
+            'flastname'             =>  $this->input->post('flastname', true),
+            'ffirstname'            =>  $this->input->post('ffirstname', true),
+            'fmiddlename'           =>  $this->input->post('fmiddlename', true),
+            'fsuffix'               =>  $this->input->post('fsuffix', true),
+            'mlastname'             =>  $this->input->post('mlastname', true),
+            'mfirstname'            =>  $this->input->post('mfirstname', true),
+            'mmiddlename'           =>  $this->input->post('mmiddlename', true),
+            'msuffix'               =>  $this->input->post('msuffix', true),
+            'householdnum'          =>  $this->input->post('householdnum', true),
+            'householdincome'       =>  $this->input->post('householdincome', true),
+            'totalassesstment'      =>  $this->input->post('totalassesstment', true),
+            'disability'            =>  $this->input->post('disability', true),
+            'datetimeadded'         =>  date('Y-m-d H:i:s')
+
+        );
+
+        $result = $this->db->insert('chedbilling', $data);
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+
+
+
 
 }

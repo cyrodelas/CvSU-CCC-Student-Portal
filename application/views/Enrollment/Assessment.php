@@ -78,7 +78,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -96,8 +96,9 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
-
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
                         </ul>
                     </div>
@@ -125,7 +126,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo base_url();?>/assets/admin/img/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
+                                <img src="<?php echo base_url();?>/assets/image/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -341,105 +342,105 @@
                                                 <?php if(intval($feeRow->labAnSci)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>AN. SCI</th>
-                                                        <td><?php $genTotal += intval($feeRow->labAnSci); echo number_format($feeRow->labAnSci, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labAnSci); echo number_format($feeRow->labAnSci, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labBioSci)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>BIO. SCI</th>
-                                                        <td><?php $genTotal += intval($feeRow->labBioSci); echo number_format($feeRow->labBioSci, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labBioSci); echo number_format($feeRow->labBioSci, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labCEMDS)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>CEMDS</th>
-                                                        <td><?php $genTotal += intval($feeRow->labCEMDS); echo number_format($feeRow->labCEMDS, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labCEMDS); echo number_format($feeRow->labCEMDS, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labHRM)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>HRM</th>
-                                                        <td><?php $genTotal += intval($feeRow->labHRM) * intval($totalLabsUnits); echo number_format(intval($feeRow->labHRM) * intval($totalLabsUnits), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labHRM) * intval($totalLabsUnits); echo number_format(intval($feeRow->labHRM) * intval($totalLabsUnits), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labCropSci)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>CROP. SCI.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labCropSci); echo number_format($feeRow->labCropSci, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labCropSci); echo number_format($feeRow->labCropSci, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labEng)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>ENG.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labEng); echo number_format($feeRow->labEng, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labEng); echo number_format($feeRow->labEng, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labPhySci)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>PHY. SCI.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labPhySci); echo number_format($feeRow->labPhySci, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labPhySci); echo number_format($feeRow->labPhySci, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labVetMed)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>VET. MED.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labVetMed); echo number_format($feeRow->labVetMed, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labVetMed); echo number_format($feeRow->labVetMed, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labSpeech)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>SPEECH LAB.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labSpeech); echo number_format($feeRow->labSpeech, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labSpeech); echo number_format($feeRow->labSpeech, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labEnglish)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>ENGLISH LAB.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labEnglish); echo number_format($feeRow->labEnglish, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labEnglish); echo number_format($feeRow->labEnglish, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labNursing)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>NURSING LAB.</th>
-                                                        <td><?php $genTotal += intval($feeRow->labNursing); echo number_format($feeRow->labNursing, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labNursing); echo number_format($feeRow->labNursing, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->ccl)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>CCL</th>
-                                                        <td><?php $genTotal += intval($feeRow->ccl) * intval($totalLabsUnits); echo number_format(intval($feeRow->ccl) * intval($totalLabsUnits), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->ccl) * intval($totalLabsUnits); echo number_format(intval($feeRow->ccl) * intval($totalLabsUnits), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->rle)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>RLE</th>
-                                                        <td><?php $genTotal += intval($feeRow->rle); echo number_format($feeRow->rle, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->rle); echo number_format($feeRow->rle, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->psyc)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>CRIM.</th>
-                                                        <td><?php $genTotal += 0; echo number_format(0, 2); ?></td>
+                                                        <td class="text-right"><?php $genTotal += 0; echo number_format(0, 2); ?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->psyc)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>PSYC.</th>
-                                                        <td><?php $genTotal += intval($feeRow->psyc); echo number_format($feeRow->psyc, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->psyc); echo number_format($feeRow->psyc, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
@@ -448,98 +449,98 @@
                                                 <?php if(intval($totalInternet)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>INTERNET</th>
-                                                        <td><?php $genTotal += intval($feeRow->internet) * intval($totalInternet); echo number_format(intval($feeRow->internet) * intval($totalInternet), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->internet) * intval($totalInternet); echo number_format(intval($feeRow->internet) * intval($totalInternet), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($totalNSTP)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>NSTP</th>
-                                                        <td><?php $genTotal += intval($feeRow->NSTP) * intval($totalNSTP); echo number_format(intval($feeRow->NSTP) * intval($totalNSTP), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->NSTP) * intval($totalNSTP); echo number_format(intval($feeRow->NSTP) * intval($totalNSTP), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($totalOJT)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>OJT</th>
-                                                        <td><?php $genTotal += intval($feeRow->ojt) * intval($totalOJT ); echo number_format(intval($feeRow->ojt) * intval($totalOJT ), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->ojt) * intval($totalOJT ); echo number_format(intval($feeRow->ojt) * intval($totalOJT ), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($totalThesis)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>THESIS ADVISER</th>
-                                                        <td><?php $genTotal += intval($feeRow->thesis) * intval($totalThesis); echo number_format(intval($feeRow->thesis) * intval($totalThesis), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->thesis) * intval($totalThesis); echo number_format(intval($feeRow->thesis) * intval($totalThesis), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->studentTeaching)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>STUDENT TEACHING</th>
-                                                        <td><?php $genTotal += intval($feeRow->studentTeaching); echo number_format($feeRow->studentTeaching, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->studentTeaching); echo number_format($feeRow->studentTeaching, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->lateReg)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>LATE REGISTRATION</th>
-                                                        <td><?php $genTotal += intval($feeRow->lateReg); echo number_format($feeRow->lateReg, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->lateReg); echo number_format($feeRow->lateReg, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($totalResidency)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>RESIDENCY</th>
-                                                        <td><?php $genTotal += intval($feeRow->residency) * intval($totalResidency); echo number_format(intval($feeRow->residency) * intval($totalResidency), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->residency) * intval($totalResidency); echo number_format(intval($feeRow->residency) * intval($totalResidency), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->foreignStudent)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>FOREIGN STUDENT</th>
-                                                        <td><?php $genTotal += intval($feeRow->foreignStudent); echo number_format($feeRow->foreignStudent, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->foreignStudent); echo number_format($feeRow->foreignStudent, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->addedSubj)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>ADDED SUBJ.</th>
-                                                        <td><?php $genTotal += intval($feeRow->addedSubj); echo number_format($feeRow->addedSubj, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->addedSubj); echo number_format($feeRow->addedSubj, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($totalPetition)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>PETITION SUBJ.</th>
-                                                        <td><?php $genTotal += intval($feeRow->petitionSubj) * intval($totalPetition); echo number_format(intval($feeRow->petitionSubj) * intval($totalPetition), 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->petitionSubj) * intval($totalPetition); echo number_format(intval($feeRow->petitionSubj) * intval($totalPetition), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->edfs)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>EDFS</th>
-                                                        <td><?php $genTotal += intval($feeRow->edfs); echo number_format($feeRow->edfs, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->edfs); echo number_format($feeRow->edfs, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->trm)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>TRM</th>
-                                                        <td><?php $genTotal += intval($feeRow->trm); echo number_format($feeRow->trm, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->trm); echo number_format($feeRow->trm, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->fishery)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>FISHERY</th>
-                                                        <td><?php $genTotal += intval($feeRow->fishery); echo number_format($feeRow->fishery, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->fishery); echo number_format($feeRow->fishery, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->labcspear)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>LABORATORY FEE</th>
-                                                        <td><?php $genTotal += intval($feeRow->labcspear); echo number_format($feeRow->labcspear, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->labcspear); echo number_format($feeRow->labcspear, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
@@ -548,91 +549,91 @@
                                                 <?php if(intval($feeRow->tuition)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>TUITION</th>
-                                                        <td id="tbltotalTuition"><?php $genTotal += intval($feeRow->tuition) * intval($totalUnits); echo number_format(intval($feeRow->tuition) * intval($totalUnits), 2);?></td>
+                                                        <td class="text-right" id="tbltotalTuition"><?php $genTotal += intval($feeRow->tuition) * intval($totalUnits); echo number_format(intval($feeRow->tuition) * intval($totalUnits), 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->miscLibrary)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>LIBRARY</th>
-                                                        <td><?php $genTotal += intval($feeRow->miscLibrary); echo number_format($feeRow->miscLibrary, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->miscLibrary); echo number_format($feeRow->miscLibrary, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->miscMedical)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>MED/DENTAL</th>
-                                                        <td><?php $genTotal += intval($feeRow->miscMedical); echo number_format($feeRow->miscMedical, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->miscMedical); echo number_format($feeRow->miscMedical, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->miscPublication)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>PUBLICATION</th>
-                                                        <td><?php $genTotal += intval($feeRow->miscPublication); echo number_format($feeRow->miscPublication, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->miscPublication); echo number_format($feeRow->miscPublication, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->miscRegistration)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>REGISTRATION FEE</th>
-                                                        <td><?php $genTotal += intval($feeRow->miscRegistration); echo number_format($feeRow->miscRegistration, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->miscRegistration); echo number_format($feeRow->miscRegistration, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->miscGuidance)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>GUIDANCE FEE</th>
-                                                        <td><?php $genTotal += intval($feeRow->miscGuidance); echo number_format($feeRow->miscGuidance, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->miscGuidance); echo number_format($feeRow->miscGuidance, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->identification)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>ID</th>
-                                                        <td><?php $genTotal += intval($feeRow->identification); echo number_format($feeRow->identification, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->identification); echo number_format($feeRow->identification, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->sfdf)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>SFDF</th>
-                                                        <td id="tbltotalSFDF"><?php $genTotal += intval($feeRow->sfdf); echo number_format($feeRow->sfdf, 2);?></td>
+                                                        <td class="text-right" id="tbltotalSFDF"><?php $genTotal += intval($feeRow->sfdf); echo number_format($feeRow->sfdf, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->srf)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>SRF</th>
-                                                        <td id="tbltotalSRF"><?php $genTotal += intval($feeRow->srf); echo number_format($feeRow->srf, 2);?></td>
+                                                        <td class="text-right" id="tbltotalSRF"><?php $genTotal += intval($feeRow->srf); echo number_format($feeRow->srf, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->athletic)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>ATHLETIC</th>
-                                                        <td><?php $genTotal += intval($feeRow->athletic); echo number_format($feeRow->athletic, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->athletic); echo number_format($feeRow->athletic, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->scuaa)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>SCUAA</th>
-                                                        <td><?php $genTotal += intval($feeRow->scuaa); echo number_format($feeRow->scuaa, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->scuaa); echo number_format($feeRow->scuaa, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->deposit)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>DEPOSIT</th>
-                                                        <td><?php $genTotal += intval($feeRow->deposit); echo number_format($feeRow->deposit, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->deposit); echo number_format($feeRow->deposit, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
                                                 <?php if(intval($feeRow->other)!=0){ ?>
                                                     <tr>
                                                         <th scope='row'>OTHER FEE</th>
-                                                        <td><?php $genTotal += intval($feeRow->other); echo number_format($feeRow->other, 2);?></td>
+                                                        <td class="text-right"><?php $genTotal += intval($feeRow->other); echo number_format($feeRow->other, 2);?></td>
                                                     </tr>
                                                 <?php } ?>
 
@@ -648,11 +649,11 @@
                                                         <thead>
                                                         <tr>
                                                             <th scope='row'>Total units</th>
-                                                            <td><?php echo number_format($totalUnits, 2); ?></td>
+                                                            <td class="text-right"><?php echo number_format($totalUnits, 2); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th scope='row'>Total hours</th>
-                                                            <td><?php echo number_format($totalHrs, 2); ?></td>
+                                                            <td class="text-right"><?php echo number_format($totalHrs, 2); ?></td>
                                                         </tr>
                                                         </thead>
                                                     </table>
@@ -665,20 +666,20 @@
                                                         <thead>
                                                         <tr>
                                                             <th scope='row'>Total</th>
-                                                            <td><?php echo number_format($genTotal, 2); ?></td>
+                                                            <td class="text-right"><?php echo number_format($genTotal, 2); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th scope='row'>First payment</th>
-                                                            <td><?php echo number_format(intval($genTotal) * 0.5, 2); ?></td>
+                                                            <td class="text-right"><?php echo number_format(intval($genTotal) * 0.5, 2); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th scope='row'>Second payment</th>
-                                                            <td><?php echo number_format(intval($genTotal) * 0.25, 2); ?></td>
+                                                            <td class="text-right"><?php echo number_format(intval($genTotal) * 0.25, 2); ?></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th scope='row'>Third payment</th>
-                                                            <td><?php echo number_format(intval($genTotal) * 0.25, 2); ?></td>
+                                                            <td class="text-right"><?php echo number_format(intval($genTotal) * 0.25, 2); ?></td>
                                                         </tr>
                                                         </thead>
                                                     </table>
@@ -700,25 +701,97 @@
                                                         <thead>
                                                         <tr>
                                                             <th scope='row'>Tuition %</th>
-                                                            <td id="tbltuitionPer"></td>
-                                                            <td id="tbltuitionVal"></td>
+                                                            <td class="text-right" id="tbltuitionPer"></td>
+                                                            <td class="text-right" id="tbltuitionVal"></td>
                                                         </tr>
                                                         <tr>
                                                             <th scope='row'>SFDF %</th>
-                                                            <td id="tblsfdfPer"></td>
-                                                            <td id="tblsfdfVal"></td>
+                                                            <td class="text-right" id="tblsfdfPer"></td>
+                                                            <td class="text-right" id="tblsfdfVal"></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th scope='row'>SRF %</th>
-                                                            <td id="tblsrfPer"></td>
-                                                            <td id="tblsrfVal"></td>
+                                                            <td class="text-right" id="tblsrfPer"></td>
+                                                            <td class="text-right" id="tblsrfVal"></td>
                                                         </tr>
                                                         </thead>
                                                     </table>
                                                 </div>
+
+
                                                 <div class="col-md-12" style="margin-top:-10px">
-                                                    <button type="submit" class="btn btn-success col-md-12 ">CONFIRM ASSESSMENT</button>
+
+                                                    <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/studentFees" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+
+                                                        <input type="text" style="display: none;" name="studentNumber" value="<?php echo $this->session->student_id;?>">
+                                                        <input type="text" style="display: none;" name="schoolyear" value="<?php echo $nextSchoolyear; ?>">
+                                                        <input type="text" style="display: none;" name="semester" value="<?php echo $nextSemester; ?>">
+                                                        <input type="text" style="display: none;" name="status" value="<?php echo $status; ?>">
+                                                        <input type="text" style="display: none;" name="standingYear" value="<?php echo $standingYear; ?>">
+
+                                                        <input type="text" style="display: none;" id="tscholarship" name="tscholarship" value="">
+                                                        <input type="text" style="display: none;" name="majorCourse" value="<?php echo $Major; ?>">
+                                                        <input type="text" style="display: none;" name="yearLevel" value="<?php echo $YL; ?>">
+                                                        <input type="text" style="display: none;" name="coursenow" value="<?php echo $this->session->student_course;?>">
+
+                                                        <?php foreach ($seData as $rs) { ?>
+                                                            <input type="text" style="display: none;" name="schedcodes[]" value="<?php echo $rs->schedcode; ?>">
+                                                        <?php }?>
+
+                                                        <input type="text" style="display: none;" name="labAnSci" value="<?php echo $feeRow->labAnSci; ?>">
+                                                        <input type="text" style="display: none;" name="labBioSci" value="<?php echo $feeRow->labBioSci; ?>">
+                                                        <input type="text" style="display: none;" name="labCEMDS" value="<?php echo $feeRow->labCEMDS; ?>">
+                                                        <input type="text" style="display: none;" name="labCropSci" value="<?php echo $feeRow->labCropSci; ?>">
+                                                        <input type="text" style="display: none;" name="labHRM" value="<?php $tlHRM=intval($feeRow->labHRM) * intval($totalLabsUnits); echo $tlHRM; ?>">
+                                                        <input type="text" style="display: none;" name="labEng" value="<?php echo $feeRow->labEng; ?>">
+                                                        <input type="text" style="display: none;" name="labPhySci" value="<?php echo $feeRow->labPhySci; ?>">
+                                                        <input type="text" style="display: none;" name="labVetMed" value="<?php echo $feeRow->labVetMed; ?>">
+                                                        <input type="text" style="display: none;" name="labSpeech" value="<?php echo $feeRow->labSpeech; ?>">
+                                                        <input type="text" style="display: none;" name="labEnglish" value="<?php echo $feeRow->labEnglish; ?>">
+                                                        <input type="text" style="display: none;" name="labNursing" value="<?php echo $feeRow->labNursing; ?>">
+                                                        <input type="text" style="display: none;" name="ccl" value="<?php $tCCL=intval($feeRow->ccl) * intval($totalLabsUnits); echo $tCCL; ?>">
+                                                        <input type="text" style="display: none;" name="internet" value="<?php $tInternet=intval($feeRow->internet) * intval($totalInternet); echo $tInternet; ?>">
+                                                        <input type="text" style="display: none;" name="NSTP" value="<?php $tNSTP=intval($feeRow->NSTP) * intval($totalNSTP); echo $tNSTP; ?>">
+                                                        <input type="text" style="display: none;" name="ojt" value="<?php $tOJT=intval($feeRow->ojt) * intval($totalOJT); echo $tOJT; ?>">
+                                                        <input type="text" style="display: none;" name="thesis" value="<?php $tThesis=intval($feeRow->thesis) * intval($totalThesis); echo $tThesis; ?>">
+                                                        <input type="text" style="display: none;" name="studentTeaching" value="<?php echo $feeRow->studentTeaching; ?>">
+                                                        <input type="text" style="display: none;" name="lateReg" value="<?php echo $feeRow->lateReg; ?>">
+                                                        <input type="text" style="display: none;" name="residency" value="<?php $tResidency=intval($feeRow->residency) * intval($totalResidency); echo $tResidency; ?>">
+                                                        <input type="text" style="display: none;" name="foreignStudent" value="<?php echo $feeRow->foreignStudent; ?>">
+                                                        <input type="text" style="display: none;" name="addedSubj" value="<?php echo $feeRow->addedSubj; ?>">
+                                                        <input type="text" style="display: none;" name="petitionSubj" value="<?php $tPetition=intval($feeRow->petitionSubj) * intval($totalPetition); echo $tPetition; ?>">
+                                                        <input type="text" style="display: none;" name="tuition" value="<?php $tTuition=intval($feeRow->tuition) * intval($totalUnits); echo $tTuition; ?>">
+                                                        <input type="text" style="display: none;" name="identification" value="<?php echo $feeRow->identification; ?>">
+                                                        <input type="text" style="display: none;" name="sfdf" value="<?php echo $feeRow->sfdf; ?>">
+                                                        <input type="text" style="display: none;" name="srf" value="<?php echo $feeRow->srf; ?>">
+                                                        <input type="text" style="display: none;" name="athletic" value="<?php echo $feeRow->athletic; ?>">
+                                                        <input type="text" style="display: none;" name="scuaa" value="<?php echo $feeRow->scuaa; ?>">
+                                                        <input type="text" style="display: none;" name="deposit" value="<?php echo $feeRow->deposit; ?>">
+                                                        <input type="text" style="display: none;" name="other" value="<?php echo $feeRow->other; ?>">
+                                                        <input type="text" style="display: none;" name="miscLibrary" value="<?php echo $feeRow->miscLibrary; ?>">
+                                                        <input type="text" style="display: none;" name="miscMedical" value="<?php echo $feeRow->miscMedical; ?>">
+                                                        <input type="text" style="display: none;" name="miscPublication" value="<?php echo $feeRow->miscPublication; ?>">
+                                                        <input type="text" style="display: none;" name="miscRegistration" value="<?php echo $feeRow->miscRegistration; ?>">
+                                                        <input type="text" style="display: none;" name="miscGuidance" value="<?php echo $feeRow->miscGuidance; ?>">
+                                                        <input type="text" style="display: none;" name="rle" value="<?php echo $feeRow->rle; ?>">
+                                                        <input type="text" style="display: none;" name="labcspear" value="<?php echo $feeRow->labcspear; ?>">
+                                                        <input type="text" style="display: none;" name="edfs" value="<?php echo $feeRow->edfs; ?>">
+                                                        <input type="text" style="display: none;" name="psyc" value="<?php echo $feeRow->psyc; ?>">
+                                                        <input type="text" style="display: none;" name="trm" value="<?php echo $feeRow->trm; ?>">
+                                                        <input type="text" style="display: none;" name="fishery" value="<?php echo $feeRow->fishery; ?>">
+
+
+                                                        <input type="text" style="display: none;" name="mwRLE" value="<?php echo $status; ?>">
+                                                        <input type="text" style="display: none;" name="rletwo" value="<?php echo $status; ?>">
+                                                        <input type="text" style="display: none;" name="rlethree" value="<?php echo $status; ?>">
+                                                        <input type="text" style="display: none;" name="mwrletwo" value="<?php echo $status; ?>">
+                                                        <input type="text" style="display: none;" name="mwrlethree" value="<?php echo $status; ?>">
+
+
+                                                        <button type="submit" class="btn btn-success col-md-12 ">CONFIRM ASSESSMENT</button>
+                                                    </form>
+
                                                 </div>
 
                                             </div>
@@ -823,6 +896,7 @@
     }
 
     function ScholarshipChange(obj) {
+
         var dropDown = document.getElementById("scholarship");
 
         scholarshipID = dropDown.options[dropDown.selectedIndex].value;
@@ -850,6 +924,9 @@
                     $("#tbltuitionPer").text(d.tuition + ' %');
                     $("#tblsfdfPer").text(d.sfdf + ' %');
                     $("#tblsrfPer").text(d.srf + ' %');
+
+                    $("#tscholarship").val(d.scholarship);
+
 
                     var totalTuition = (parseInt(d.tuition)/100) * parseFloat(newTuition);
                     var totalSFDF = (parseInt(d.sfdf)/100) * parseFloat(newSFDF);

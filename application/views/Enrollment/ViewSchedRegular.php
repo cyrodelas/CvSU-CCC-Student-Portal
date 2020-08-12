@@ -17,6 +17,7 @@
     <script src='<?php echo base_url();?>assets/plugins/moment/min/moment.min.js'></script>
     <script src='<?php echo base_url();?>assets/plugins/jquery/dist/jquery.min.js'></script>
     <script src='<?php echo base_url();?>assets/plugins/fullcalendar/dist/fullcalendar.min.js'></script>
+
     <script src='<?php echo base_url();?>assets/js/initCalendar.js'></script> <!-- Script with all important stuff-->
     <style>
         body {

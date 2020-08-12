@@ -78,7 +78,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -96,9 +96,9 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
-
-                        </ul>
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
                     </div>
 
@@ -234,7 +234,22 @@
                                         </table>
                                     </div>
 
-                                    <a href="<?php echo base_url();?>enrollment/studentAssestment/<?php echo $this->session->student_id;?>" class="btn btn-success col-md-12">PROCEED TO ASSESSMENT</a>
+                                    <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/studentAssessment" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+
+                                        <input type="text" style="display: none;" name="studentNumber" value="<?php echo $this->session->student_id;?>">
+                                        <input type="text" style="display: none;" name="schoolyear" value="<?php echo $nextSchoolyear; ?>">
+                                        <input type="text" style="display: none;" name="semester" value="<?php echo $nextSemester; ?>">
+                                        <input type="text" style="display: none;" name="status" value="<?php echo $status; ?>">
+                                        <input type="text" style="display: none;" name="standingYear" value="<?php echo $standingYear; ?>">
+
+                                        <?php foreach ($seData as $rs) { ?>
+                                            <input type="text" style="display: none;" name="schedcodes[]" value="<?php echo $rs->schedcode; ?>">
+                                        <?php } ?>
+
+                                        <button type="submit" style="margin-top: 15px" class="btn btn-success col-md-12">PROCEED TO ASSESSMENT</button>
+
+                                    </form>
+
 
                                 </div>
 

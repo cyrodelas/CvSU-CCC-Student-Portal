@@ -203,24 +203,71 @@ class Student extends CI_Controller
     }
 
     public function subject(){
-        $currentUser = $this->session->student_id;
-        $currentSY = $this->session->schoolyear;
-        $currentSem = $this->session->semester;
 
-        $query = $this->Student_Model->loadEnrolledSubject();
+        $currentUser = $this->session->student_id;
+
+        if($this->session->enrollment=='OPEN'){
+
+            $OldSY = $this->session->schoolyear;
+            $ldSem = $this->session->semester;
+
+            if($ldSem=='FIRST') {
+                $currentSY = $OldSY;
+                $currentSem = 'SECOND';
+            } else {
+                $currentSY = (intval(substr($OldSY, 0, 4)) + 1) . "-" . (intval(substr($OldSY, 5, 4)) + 1);
+                $currentSem = 'FIRST';
+            }
+
+        }else{
+
+            $currentSY = $this->session->schoolyear;
+            $currentSem = $this->session->semester;
+
+        }
+
+
+        $module['sY'] = $currentSY;
+        $module['seM'] = $currentSem;
+
+        $query = $this->Student_Model->loadEnrolledSubject($currentSY, $currentSem, $currentUser);
         $module['subjData'] = $query;
 
         $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
         $module['YLSData'] = $query;
 
         $this->load->view('Student/Subject', $module);
+
     }
 
 
     public function schedule(){
+
         $currentUser = $this->session->student_id;
-        $currentSY = $this->session->schoolyear;
-        $currentSem = $this->session->semester;
+
+        if($this->session->enrollment=='OPEN'){
+
+            $OldSY = $this->session->schoolyear;
+            $ldSem = $this->session->semester;
+
+            if($ldSem=='FIRST') {
+                $currentSY = $OldSY;
+                $currentSem = 'SECOND';
+            } else {
+                $currentSY = (intval(substr($OldSY, 0, 4)) + 1) . "-" . (intval(substr($OldSY, 5, 4)) + 1);
+                $currentSem = 'FIRST';
+            }
+
+        }else{
+
+            $currentSY = $this->session->schoolyear;
+            $currentSem = $this->session->semester;
+
+        }
+
+        $module['studentid'] = $currentUser;
+        $module['schoolyear'] = $currentSY;
+        $module['semester'] = $currentSem;
 
         $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
         $module['YLSData'] = $query;
@@ -279,13 +326,17 @@ class Student extends CI_Controller
     public function checklist($studentID){
 
         $gCurriculum = $this->Enrollment_Model->getCurriculumID($studentID);
+
         $cID = $gCurriculum['curriculumID'];
+
         $module['studentNum'] = $gCurriculum['studentNumber'];
         $module['studentName'] = $gCurriculum['firstName'] ." ". $gCurriculum['lastName'];
         $module['course'] = $gCurriculum['course'];
 
         $query = $this->Student_Model->loadStudentSY($studentID);
         $module['schoolYearData'] = $query;
+
+        $module['Curriculum'] = $cID;
 
         $query = $this->Enrollment_Model->courselist();
         $module['courseData'] = $query;
@@ -373,7 +424,6 @@ class Student extends CI_Controller
 
         echo json_encode($fresult);
 
-
     }
 
     public function gradesRequest(){
@@ -427,5 +477,6 @@ class Student extends CI_Controller
         $message = "Date of birth : ".$result['dateOfBirth'];
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
+
 
 }

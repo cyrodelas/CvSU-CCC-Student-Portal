@@ -111,7 +111,9 @@ if($this->session->defaultPass==1){
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
 
                     </div>

@@ -78,7 +78,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -96,8 +96,9 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
-
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
                         </ul>
                     </div>
@@ -258,6 +259,7 @@
 
                                     <tbody id="gradetablebody">
                                     <?php
+                                    $fCount=0;
                                     $row=0;
                                     if($gradesData){
                                         foreach ($gradesData as $rs) {
@@ -302,11 +304,11 @@
                                                         case '2.75':{echo 'PASSED';}break;
                                                         case '3.00':{echo 'PASSED';}break;
                                                         case 'S':{echo 'PASSED';}break;
-                                                        case '4.00':{echo 'Incomplete';}break;
-                                                        case '5.00':{echo 'FAILED';}break;
-                                                        case '6.00':{echo 'DROPPED';}break;
-                                                        case '8.00':{echo 'WITHHELD';}break;
-                                                        case 'DRP':{echo 'DROPPED';}break;
+                                                        case '4.00':{echo 'Incomplete'; $fCount+=1;}break;
+                                                        case '5.00':{echo 'FAILED'; $fCount+=1;}break;
+                                                        case '6.00':{echo 'DROPPED'; $fCount+=1;}break;
+                                                        case '8.00':{echo 'WITHHELD'; $fCount+=1;}break;
+                                                        case 'DRP':{echo 'DROPPED'; $fCount+=1;}break;
                                                     }
                                                     ?>
                                                 </td>
@@ -324,12 +326,12 @@
                                     <input style="display:none" id="studentNumber" name="studentNumber" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_id; ?>">
                                     <input style="display:none" id="studentName" name="studentName" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?>">
                                     <input style="display:none" id="course" name="course" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->student_course;?>">
-                                    <input style="display:none" id="major" name="major" class="form-control col-md-7 col-xs-12" value="<?php echo $Major;?>">
+                                    <input style="display:none" id="major" name="major" class="form-control col-md-7 col-xs-12" value="<?php if($Major==''){echo "N/A";} else {echo $Major;}?>">
                                     <input style="display:none" id="schoolyear" name="schoolyear" class="form-control col-md-7 col-xs-12" value="<?php echo $SY;?>">
                                     <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $Sem;?>">
                                     <input style="display:none" id="yearLevel" name="yearLevel" class="form-control col-md-7 col-xs-12" value="<?php echo $YL;?>">
                                     <input style="display:none" id="section" name="section" class="form-control col-md-7 col-xs-12" value="<?php echo $Section;?>">
-                                    <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php if($sectioncount > 1){echo "IRREGULAR";} else{echo "REGULAR";} ?>">
+                                    <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php if($sectioncount > 1 || $fCount > 1 || $status != "REGULAR"){echo "IRREGULAR";} else{echo "REGULAR";} ?>">
                                     <button type="submit" class="btn btn-success pull-right">Request for Evaluation</button>
                                 </form>
 

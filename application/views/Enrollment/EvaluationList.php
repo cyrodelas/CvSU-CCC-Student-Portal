@@ -78,7 +78,7 @@
                         <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?> <?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
+                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
                         <h2><?php echo $this->session->student_course;?></h2>
                     </div>
                 </div>
@@ -96,8 +96,9 @@
                             <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
                             <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
                             <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-tasks"></i> Enrollment Module</a></li>
-
+                            <?php if ($this->session->enrollment == "OPEN") {?>
+                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
+                            <?php } ?>
                         </ul>
                         </ul>
                     </div>
@@ -183,7 +184,7 @@
                                         <tr>
                                             <td><?php echo $rs->studentNumber;?></td>
                                             <td><?php echo $rs->studentName;?></td>
-                                            <td><?php echo $rs->course;?><?php echo $rs->major;?> <?php echo $rs->yearLevel;?><?php echo $rs->section;?></td>
+                                            <td><?php echo $rs->course;?><?php if($rs->major=='N/A') {echo '';} else {echo $rs->major;} ?> <?php echo $rs->yearLevel;?><?php echo $rs->section;?></td>
                                             <td><?php echo $rs->schoolyear;?></td>
                                             <td><?php echo $rs->semester;?></td>
                                             <td><?php echo $rs->status;?></td>
@@ -199,9 +200,10 @@
                                                     <input style="display:none" id="schoolyear" name="schoolyear" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->schoolyear; ?>">
                                                     <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->semester; ?>">
                                                     <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->status; ?>">
+                                                    <input style="display:none" id="standingYear" name="standingYear" class="form-control col-md-7 col-xs-12" value="<?php echo $standingYear; ?>">
                                                 </form>
 
-                                                <a href="#!" onclick="event.preventDefault();document.getElementById('student_<?php echo $rs->studentNumber;?>').submit();">Evaluate Students</a>
+                                                <a href="#" onclick="event.preventDefault();document.getElementById('student_<?php echo $rs->studentNumber;?>').submit();">Evaluate Students</a>
 
                                             </th>
                                         </tr>
