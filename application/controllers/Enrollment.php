@@ -23,6 +23,7 @@ class Enrollment extends CI_Controller
         $module['standingYear'] = $query['standingYear'];
 
         if($query['status'] == 'PRE-EVALUATION'){
+
             $currentUser = $this->session->student_id;
             $currentSY = $this->session->schoolyear;
             $currentSem = $this->session->semester;
@@ -103,12 +104,22 @@ class Enrollment extends CI_Controller
             $query = $this->Enrollment_Model->getScholarship();
             $module['schData'] = $query;
 
+            if($this->session->dbtype == 1){
+                $schoolyear = $nextSchoolyear;
+                $semester = $nextSemester;
+                $course = $this->session->student_course;
+                $yearAdmitted = $this->session->yearAdmitted;
+                $semAdmitted = $this->session->semesterAdmitted;
+            } else {
+                $schoolyear = $nextSchoolyear;
+                $semester = $nextSemester;
+                $course = $this->session->student_course;
+                $yearAdmitted = $this->session->yearAdmitted .'-'. (intval($this->session->yearAdmitted) + 1);
+                $semAdmitted = $this->session->semesterAdmitted;
+            }
 
-            $schoolyear ='2019-2020';
-            $semester ='SECOND';
-            $course ='BSIT';
-            $yearAdmitted ='2019-2020';
-            $semAdmitted ='FIRST';
+            $module['yearAdmitted']= $yearAdmitted;
+            $module['semAdmitted']= $semAdmitted;
 
             $query = $this->Enrollment_Model->getFeeList($schoolyear, $semester, $course, $yearAdmitted, $semAdmitted);
             $module['feeData'] = $query;
@@ -135,20 +146,28 @@ class Enrollment extends CI_Controller
             $query = $this->Enrollment_Model->getScholarship();
             $module['schData'] = $query;
 
+            if($this->session->dbtype == 1){
+                $schoolyear = $nextSchoolyear;
+                $semester = $nextSemester;
+                $course = $this->session->student_course;
+                $yearAdmitted = $this->session->yearAdmitted;
+                $semAdmitted = $this->session->semesterAdmitted;
+            } else {
+                $schoolyear = $nextSchoolyear;
+                $semester = $nextSemester;
+                $course = $this->session->student_course;
+                $yearAdmitted = $this->session->yearAdmitted .'-'. (intval($this->session->yearAdmitted) + 1);
+                $semAdmitted = $this->session->semesterAdmitted;
+            }
 
-            $schoolyear ='2019-2020';
-            $semester ='SECOND';
-            $course ='BSIT';
-            $yearAdmitted ='2019-2020';
-            $semAdmitted ='FIRST';
+            $module['yearAdmitted']= $yearAdmitted;
+            $module['semAdmitted']= $semAdmitted;
 
             $query = $this->Enrollment_Model->getFeeList($schoolyear, $semester, $course, $yearAdmitted, $semAdmitted);
             $module['feeData'] = $query;
 
             $this->load->view('Enrollment/Registry', $module);
         }
-
-
 
     }
 
@@ -207,6 +226,7 @@ class Enrollment extends CI_Controller
         $module['semester'] = $this->input->post('semester', true);
         $module['status'] = $this->input->post('status', true);
         $module['standingYear'] = $this->input->post('standingYear', true);
+        $module['dbtype'] = $this->input->post('dbtype', true);
 
         $semester = $this->input->post('semester', true);
         $schoolyear = $this->input->post('schoolyear', true);
@@ -215,6 +235,7 @@ class Enrollment extends CI_Controller
         $yearlevel = $this->input->post('yearLevel', true);
         $section = $this->input->post('section', true);
         $status = $this->input->post('status', true);
+        $dbtype = $this->input->post('dbtype', true);
 
         if($semester=='FIRST'){
             $nextSchoolYear = $schoolyear;
@@ -263,27 +284,27 @@ class Enrollment extends CI_Controller
 
         }
 
-        $gCurriculum = $this->Enrollment_Model->getCurriculumID($studentID);
+        $gCurriculum = $this->Enrollment_Model->getCurriculumIDv2($studentID, $dbtype);
         $cID = $gCurriculum['curriculumID'];
 
         if($status == "REGULAR"){
-            $query = $this->Enrollment_Model->courselist();
+            $query = $this->Enrollment_Model->courselistv2($dbtype);
             $module['courseData'] = $query;
-            $query = $this->Enrollment_Model->loadYearAndSemester($cID);
+            $query = $this->Enrollment_Model->loadYearAndSemesterv2($cID, $dbtype);
             $module['ysData'] = $query;
-            $query = $this->Enrollment_Model->loadSubject($cID);
+            $query = $this->Enrollment_Model->loadSubjectv2($cID, $dbtype);
             $module['sData'] = $query;
-            $query = $this->Enrollment_Model->loadSubjectCode();
+            $query = $this->Enrollment_Model->loadSubjectCodev2($dbtype);
             $module['scData'] = $query;
-            $query = $this->Enrollment_Model->loadStudentGrade($studentID);
+            $query = $this->Enrollment_Model->loadStudentGradev2($studentID, $dbtype);
             $module['sgData'] = $query;
 
-            $query = $this->Enrollment_Model->loadSchedCodes($nextSchoolYear, $nextSemester, $YCS);
+            $query = $this->Enrollment_Model->loadSchedCodesv2($nextSchoolYear, $nextSemester, $YCS, $dbtype);
             $module['sccData'] = $query;
         } else{
-            $query = $this->Enrollment_Model->courselist();
+            $query = $this->Enrollment_Model->courselistc2($dbtype);
             $module['courseData'] = $query;
-            $query = $this->Enrollment_Model->loadYearAndSemester($cID);
+            $query = $this->Enrollment_Model->loadYearAndSemesterv2($cID, $dbtype);
             $module['ysData'] = $query;
 
             $module['sData'] = '';
@@ -312,6 +333,7 @@ class Enrollment extends CI_Controller
         $major= $this->input->post('major',TRUE);
         $yearlevel = $this->input->post('yearlevel',TRUE);
         $yearsection = $this->input->post('section',TRUE);
+        $dbtype = $this->input->post('dbtype',TRUE);
 
         if(strlen($coursename)==3){
 
@@ -339,16 +361,17 @@ class Enrollment extends CI_Controller
             $section = $nextCourse.$nextYearlevel.$nextSection;
         }
 
-        $query = $this->Enrollment_Model->getScheduleRegularData($schoolyear, $semester, $section);
+        $query = $this->Enrollment_Model->getScheduleRegularData($schoolyear, $semester, $section, $dbtype);
         echo json_encode($query);
     }
 
     public function evaluateStudent(){
 
+        $dbtype = $this->input->post('dbtype ', true);
         $status = $this->input->post('status', true);
 
         if($status=='REGULAR'){
-            $result = $this->Enrollment_Model->addEvaluationData();
+            $result = $this->Enrollment_Model->addEvaluationData($dbtype);
 
             if($result['result']==true){
                 $studentNumber = $this->input->post('studentNumber', true);
@@ -363,6 +386,7 @@ class Enrollment extends CI_Controller
                 $this->session->set_flashdata("error", "Evaluation failed.");
             }
         } else {
+
             $result = $this->Enrollment_Model->addEvaluationManual();
 
             if($result['result']==true){
@@ -381,7 +405,7 @@ class Enrollment extends CI_Controller
         }
 
 
-        redirect("enrollment/evaluation_list", "refresh");
+        redirect("student/evaluation", "refresh");
 
     }
 
@@ -408,6 +432,28 @@ class Enrollment extends CI_Controller
         $module['sgData'] = $query;
 
         $this->load->view('Enrollment/Checklist', $module);
+    }
+
+    public function eChecklist($studentID, $dbType){
+
+        $gCurriculum = $this->Enrollment_Model->getCurriculumIDv2($studentID, $dbType);
+        $cID = $gCurriculum['curriculumID'];
+        $module['studentNum'] = $gCurriculum['studentNumber'];
+        $module['studentName'] = $gCurriculum['firstName'] ." ". $gCurriculum['lastName'];
+        $module['course'] = $gCurriculum['course'];
+
+        $query = $this->Enrollment_Model->courselistv2($dbType);
+        $module['courseData'] = $query;
+        $query = $this->Enrollment_Model->loadYearAndSemesterv2($cID, $dbType);
+        $module['ysData'] = $query;
+        $query = $this->Enrollment_Model->loadSubjectv2($cID, $dbType);
+        $module['sData'] = $query;
+        $query = $this->Enrollment_Model->loadSubjectCodev2($dbType);
+        $module['scData'] = $query;
+        $query = $this->Enrollment_Model->loadStudentGradev2($studentID, $dbType);
+        $module['sgData'] = $query;
+
+        $this->load->view('Enrollment/EvaluationFormChecklist', $module);
     }
 
     public function getSubjectInfo(){

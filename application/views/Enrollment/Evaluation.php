@@ -268,26 +268,27 @@
                                             <tr>
                                                 <td><?php echo $rs->schedcode;?></td>
                                                 <td><?php echo $rs->subjectcode;?></td>
-                                                <td><?php echo $rs->units;?></td>
-                                                <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} else {echo $rs->mygrade;} ?></td>
+                                                <td><?php echo number_format($rs->units,2);?></td>
+                                                <td><?php if ($rs->mygrade=='S') {echo "SATISFACTORY";} elseif($rs->mygrade=='NG'){echo "NO GRADE";} else {echo $rs->mygrade;} ?></td>
                                                 <td>
                                                     <?php
                                                     switch($rs->mygrade){
-                                                        case '1.00':{echo $rs->units;}break;
-                                                        case '1.25':{echo $rs->units;}break;
-                                                        case '1.50':{echo $rs->units;}break;
-                                                        case '1.75':{echo $rs->units;}break;
-                                                        case '2.00':{echo $rs->units;}break;
-                                                        case '2.25':{echo $rs->units;}break;
-                                                        case '2.50':{echo $rs->units;}break;
-                                                        case '2.75':{echo $rs->units;}break;
-                                                        case '3.00':{echo $rs->units;}break;
-                                                        case 'S':{echo $rs->units;}break;
+                                                        case '1.00':{echo number_format($rs->units, 2);}break;
+                                                        case '1.25':{echo number_format($rs->units, 2);}break;
+                                                        case '1.50':{echo number_format($rs->units, 2);}break;
+                                                        case '1.75':{echo number_format($rs->units, 2);}break;
+                                                        case '2.00':{echo number_format($rs->units, 2);}break;
+                                                        case '2.25':{echo number_format($rs->units, 2);}break;
+                                                        case '2.50':{echo number_format($rs->units, 2);}break;
+                                                        case '2.75':{echo number_format($rs->units, 2);}break;
+                                                        case '3.00':{echo number_format($rs->units, 2);}break;
+                                                        case 'S':{echo number_format($rs->units, 2);}break;
                                                         case '4.00':{echo '0.00';}break;
                                                         case '5.00':{echo '0.00';}break;
                                                         case '6.00':{echo '0.00';}break;
                                                         case '8.00':{echo '0.00';}break;
                                                         case 'DRP':{echo '0.00';}break;
+                                                        case 'NG':{echo '0.00';}break;
                                                     }
                                                     ?>
                                                 </td>
@@ -309,6 +310,7 @@
                                                         case '6.00':{echo 'DROPPED'; $fCount+=1;}break;
                                                         case '8.00':{echo 'WITHHELD'; $fCount+=1;}break;
                                                         case 'DRP':{echo 'DROPPED'; $fCount+=1;}break;
+                                                        case 'NG':{echo 'NO GRADE'; $fCount+=1;}break;
                                                     }
                                                     ?>
                                                 </td>
@@ -331,6 +333,7 @@
                                     <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $Sem;?>">
                                     <input style="display:none" id="yearLevel" name="yearLevel" class="form-control col-md-7 col-xs-12" value="<?php echo $YL;?>">
                                     <input style="display:none" id="section" name="section" class="form-control col-md-7 col-xs-12" value="<?php echo $Section;?>">
+                                    <input style="display:none" id="dbtype" name="dbtype" class="form-control col-md-7 col-xs-12" value="<?php echo $this->session->dbtype;?>">
                                     <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php if($sectioncount > 1 || $fCount > 1 || $status != "REGULAR"){echo "IRREGULAR";} else{echo "REGULAR";} ?>">
                                     <button type="submit" class="btn btn-success pull-right">Request for Evaluation</button>
                                 </form>

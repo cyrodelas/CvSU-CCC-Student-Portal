@@ -1,7 +1,3 @@
-<?php if (!isset($_SESSION['student_id'])) {
-    redirect('student', 'refresh');
-} ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,11 +71,11 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
+                        <img src="<?php echo base_url();?>/assets/images/user.png" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
-                        <h2><?php echo $this->session->student_course;?></h2>
+                        <h2 style="font-weight: 600">Evaluator<br>Profile</h2>
+                        <h2><?php echo $this->session->department;?></h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -91,14 +87,7 @@
                     <div class="menu_section">
                         <h3>Navigation</h3>
                         <ul class="nav side-menu">
-                            <li><a href="<?php echo base_url();?>student/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
-                            <li><a href="<?php echo base_url();?>student/information"><i class="fa fa-user"></i> Student Information </a></li>
-                            <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
-                            <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
-                            <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <?php if ($this->session->enrollment == "OPEN") {?>
-                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
-                            <?php } ?>
+                            <li><a href="<?php echo base_url();?>student/evaluation"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                         </ul>
                     </div>
 
@@ -144,13 +133,6 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-
-            <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
-                <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
-                <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
-                <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
-            </div>
-
             <div class="row">
                 <div class="col-md-5">
                     <div class="x_panel">
@@ -297,7 +279,7 @@
                         <div class="x_title">
                             <h2>Student Evaluation</h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <li><a href="<?php echo base_url();?>enrollment/checklist/<?php echo $studentNumber; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Student Checklist</i></a></li>
+                                <li><a href="<?php echo base_url();?>enrollment/eChecklist/<?php echo $studentNumber; ?>/<?php echo $dbtype; ?>" class="load_modal_details" target="_blank" > <i class="fa fa-list"></i> Student Checklist</i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -398,6 +380,7 @@
                                             <input type="text" style="display: none;" name="semester" value="<?php echo $nextSem; ?>">
                                             <input type="text" style="display: none;" id="fyearlevel" name="standingYear" value="<?php echo $yearLevel++; ?>">
                                             <input type="text" style="display: none;" id="fstatus" name="status" value="<?php echo $status; ?>">
+                                            <input type="text" style="display: none;" id="dbtype" name="dbtype" value="<?php echo $dbtype; ?>">
 
                                             <?php
                                             if($sccData){
@@ -563,6 +546,11 @@
     }
 
     function SectionOnChange(obj){
+
+        var table = $('#subjectlist').DataTable();
+        table.clear().draw();
+        table.destroy();
+
         var dropDown = document.getElementById("section");
 
         var schoolyear = $('#schoolyear').val();
@@ -571,13 +559,7 @@
         var major = $('#tMajor').text();
         var yearlevel = $("#yearlevel option:selected").val();
         var section = dropDown.options[dropDown.selectedIndex].value;
-
-        console.log(schoolyear);
-        console.log(semester);
-        console.log(coursecode);
-        console.log(major);
-        console.log(yearlevel);
-        console.log(section);
+        var dbtype = $('#dbtype').val();
 
         $.ajax({
             type: "POST",
@@ -588,7 +570,8 @@
                 'coursecode': coursecode,
                 'major': major,
                 'yearlevel': yearlevel,
-                'section': section
+                'section': section,
+                'dbtype': dbtype
             },
 
             success: function(data) {

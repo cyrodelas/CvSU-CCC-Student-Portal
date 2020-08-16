@@ -1,6 +1,4 @@
-<?php if (!isset($_SESSION['student_id'])) {
-    redirect('student', 'refresh');
-} ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +67,6 @@
             <div class="x_title">
                 <h2><?php echo $studentNum;?> <small> <?php echo $studentName; ?> - <?php foreach ($courseData as $rs) {if($rs->courseCode==$course){echo $rs->courseTitle;}}  ?> </small></h2>
                 <ul class="nav navbar-right panel_toolbox">
-                    <li><a href="#" class="load_modal_details" data-toggle="modal" data-target=".update-guardian-information"  title="update student info"><i class="fa fa-list"></i> Request for missing grades</i></a>
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -158,28 +155,28 @@
                             <br />
                             <form method="post" id="frm_validation" action="<?php echo base_url();?>student/gradesRequest" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
 
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">School year :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="schoolyear" name="schoolyear" class="form-control" onchange="myFunction(this)">
-                                                <option hidden>--------------</option>
-                                                <?php foreach ($schoolYearData as $syRow) { ?>
-                                                    <option><?php echo $syRow->schoolyear; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">School year :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <select id="schoolyear" name="schoolyear" class="form-control" onchange="myFunction(this)">
+                                            <option hidden>--------------</option>
+                                            <?php foreach ($schoolYearData as $syRow) { ?>
+                                                <option><?php echo $syRow->schoolyear; ?></option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Semester :
-                                        </label>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <select id="semester" name="semester" class="form-control">
-                                                <option hidden>--------------</option>
-                                            </select>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Semester :
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <select id="semester" name="semester" class="form-control">
+                                            <option hidden>--------------</option>
+                                        </select>
                                     </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Subject Code :

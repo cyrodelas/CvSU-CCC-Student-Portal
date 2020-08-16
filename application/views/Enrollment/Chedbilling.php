@@ -439,7 +439,7 @@ if (!isset($_SESSION['student_id'])) {
                                             <label class="col-md-12 col-sm-12 col-xs-12" for="last-name">Household Number
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input required="required" type="text" id="householdnum" name="householdnum" required="required" class="form-control col-md-12 col-xs-12" value="<?php echo $sfRow->suffix; ?>">
+                                                <input required="required" type="text" id="householdnum" name="householdnum" required="required" class="form-control col-md-12 col-xs-12" value="">
                                             </div>
                                         </div>
 

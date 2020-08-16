@@ -236,7 +236,7 @@
                                         </tr>
                                         <tr>
                                             <th scope='row'>Section</th>
-                                            <td id=""><?php echo $Section;?> </td>
+                                            <td id=""><?php echo $Section;?></td>
                                         </tr>
                                         </thead>
                                     </table>

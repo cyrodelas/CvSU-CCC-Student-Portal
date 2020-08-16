@@ -1,7 +1,3 @@
-<?php if (!isset($_SESSION['student_id'])) {
-    redirect('student', 'refresh');
-} ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,11 +71,11 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
+                        <img src="<?php echo base_url();?>/assets/images/user.png" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
-                        <h2><?php echo $this->session->student_course;?></h2>
+                        <h2 style="font-weight: 600">Evaluator<br>Profile</h2>
+                        <h2><?php echo $this->session->department;?></h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -91,14 +87,7 @@
                     <div class="menu_section">
                         <h3>Navigation</h3>
                         <ul class="nav side-menu">
-                            <li><a href="<?php echo base_url();?>student/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
-                            <li><a href="<?php echo base_url();?>student/information"><i class="fa fa-user"></i> Student Information </a></li>
-                            <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
-                            <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
-                            <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <?php if ($this->session->enrollment == "OPEN") {?>
-                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
-                            <?php } ?>
+                            <li><a href="<?php echo base_url();?>student/evaluation"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                         </ul>
                         </ul>
                     </div>
@@ -145,13 +134,6 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-
-            <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
-                <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
-                <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
-                <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
-            </div>
-
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -200,6 +182,7 @@
                                                     <input style="display:none" id="schoolyear" name="schoolyear" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->schoolyear; ?>">
                                                     <input style="display:none" id="semester" name="semester" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->semester; ?>">
                                                     <input style="display:none" id="status" name="status" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->status; ?>">
+                                                    <input style="display:none" id="dbtype" name="dbtype" class="form-control col-md-7 col-xs-12" value="<?php echo $rs->dbtype; ?>">
                                                     <input style="display:none" id="standingYear" name="standingYear" class="form-control col-md-7 col-xs-12" value="<?php echo $standingYear; ?>">
                                                 </form>
 

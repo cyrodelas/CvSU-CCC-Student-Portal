@@ -21,65 +21,117 @@ class Student extends CI_Controller
         $this->form_validation->set_rules('username','Username','trim|required|max_length[9]');
         $this->form_validation->set_rules('password','Password','trim|required|max_length[16]');
 
-        if($this->form_validation->run() == TRUE){
-            $defaultPass = 0;
-
-            $passVal = $this->input->post("password", TRUE);
-
-            $result = $this->Student_Model->validate_login();
-
-            if($result['success']==TRUE){
-
-                if($passVal == '8cN8GpmMJ99rPJyy') {
-                    $defaultPass = 1;
-                }
-
-                $enrollment_status = 'OPEN';
-
+        if($this->input->post("username", TRUE)=='evaluatorDIT'){
+            if($this->input->post("password", TRUE)=='1234'){
                 $account_data = array(
-                    'student_id'         => $result['student_id'],
-                    'student_fn'         => $result['student_fn'],
-                    'student_mn'         => $result['student_mn'],
-                    'student_ln' 	     => $result['student_ln'],
-                    'student_course' 	 => $result['student_course'],
-                    'student_image'      => $result['student_image'],
-                    'schoolyear'         => $result['schoolyear'],
-                    'semester'           => $result['semester'],
-                    'curriculum'         => $result['curriculum'],
-                    'yearAdmitted'       => $result['yearAdmitted'],
-                    'semesterAdmitted'   => $result['semesterAdmitted'],
-                    'dbtype'             => $result['dbtype'],
-                    'defaultPass'        => $defaultPass,
-                    'enrollment'         => $enrollment_status,
+                    'department'         => 'DIT',
                     'logged_in' 	     => TRUE
                 );
-
                 $this->session->set_userdata($account_data);
-
-                $this->session->set_flashdata("success","login sucess");
-
-
-                redirect("student/dashboard","refresh");
-
-
-            }else{
-
-                $this->session->set_flashdata("error","invalid username/password.");
+                redirect("student/evaluation","refresh");
             }
+        } elseif($this->input->post("username", TRUE)=='evaluatorDM'){
+            if($this->input->post("password", TRUE)=='1234'){
+                if($this->input->post("password", TRUE)=='1234'){
+                    $account_data = array(
+                        'department'         => 'DM',
+                        'logged_in' 	     => TRUE
+                    );
+                    $this->session->set_userdata($account_data);
+                    redirect("student/evaluation","refresh");
+                }
+            }
+        } elseif($this->input->post("username", TRUE)=='evaluatorDAS'){
+            if($this->input->post("password", TRUE)=='1234'){
+                if($this->input->post("password", TRUE)=='1234'){
+                    $account_data = array(
+                        'department'         => 'DAS',
+                        'logged_in' 	     => TRUE
+                    );
+                    $this->session->set_userdata($account_data);
+                    redirect("student/evaluation","refresh");
+                }
+            }
+        } elseif($this->input->post("username", TRUE)=='evaluatorDTEL'){
+            if($this->input->post("password", TRUE)=='1234'){
+                if($this->input->post("password", TRUE)=='1234'){
+                    $account_data = array(
+                        'department'         => 'DTEL',
+                        'logged_in' 	     => TRUE
+                    );
+                    $this->session->set_userdata($account_data);
+                    redirect("student/evaluation","refresh");
+                }
+            }
+        } else{
+            if($this->form_validation->run() == TRUE){
 
-            if($result['success']==FALSE){
+                $defaultPass = 0;
+
+                $passVal = $this->input->post("password", TRUE);
+
+                $result = $this->Student_Model->validate_login();
+
+                if($result['success']==TRUE){
+
+                    if($passVal == '8cN8GpmMJ99rPJyy') {
+                        $defaultPass = 1;
+                    }
+
+                    $enrollment_status = 'CLOSE';
+
+                    $account_data = array(
+                        'student_id'         => $result['student_id'],
+                        'student_fn'         => $result['student_fn'],
+                        'student_mn'         => $result['student_mn'],
+                        'student_ln' 	     => $result['student_ln'],
+                        'student_course' 	 => $result['student_course'],
+                        'student_image'      => $result['student_image'],
+                        'schoolyear'         => $result['schoolyear'],
+                        'semester'           => $result['semester'],
+                        'curriculum'         => $result['curriculum'],
+                        'yearAdmitted'       => $result['yearAdmitted'],
+                        'semesterAdmitted'   => $result['semesterAdmitted'],
+                        'dbtype'             => $result['dbtype'],
+                        'defaultPass'        => $defaultPass,
+                        'enrollment'         => $enrollment_status,
+                        'logged_in' 	     => TRUE
+                    );
+
+                    $this->session->set_userdata($account_data);
+
+                    $this->session->set_flashdata("success","login sucess");
+
+
+                    redirect("student/dashboard","refresh");
+
+
+                }else{
+
+                    $this->session->set_flashdata("error","invalid username/password.");
+                }
+
+                if($result['success']==FALSE){
+                    redirect("Student","refresh");
+                }
+
+
+            }
+            else{
+                $this->session->set_flashdata("error","invalid username/password.");
                 redirect("Student","refresh");
             }
-
-
-        }
-        else{
-            $this->session->set_flashdata("error","invalid username/password.");
-            redirect("Student","refresh");
         }
 
     }
 
+    public function evaluation(){
+        $department = $this->session->department;
+        $query = $this->Enrollment_Model->loadEvalList($department);
+        $module['evalData'] = $query;
+        $module['standingYear'] = 0;
+        $this->load->view('Enrollment/EvaluationList', $module);
+    }
 
     public function logout()
     {

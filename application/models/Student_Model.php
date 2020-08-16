@@ -204,7 +204,7 @@ class Student_Model extends CI_Model
             $query = $this->db->get();
             return $query->result();
         }else {
-            $this->cvsu->select('StudentNumber as studentNumber, FirstName as firstName, LastName as lastName, MiddleName as middleName, Street as street, Barangay as barangay, Municipality as municipality, Province as province, Birthday as dateOfBirth, Sex as gender, Status as status, Citizenship as citizenship, Religion as religion, Guardian as guardian, Phone as mobilePhone');
+            $this->cvsu->select('StudentNumber as studentNumber, FirstName as firstName, LastName as lastName, MiddleName as middleName, Street as street, Barangay as barangay, Municipality as municipality, Province as province, Birthday as dateOfBirth, Sex as gender, Status as status, Citizenship as citizenship, Religion as religion, Guardian as guardian, Phone as mobilePhone, "N/A" as email, "" as suffix');
             $this->cvsu->from('studentinfo');
             $this->cvsu->where('StudentNumber', $currentStudent);
             $query = $this->cvsu->get();
@@ -404,10 +404,10 @@ class Student_Model extends CI_Model
             $query = $this->db->get();
             return $query->result();
         }else{
-            $this->cvsu->select('schedcode.SubjectCode AS schedcode, schedcode.CourseCode AS subjectCode, coursecode.Title AS subjectTitle, schedcode.Units AS units');
+            $this->cvsu->select('enrolledsubject.SchedCode as schedcode, enrollscheduletbl.subjectCode, enrollsubjectstbl.subjectTitle, enrollscheduletbl.units');
             $this->cvsu->from('enrolledsubject');
-            $this->cvsu->join('schedcode', 'schedcode.SubjectCode = enrolledsubject.SchedCode ', 'left');
-            $this->cvsu->join('coursecode', 'coursecode.Code = schedcode.CourseCode');
+            $this->cvsu->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrolledsubject.SchedCode', 'left');
+            $this->cvsu->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
             $this->cvsu->where('enrolledsubject.StudentNumber', $currentUser);
             $this->cvsu->where('enrolledsubject.Schoolyear', $currentSY);
             $this->cvsu->where('enrolledsubject.semester', $currentSem);
@@ -510,9 +510,9 @@ class Student_Model extends CI_Model
             $query = $this->db->get();
             return $query->result();
         }else {
-            $this->cvsu->select('DISTINCT(schedcode.Section) as section, COUNT(schedcode.Section) AS NoOfSubject');
+            $this->cvsu->select('DISTINCT(enrollscheduletbl.section) as section, COUNT(enrollscheduletbl.section) AS NoOfSubject');
             $this->cvsu->from('enrolledsubject');
-            $this->cvsu->join('schedcode', 'schedcode.SubjectCode = enrolledsubject.SchedCode');
+            $this->cvsu->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrolledsubject.SchedCode');
             $this->cvsu->where('enrolledsubject.StudentNumber', $currentStudent);
             $this->cvsu->where('enrolledsubject.Schoolyear', $sy);
             $this->cvsu->where('enrolledsubject.semester', $sem);
