@@ -276,6 +276,7 @@ class Student_Model extends CI_Model
             $provCode = $rs->provCode;
         }
 
+        $this->db->where('provCode', $provCode);
         $this->db->where('citymunDesc', $municipalityCode);
         $munData = $this->db->get("refcitymun");
 
@@ -404,10 +405,10 @@ class Student_Model extends CI_Model
             $query = $this->db->get();
             return $query->result();
         }else{
-            $this->cvsu->select('enrolledsubject.SchedCode as schedcode, enrollscheduletbl.subjectCode, enrollsubjectstbl.subjectTitle, enrollscheduletbl.units');
+            $this->cvsu->select('enrolledsubject.SchedCode as schedcode, enrollscheduletbl.subjectCode, coursecode.Title as subjectTitle, enrollscheduletbl.units');
             $this->cvsu->from('enrolledsubject');
             $this->cvsu->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrolledsubject.SchedCode', 'left');
-            $this->cvsu->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+            $this->cvsu->join('coursecode', 'coursecode.Code = enrollscheduletbl.subjectCode');
             $this->cvsu->where('enrolledsubject.StudentNumber', $currentUser);
             $this->cvsu->where('enrolledsubject.Schoolyear', $currentSY);
             $this->cvsu->where('enrolledsubject.semester', $currentSem);
@@ -510,15 +511,26 @@ class Student_Model extends CI_Model
             $query = $this->db->get();
             return $query->result();
         }else {
-            $this->cvsu->select('DISTINCT(enrollscheduletbl.section) as section, COUNT(enrollscheduletbl.section) AS NoOfSubject');
+
+            $this->cvsu->select('DISTINCT(schedcode.Section) as section, COUNT(schedcode.Section) AS NoOfSubject');
             $this->cvsu->from('enrolledsubject');
-            $this->cvsu->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrolledsubject.SchedCode');
+            $this->cvsu->join('schedcode', 'schedcode.SubjectCode = enrolledsubject.SchedCode');
             $this->cvsu->where('enrolledsubject.StudentNumber', $currentStudent);
             $this->cvsu->where('enrolledsubject.Schoolyear', $sy);
             $this->cvsu->where('enrolledsubject.semester', $sem);
             $this->cvsu->order_by('NoOfSubject', 'ASC');
             $query = $this->cvsu->get();
             return $query->result();
+
+            //$this->cvsu->select('DISTINCT(enrollscheduletbl.section) as section, COUNT(enrollscheduletbl.section) AS NoOfSubject');
+            //$this->cvsu->from('enrolledsubject');
+            //$this->cvsu->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrolledsubject.SchedCode');
+            //$this->cvsu->where('enrolledsubject.StudentNumber', $currentStudent);
+            //$this->cvsu->where('enrolledsubject.Schoolyear', $sy);
+            //$this->cvsu->where('enrolledsubject.semester', $sem);
+            //$this->cvsu->order_by('NoOfSubject', 'ASC');
+            //$query = $this->cvsu->get();
+            //return $query->result();
         }
     }
 
@@ -631,6 +643,72 @@ class Student_Model extends CI_Model
         );
 
     }
+
+
+    public function displayMissingGrades(){
+        $this->db->select('*');
+        $this->db->distinct();
+        $this->db->from('requestedgradestbl');
+        $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = requestedgradestbl.subjectCode');
+        $this->db->where('requestedgradestbl.section Like', '%BM%');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function gradesOnNewDB(){
+        $this->db->select('*');
+        $this->db->from('enrollgradestbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
+
+
+    public function searchGradesOldDB($studentnumber, $subjectcode, $schoolyear, $semester){
+        $this->cvsu->select('*');
+        $this->cvsu->from('grades');
+        $this->cvsu->where('StudentNumber', $studentnumber);
+        $this->cvsu->where('CourseCode', $subjectcode);
+        $this->cvsu->where('Schoolyear', $schoolyear);
+        $this->cvsu->where('Semester', $semester);
+        $query = $this->cvsu->get();
+        return $query->result();
+    }
+
+    public function addGradesNewDB(){
+        $data = array(
+            'subjectcode'      =>  $this->input->post('subjectcode', true),
+            'studentnumber'    =>  $this->input->post('studentNumber', true),
+            'schedcode'        =>  $this->input->post('schedulecode', true),
+            'mygrade'          =>  $this->input->post('grade', true),
+            'units'            =>  $this->input->post('unit', true),
+            'semester'         =>  $this->input->post('semester', true),
+            'schoolyear'       =>  $this->input->post('schoolyear', true),
+            'graded'           =>  'Y'
+        );
+
+        $result = $this->db->insert('enrollgradestbl', $data);
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+    public function deleteOnRequestData($studentNumber, $schoolyear, $semester, $subjectcode){
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->where('schoolyear', $schoolyear);
+        $this->db->where('semester', $semester);
+        $this->db->where('subjectCode', $subjectcode);
+        $this->db->delete('requestedgradestbl');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
 
 
 }

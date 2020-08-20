@@ -78,7 +78,11 @@ class Student extends CI_Controller
                         $defaultPass = 1;
                     }
 
-                    $enrollment_status = 'CLOSE';
+                    if(($result['student_course']=="BSBM")||($result['student_course']=="BSE")||($result['student_course']=="BECED")||($result['student_course']=="BEE")){
+                        $enrollment_status = 'OPEN';
+                    } else {
+                        $enrollment_status = 'CLOSE';
+                    }
 
                     $account_data = array(
                         'student_id'         => $result['student_id'],
@@ -529,6 +533,47 @@ class Student extends CI_Controller
         $message = "Date of birth : ".$result['dateOfBirth'];
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
+
+    public function missingGrades(){
+
+        $query = $this->Student_Model->displayMissingGrades();
+        $module['missingData'] = $query;
+        $query = $this->Student_Model->gradesOnNewDB();
+        $module['gradesNew'] = $query;
+
+        $this->load->view('Student/MissingGrades', $module);
+    }
+
+    public function searchGradesToOld(){
+        $studentnumber = $this->input->post('studentnumber',TRUE);
+        $schoolyear = $this->input->post('schoolyear',TRUE);
+        $semester = $this->input->post('semester',TRUE);
+        $subjectcode = $this->input->post('subjectcode',TRUE);
+
+        $query = $this->Student_Model->searchGradesOldDB($studentnumber, $subjectcode, $schoolyear, $semester);
+        echo json_encode($query);
+    }
+
+    public function addGradesCvSUdatabase(){
+        $result = $this->Student_Model->addGradesNewDB();
+
+        if($result['result']==true){
+            $studentNumber = $this->input->post('studentNumber', true);
+            $schoolyear = $this->input->post('schoolyear', true);
+            $semester = $this->input->post('semester', true);
+            $subjectcode = $this->input->post('subjectcode', true);
+
+            $deleteRequest = $this->Student_Model->deleteOnRequestData($studentNumber, $schoolyear, $semester, $subjectcode);
+
+            $message = "Successful";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        } else {
+            $message = "Error";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
+        redirect("student/missingGrades", "refresh");
+    }
+
 
 
 }

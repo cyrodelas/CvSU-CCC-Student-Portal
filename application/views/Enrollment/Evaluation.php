@@ -192,6 +192,9 @@
                                     <label>Course</label>
                                     <?php $sectioncount=0;
                                     foreach ($YLSData as $ylsData){
+
+                                        $courseX = $ylsData->section;
+
                                         $sectioncount ++;
                                         $Course = '';
                                         $Major = '';

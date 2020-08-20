@@ -380,7 +380,7 @@
                                             <input type="text" style="display: none;" name="semester" value="<?php echo $nextSem; ?>">
                                             <input type="text" style="display: none;" id="fyearlevel" name="standingYear" value="<?php echo $yearLevel++; ?>">
                                             <input type="text" style="display: none;" id="fstatus" name="status" value="<?php echo $status; ?>">
-                                            <input type="text" style="display: none;" id="dbtype" name="dbtype" value="<?php echo $dbtype; ?>">
+                                            <input type="text" style="display: none;" id="databaseType" name="databaseType" value="<?php echo $dbtype; ?>">
 
                                             <?php
                                             if($sccData){
@@ -559,7 +559,7 @@
         var major = $('#tMajor').text();
         var yearlevel = $("#yearlevel option:selected").val();
         var section = dropDown.options[dropDown.selectedIndex].value;
-        var dbtype = $('#dbtype').val();
+        var dbtype = $('#databaseType').val();
 
         $.ajax({
             type: "POST",

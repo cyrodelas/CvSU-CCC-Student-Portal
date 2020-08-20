@@ -338,7 +338,9 @@ if($this->session->defaultPass==1){
                         <div class="x_title">
                             <h2>Enrolled Subjects</h2>
                             <ul class="nav navbar-right panel_toolbox">
+                                <?php if ($this->session->enrollment == "OPEN") {?>
                                 <li><a href="#" onclick="myFunction()"> <i class="fa fa-list"></i> Registration Form</i></a></li>
+                                <?php } ?>
                             </ul>
                             <div class="clearfix"></div>
                         </div>

@@ -134,6 +134,13 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+
+            <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
+                <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
+                <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
+                <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
+            </div>
+
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">

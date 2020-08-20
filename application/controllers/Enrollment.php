@@ -45,7 +45,7 @@ class Enrollment extends CI_Controller
 
         } elseif($query['status'] == 'MANUAL-EVALUATION'){
 
-            //Creation of Schedule Manual
+            $this->load->view('Enrollment/EvalPending');
 
 
         }elseif($query['status'] == 'POST-EVALUATION') {
@@ -118,10 +118,16 @@ class Enrollment extends CI_Controller
                 $semAdmitted = $this->session->semesterAdmitted;
             }
 
+            if(strlen($this->session->yearAdmitted)==4){
+                $newYearAdmitted = $this->session->yearAdmitted. '-' . (intval($this->session->yearAdmitted) + 1);
+            } else{
+                $newYearAdmitted = $this->session->yearAdmitted;
+            }
+
             $module['yearAdmitted']= $yearAdmitted;
             $module['semAdmitted']= $semAdmitted;
 
-            $query = $this->Enrollment_Model->getFeeList($schoolyear, $semester, $course, $yearAdmitted, $semAdmitted);
+            $query = $this->Enrollment_Model->getFeeList($schoolyear, $semester, $course, $newYearAdmitted, $semAdmitted);
             $module['feeData'] = $query;
 
             $this->load->view('Enrollment/Assessment', $module);
@@ -228,6 +234,7 @@ class Enrollment extends CI_Controller
         $module['standingYear'] = $this->input->post('standingYear', true);
         $module['dbtype'] = $this->input->post('dbtype', true);
 
+
         $semester = $this->input->post('semester', true);
         $schoolyear = $this->input->post('schoolyear', true);
         $course = $this->input->post('course', true);
@@ -237,13 +244,15 @@ class Enrollment extends CI_Controller
         $status = $this->input->post('status', true);
         $dbtype = $this->input->post('dbtype', true);
 
+        $UpdateEvaluatedStatus = $this->Enrollment_Model->changeEvaluatedStatus($studentID);
+
         if($semester=='FIRST'){
             $nextSchoolYear = $schoolyear;
             $nextSemester = 'SECOND';
 
             if(strlen($course)==3){
                 $nextCourse = substr($course, 1, 2);
-                $nextMajor = substr($major, 0, 1);
+                $nextMajor = substr($major, 3, 1);;
                 $nextYearlevel = $yearlevel;
                 $nextSection = $section;
                 $YCS = $nextCourse.$nextYearlevel.$nextSection.$nextMajor;
@@ -265,21 +274,27 @@ class Enrollment extends CI_Controller
             $nextSemester = 'FIRST';
 
             if(strlen($course)==3){
+
                 $nextCourse = substr($course, 1, 2);
-                $nextMajor = substr($major, 0, 1);
+                $nextMajor = substr($major, 3, 1);;
                 $nextYearlevel = intval($yearlevel) + 1;
                 $nextSection = $section;
                 $YCS = $nextCourse.$nextYearlevel.$nextSection.$nextMajor;
+
             } elseif(strlen($course)==5){
+
                 $nextCourse = substr($course, 1, 4);
                 $nextYearlevel = intval($yearlevel) + 1;
                 $nextSection = $section;
                 $YCS = $nextCourse.$nextYearlevel.$nextSection;
+
             } else {
+
                 $nextCourse = substr($course, 2, 2);
                 $nextYearlevel = intval($yearlevel) + 1;
                 $nextSection = $section;
                 $YCS = $nextCourse.$nextYearlevel.$nextSection;
+
             }
 
         }
@@ -302,7 +317,7 @@ class Enrollment extends CI_Controller
             $query = $this->Enrollment_Model->loadSchedCodesv2($nextSchoolYear, $nextSemester, $YCS, $dbtype);
             $module['sccData'] = $query;
         } else{
-            $query = $this->Enrollment_Model->courselistc2($dbtype);
+            $query = $this->Enrollment_Model->courselistv2($dbtype);
             $module['courseData'] = $query;
             $query = $this->Enrollment_Model->loadYearAndSemesterv2($cID, $dbtype);
             $module['ysData'] = $query;
@@ -333,7 +348,7 @@ class Enrollment extends CI_Controller
         $major= $this->input->post('major',TRUE);
         $yearlevel = $this->input->post('yearlevel',TRUE);
         $yearsection = $this->input->post('section',TRUE);
-        $dbtype = $this->input->post('dbtype',TRUE);
+        $dbtype = $this->input->post('dbtype');
 
         if(strlen($coursename)==3){
 
@@ -367,8 +382,8 @@ class Enrollment extends CI_Controller
 
     public function evaluateStudent(){
 
-        $dbtype = $this->input->post('dbtype ', true);
-        $status = $this->input->post('status', true);
+        $dbtype = $this->input->post('databaseType');
+        $status = $this->input->post('status');
 
         if($status=='REGULAR'){
             $result = $this->Enrollment_Model->addEvaluationData($dbtype);

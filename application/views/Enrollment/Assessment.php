@@ -206,7 +206,13 @@
                                         </tr>
                                         <tr>
                                             <th scope='row'>Admitted Year</th>
-                                            <td id=""><?php echo $this->session->yearAdmitted;?></td>
+                                            <td id=""><?php
+                                                if(strlen($this->session->yearAdmitted)==4){
+                                                    echo $this->session->yearAdmitted. '-' . (intval($this->session->yearAdmitted) + 1);
+                                                } else{
+                                                    echo $this->session->yearAdmitted;
+                                                }
+                                                ?></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Admitted Semester</th>

@@ -141,17 +141,12 @@ class Enrollment_Model extends CI_Model
     }
 
     public function courselist(){
-        if($this->session->dbtype == 1){
-            $this->db->select('*');
-            $this->db->from('enrollcoursetbl');
-            $query = $this->db->get();
-            return $query->result();
-        }else {
-            $this->cvsu->select('CourseCode as courseCode, CourseTitle as courseTitle');
-            $this->cvsu->from('course');
-            $query = $this->cvsu->get();
-            return $query->result();
-        }
+
+        $this->db->select('*');
+        $this->db->from('enrollcoursetbl');
+        $query = $this->db->get();
+        return $query->result();
+
     }
 
     public function courselistv2($dbType){
@@ -251,6 +246,7 @@ class Enrollment_Model extends CI_Model
         if($department=='DIT'){
             $this->db->select('*');
             $this->db->from('enrollment_evaluation');
+            $this->db->where('evaluated', 0);
             $this->db->where('course', 'BSIT');
             $this->db->or_where('course', 'BSCS');
             $query = $this->db->get();
@@ -258,6 +254,7 @@ class Enrollment_Model extends CI_Model
         } elseif($department=='DM'){
             $this->db->select('*');
             $this->db->from('enrollment_evaluation');
+            $this->db->where('evaluated', 0);
             $this->db->where('course', 'BSBM');
             $this->db->or_where('course', 'BSHM');
             $query = $this->db->get();
@@ -265,21 +262,43 @@ class Enrollment_Model extends CI_Model
         } elseif($department=='DAS'){
             $this->db->select('*');
             $this->db->from('enrollment_evaluation');
+            $this->db->where('evaluated', 0);
             $this->db->where('course', 'BECED');
             $this->db->or_where('course', 'BSE');
+            $this->db->or_where('course', 'BEE');
             $query = $this->db->get();
             return $query->result();
         } elseif($department=='DTEL'){
             $this->db->select('*');
             $this->db->from('enrollment_evaluation');
+            $this->db->where('evaluated', 0);
             $this->db->where('course', 'BECED');
             $this->db->or_where('course', 'BSE');
+            $this->db->or_where('course', 'BEE');
             $query = $this->db->get();
             return $query->result();
         }
+
     }
 
+    public function changeEvaluatedStatus($studentID){
+        $this->db->set('evaluated', 1);
+        $this->db->where('studentNumber', $studentID);
+        $this->db->update('enrollment_evaluation');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
+
+
     public function getSectionDataSchedule($cCode, $mID, $yl){
+
+        if($cCode=='BSBM'){
+            $mID = 'MARKETING MANAGEMENT';
+        }
+
         $this->db->select('sectioncount');
         $this->db->from('enrollsectiondetails');
         $this->db->where('coursecode', $cCode);
@@ -290,6 +309,7 @@ class Enrollment_Model extends CI_Model
     }
 
     public function getScheduleRegularData($schoolyear, $semester, $section, $dbtype){
+
         if($dbtype==1){
 
             $this->db->select('enrollscheduletbl.*, enrollsubjectstbl.subjectTitle');
@@ -603,7 +623,6 @@ class Enrollment_Model extends CI_Model
     public function addEvaluationData($dbtype){
 
         $data = array();
-
         if($dbtype == 1){
 
             $studentNumber = $this->input->post('studentNumber');
@@ -657,7 +676,6 @@ class Enrollment_Model extends CI_Model
             );
 
         }
-
     }
 
     public function addEvaluationManual(){
