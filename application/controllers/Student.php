@@ -77,12 +77,8 @@ class Student extends CI_Controller
                     if($passVal == '8cN8GpmMJ99rPJyy') {
                         $defaultPass = 1;
                     }
-
-                    if(($result['student_course']=="BSBM")||($result['student_course']=="BSE")||($result['student_course']=="BECED")||($result['student_course']=="BEE")){
-                        $enrollment_status = 'OPEN';
-                    } else {
-                        $enrollment_status = 'CLOSE';
-                    }
+                    
+                    $enrollment_status = 'OPEN';
 
                     $account_data = array(
                         'student_id'         => $result['student_id'],
@@ -574,6 +570,20 @@ class Student extends CI_Controller
         redirect("student/missingGrades", "refresh");
     }
 
+    public function resetEnrollmentManual($studentNumber){
+        $result = $this->Student_Model->resetEnrollmentManualData($studentNumber);
+
+        if($result['result']==true){
+
+            $subjectData = $this->Student_Model->resetEnrollmentSubjectData($studentNumber);
+
+            $message = "Reset Successful";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        } else {
+            $message = "Error";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
+    }
 
 
 }

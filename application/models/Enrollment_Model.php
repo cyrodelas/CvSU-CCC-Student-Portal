@@ -257,6 +257,7 @@ class Enrollment_Model extends CI_Model
             $this->db->where('evaluated', 0);
             $this->db->where('course', 'BSBM');
             $this->db->or_where('course', 'BSHM');
+            $this->db->or_where('course', 'BSHRM');
             $query = $this->db->get();
             return $query->result();
         } elseif($department=='DAS'){
@@ -612,12 +613,44 @@ class Enrollment_Model extends CI_Model
     }
 
 
-    public function getSubjectData($subjectCode){
+    public function getSubjectData($subjectCode, $dbtype){
+        if($dbtype == 1){
+            $this->db->select('*');
+            $this->db->from('enrollsubjectstbl');
+            $this->db->where('subjectcode', $subjectCode);
+            $query = $this->db->get();
+            return $query->result();
+        } else {
+            $this->cvsu->select('Code as subjectcode, Title as subjectTitle, Credit as lectUnits, 0 as labunits');
+            $this->cvsu->from('coursecode');
+            $this->cvsu->where('Code', $subjectCode);
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
+    }
+
+    public function displayManualEvaluation($studentNumber){
         $this->db->select('*');
-        $this->db->from('enrollsubjectstbl');
-        $this->db->where('subjectcode', $subjectCode);
+        $this->db->from('enrollment_subjectlist');
+        $this->db->where('studentNumber', $studentNumber);
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function displayManualSubjectDetail($dbtype){
+        if($dbtype == 1){
+            $this->db->select('*');
+            $this->db->from('enrollsubjectstbl');
+            $query = $this->db->get();
+            return $query->result();
+        } else {
+            $this->cvsu->select('Code as subjectcode, Title as subjectTitle, Credit as lectUnits, 0 as labunits');
+            $this->cvsu->from('coursecode');
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
     }
 
     public function addEvaluationData($dbtype){

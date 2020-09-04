@@ -157,6 +157,8 @@
                                     $Course = substr($ylsData->section, 0, 2);
                                     if($Course == "SE"){
 
+                                        $courseName = 'B'. $Course;
+
                                         $YL = substr($ylsData->section, 2, 1);
                                         $Section = substr($ylsData->section, 3, 1);
 

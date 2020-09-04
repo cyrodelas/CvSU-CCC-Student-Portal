@@ -60,7 +60,7 @@
 </head>
 
 
-<body class="nav-md" onload="OnNotification()">
+<body class="nav-md">
 
 <div class="container body">
     <div class="main_container">
@@ -100,6 +100,7 @@
                                 <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
                             <?php } ?>
                         </ul>
+                        </ul>
                     </div>
 
                 </div>
@@ -125,7 +126,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo base_url();?>/assets/admin/img/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
+                                <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -133,6 +134,7 @@
                                 <li><a href="<?php echo base_url();?>student/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
+
 
                     </ul>
                 </nav>
@@ -142,181 +144,57 @@
 
 
         <!-- page content -->
-        <div class="right_col" role="main" style="padding-bottom: 50px">
-            <div class="col-md-5">
+        <div class="right_col" role="main">
 
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Student Information</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="x_content">
-                        <div class="row">
-                            <div id ="studentinformation" class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="table-reponsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope='row'>Student Number</th>
-                                                <td id=""><?php echo $this->session->student_id;?></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope='row'>Student Name</th>
-                                                <td id=""><?php echo $this->session->student_fn;?> <?php if($this->session->student_mn!='N/A'){ echo $this->session->student_mn;}?> <?php echo $this->session->student_ln;?></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope='row'>School Year</th>
-                                                <?php $nextSchoolyear = ''; if($this->session->semester == 'FIRST') {$nextSchoolyear = $this->session->schoolyear;} else {$nextSchoolyear = (intval(substr($this->session->schoolyear, 0, 4)) + 1) . "-" . (intval(substr($this->session->schoolyear, 5, 4)) + 1);}?>
-                                                <td id=""><?php echo $nextSchoolyear ;?></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope='row'>Semester</th>
-                                                <?php $nextSemester = ''; if($this->session->semester == 'FIRST') {$nextSemester = 'SECOND';} else {$nextSemester = 'FIRST';}?>
-                                                <td id=""><?php echo $nextSemester; ?> SEMESTER</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope='row'>Course</th>
-                                                <?php $sectioncount=0;
-                                                foreach ($YLSData as $ylsData){
-                                                    $CYS = $ylsData->section;
-                                                    $sectioncount ++;
-                                                    $Course = '';
-                                                    $Major = '';
-                                                    $Section = '';
-                                                    $Course = substr($ylsData->section, 0, 2);
-                                                    if($Course == "SE"){
-                                                        $courseName = 'B'. substr($ylsData->section, 0, 2);
-                                                        $YL = substr($ylsData->section, 2, 1);
-                                                        $Section = substr($ylsData->section, 3, 1);
-
-                                                        $MI = $Course = substr($ylsData->section, 4, 1);
-                                                        if($MI == 'M'){
-                                                            $Major = " - MATHEMATICS";
-                                                        }else {
-                                                            $Major = " - ENGLISH";
-                                                        }
-
-
-                                                    }
-
-                                                    elseif($Course == "BE"){
-                                                        $courseName = substr($ylsData->section, 0, 5);
-                                                        $YL = substr($ylsData->section, 5, 1);
-                                                        $Section = substr($ylsData->section, 6, 1);
-                                                    }
-
-                                                    else{
-                                                        $courseName = 'BS'. $Course;
-                                                        $YL = substr($ylsData->section, 2, 1);
-                                                        $Section = substr($ylsData->section, 3, 1);
-                                                    }
-
-                                                } ?>
-
-                                                <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
-
-
-                                            </tr>
-                                            <tr>
-                                                <th scope='row'>Year Level</th>
-                                                <td id=""><?php echo $YL;?> </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope='row'>Section</th>
-                                                <td id=""><?php echo $Section;?></td>
-                                            </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-
-                                    <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/studentAssessment" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-
-                                        <input type="text" style="display: none;" name="studentNumber" value="<?php echo $this->session->student_id;?>">
-                                        <input type="text" style="display: none;" name="schoolyear" value="<?php echo $nextSchoolyear; ?>">
-                                        <input type="text" style="display: none;" name="semester" value="<?php echo $nextSemester; ?>">
-                                        <input type="text" style="display: none;" name="status" value="<?php echo $status; ?>">
-                                        <input type="text" style="display: none;" name="standingYear" value="<?php echo $standingYear; ?>">
-
-                                        <?php foreach ($seData as $rs) { ?>
-                                            <input type="text" style="display: none;" name="schedcodes[]" value="<?php echo $rs->schedcode; ?>">
-                                        <?php } ?>
-
-                                        <button type="submit" style="margin-top: 15px" class="btn btn-success col-md-12">PROCEED TO ASSESSMENT</button>
-
-                                    </form>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
+            <div id="notif_fade" class="col-md-12 col-sm-12 col-xs-12">
+                <?php if(isset($_SESSION["error"])){echo '<div class="clearfix"></div><div class="alert alert-danger">'.$_SESSION["error"].'</div>';}?>
+                <?php if(isset($_SESSION["success"])){echo '<div class="clearfix"></div><div class="alert alert-success">'.$_SESSION["success"].'</div>';}?>
+                <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
             </div>
 
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Enrollment<small> Student Evaluation </small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
 
-            <div class="col-md-7">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Evaluated Subject</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="#" onclick="myFunction()"> <i class="fa fa-list"></i> Class Schedule</i></a></li>
-                        </ul>
+                        <div class="card-body">
+                            <table id="" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Schedule Code</th>
+                                    <th>Subject Code</th>
+                                    <th>Subject Title</th>
+                                    <th>Units</th>
+                                </tr>
+                                </thead>
 
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <table id="subjectlist" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Schedule Code </th>
-                                        <th>Course Code </th>
-                                        <th>Course Description </th>
-                                        <th>Units </th>
-                                        <th>Instructor </th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <?php
-                                    if($seData){
-                                        foreach ($seData as $rs) {
-                                            ?>
-                                            <tr>
-                                                <td>
-                                                    <?php echo $rs->schedcode;?>
-                                                </td>
-                                                <td><?php echo $rs->subjectCode;?></td>
-                                                <td><?php echo $rs->subjectTitle;?></td>
-                                                <td><?php echo number_format(intval($rs->units) + intval($rs->labunits), 2);?></td>
-                                                <td><?php echo $rs->instructor;?></td>
-                                            </tr>
-                                        <?php } }  ?>
-                                    </tbody>
-                                </table>
-
-
-                            </div>
-
+                                <tbody>
+                                <?php
+                                if($meData){
+                                    foreach ($meData as $rs) {
+                                        ?>
+                                        <tr>
+                                            <td><input type="text" id="" name=""></td>
+                                            <td><?php echo $rs->subjectcode;?></td>
+                                            <?php foreach ($sdData as $sRow) { if($rs->subjectcode==$sRow->subjectcode){ ?>
+                                                <td><?php echo $sRow->subjectTitle;?></td>
+                                                <td><?php $totalUnits = intval($sRow->lectUnits) + intval($sRow->labunits); echo $totalUnits;?></td>
+                                            <?php } } ?>
+                                        </tr>
+                                    <?php } }?>
+                                </tbody>
+                            </table>
 
                         </div>
 
                     </div>
                 </div>
             </div>
-
-
         </div>
 
 
@@ -401,10 +279,9 @@
         $("#notif_fade").fadeOut(5000);
     });
 
-    function myFunction() {
-        var myWindow = window.open("<?php echo base_url();?>enrollment/viewschedSection/<?php echo $nextSchoolyear; ?>/<?php echo $nextSemester; ?>/<?php echo $this->session->student_id;?>", "Class Schedule", "width=865,height=700");
+    function OnNotification() {
+        alert("Evaluation on progress.");
     }
-
 
 </script>
 

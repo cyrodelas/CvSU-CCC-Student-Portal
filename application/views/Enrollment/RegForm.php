@@ -74,6 +74,7 @@
                             $Major = 'N/A';
                             $Section = '';
                             $Course = substr($ylsData->section, 0, 2);
+
                             if($Course == "SE"){
 
                                 $YL = substr($ylsData->section, 2, 1);
@@ -85,7 +86,6 @@
                                 }else {
                                     $Major = " - ENGLISH";
                                 }
-
 
                             }
 
@@ -99,6 +99,9 @@
                                 $courseName = 'BS'. $Course;
                                 $YL = substr($ylsData->section, 2, 1);
                                 $Section = substr($ylsData->section, 3, 1);
+                                if($courseName=='BSBM'){
+                                    $Major = 'MARKETING MANAGEMENT';
+                                }
                             }
 
                         } ?>

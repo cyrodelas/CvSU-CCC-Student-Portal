@@ -45,7 +45,14 @@ class Enrollment extends CI_Controller
 
         } elseif($query['status'] == 'MANUAL-EVALUATION'){
 
-            $this->load->view('Enrollment/EvalPending');
+            $currentUser = $this->session->student_id;
+            $databaseType = $this->session->dbtype;
+            $query = $this->Enrollment_Model->displayManualEvaluation($currentUser);
+            $module['meData'] = $query;
+            $query = $this->Enrollment_Model->displayManualSubjectDetail($databaseType);
+            $module['sdData'] = $query;
+
+            $this->load->view('Enrollment/Manual', $module);
 
 
         }elseif($query['status'] == 'POST-EVALUATION') {
@@ -108,12 +115,18 @@ class Enrollment extends CI_Controller
                 $schoolyear = $nextSchoolyear;
                 $semester = $nextSemester;
                 $course = $this->session->student_course;
+
+                if($course == 'BEE'){ $course = 'BECED';}
+
                 $yearAdmitted = $this->session->yearAdmitted;
                 $semAdmitted = $this->session->semesterAdmitted;
             } else {
                 $schoolyear = $nextSchoolyear;
                 $semester = $nextSemester;
                 $course = $this->session->student_course;
+
+                if($course == 'BEE'){ $course = 'BECED';}
+
                 $yearAdmitted = $this->session->yearAdmitted .'-'. (intval($this->session->yearAdmitted) + 1);
                 $semAdmitted = $this->session->semesterAdmitted;
             }
@@ -281,6 +294,8 @@ class Enrollment extends CI_Controller
                 $nextSection = $section;
                 $YCS = $nextCourse.$nextYearlevel.$nextSection.$nextMajor;
 
+
+
             } elseif(strlen($course)==5){
 
                 $nextCourse = substr($course, 1, 4);
@@ -298,6 +313,8 @@ class Enrollment extends CI_Controller
             }
 
         }
+
+        $module['YCS'] = $YCS;
 
         $gCurriculum = $this->Enrollment_Model->getCurriculumIDv2($studentID, $dbtype);
         $cID = $gCurriculum['curriculumID'];
@@ -473,7 +490,8 @@ class Enrollment extends CI_Controller
 
     public function getSubjectInfo(){
         $subjectCode = $this->input->post('subjectcode');
-        $result = $this->Enrollment_Model->getSubjectData($subjectCode);
+        $databaseType = $this->input->post('databaseType');
+        $result = $this->Enrollment_Model->getSubjectData($subjectCode, $databaseType);
         echo json_encode($result);
     }
 

@@ -164,7 +164,10 @@
                                     $Major = 'N/A';
                                     $Section = '';
                                     $Course = substr($ylsData->section, 0, 2);
+
                                     if($Course == "SE"){
+
+                                        $courseName = 'B'. $Course;
 
                                         $YL = substr($ylsData->section, 2, 1);
                                         $Section = substr($ylsData->section, 3, 1);
@@ -180,9 +183,19 @@
                                     }
 
                                     elseif($Course == "BE"){
+
+
                                         $courseName = substr($ylsData->section, 0, 5);
                                         $YL = substr($ylsData->section, 5, 1);
                                         $Section = substr($ylsData->section, 6, 1);
+                                    }
+
+                                    elseif($Course == "EC"){
+
+                                        $courseName = 'B'. substr($ylsData->section, 0, 4);
+                                        $YL = substr($ylsData->section, 4, 1);
+                                        $Section = substr($ylsData->section, 5, 1);
+
                                     }
 
                                     else{

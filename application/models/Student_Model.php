@@ -709,6 +709,24 @@ class Student_Model extends CI_Model
         );
     }
 
+    public function resetEnrollmentManualData($studentNumber){
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->delete('enrollment_tracker');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
 
+        return array(
+            'result'    => $result
+        );
+    }
+
+    public function resetEnrollmentSubjectData($studentNumber){
+        $this->db->where('studentNumber', $studentNumber);
+        $this->db->delete('enrollment_subjectlist');
+        $result = ($this->db->affected_rows() != 1) ? false : true;
+
+        return array(
+            'result'    => $result
+        );
+    }
 
 }

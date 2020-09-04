@@ -227,6 +227,7 @@
                                     <div class="input-group input-group-sm">
                                         <div class="col-md-8">
                                             <input type="text" class="form-control" name="inputsubjectcode" id="inputsubjectcode">
+                                            <input style="display: none" type="text" class="form-control" name="dbtype" id="dbtype" value="<?php echo $dbtype; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <input type='hidden' name ="searchsubjecturl" id = "searchsubjecturl" value="<?php echo base_url();?>enrollment/getSubjectInfo">
@@ -616,13 +617,14 @@
 
     $('#searchsujectcode').click(function(){
         var searchsubj = $('#searchsubjecturl').val();
-        var subjectcode =$('#inputsubjectcode').val();
+        var subjectcode = $('#inputsubjectcode').val();
+        var databaseType = $('#dbtype').val();
 
         $.ajax({
             type: "POST",
             url  : searchsubj,
             dataType : "JSON",
-            data : {subjectcode:subjectcode},
+            data : {subjectcode:subjectcode, databaseType:databaseType},
             success: function(data){
                 console.log(data);
                 $("#tblsubjectcode").text(data[0].subjectcode);
