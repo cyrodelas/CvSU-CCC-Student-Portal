@@ -133,7 +133,7 @@ if($this->session->defaultPass==1){
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo base_url();?>/assets/admin/img/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
+                                <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -272,13 +272,15 @@ if($this->session->defaultPass==1){
                             </p>
                         </div>
 
+                        <?php $courseN = ''; $majorN = '';  foreach ($currData as $cRow) { $courseN = $cRow->course; $majorN = $cRow->coursemajor;} ?>
+
                         <div class="col-md-3 col-xs-3">
                             <label>Course</label>
-                            <p><?php echo $courseName; ?></p>
+                            <p><?php echo $courseN; ?></p>
                         </div>
                         <div class="col-md-3 col-xs-3">
                             <label>Major</label>
-                            <p><?php if($courseName=='BSBM') {echo 'MARKETING MANAGEMENT';} else {echo $Major;}  ?></p>
+                            <p><?php echo $majorN; ?></p>
                         </div>
 
                     </div>

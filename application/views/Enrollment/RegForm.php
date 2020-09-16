@@ -106,6 +106,8 @@
 
                         } ?>
 
+                        <?php $courseN = ''; $majorN = '';  foreach ($currData as $cRow) { $courseN = $cRow->course; $majorN = $cRow->coursemajor;} ?>
+
                         <div class="col-md-10 col-md-offset-1" style="padding-bottom: 20px">
                             <img class="img-responsive" src="<?php echo base_url();?>/assets/images/banner.png">
                         </div>
@@ -140,10 +142,10 @@
 
                                     <tr>
                                         <th style="border-top-width: 0px; border-bottom-width: 0px;" scope='row'>Course</th>
-                                        <td style="border-top-width: 0px;" id=""><?php echo $courseName; ?></td>
+                                        <td style="border-top-width: 0px;" id=""><?php echo $courseN; ?></td>
 
                                         <th style="border-top-width: 0px; border-bottom-width: 0px;" scope='row'>Major</th>
-                                        <td style="border-top-width: 0px;" id=""><?php echo $Major; ?></td>
+                                        <td style="border-top-width: 0px;" id=""><?php echo $majorN; ?></td>
 
                                         <th style="border-top-width: 0px; border-bottom-width: 0px;" scope='row'>Year Level</th>
                                         <td style="border-top-width: 0px;" id=""><?php if($YL == 1){

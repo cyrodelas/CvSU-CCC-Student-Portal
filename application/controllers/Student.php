@@ -63,6 +63,12 @@ class Student extends CI_Controller
                     redirect("student/evaluation","refresh");
                 }
             }
+        } elseif($this->input->post("username", TRUE)=='evaluatorMIS'){
+            if($this->input->post("password", TRUE)=='1234'){
+                if($this->input->post("password", TRUE)=='1234'){
+                    redirect("student/createSchedule","refresh");
+                }
+            }
         } else{
             if($this->form_validation->run() == TRUE){
 
@@ -133,6 +139,12 @@ class Student extends CI_Controller
         $this->load->view('Enrollment/EvaluationList', $module);
     }
 
+    public function createSchedule(){
+        $query = $this->Enrollment_Model->loadFEList();
+        $module['evalData'] = $query;
+        $this->load->view('Enrollment/EvaluationFList', $module);
+    }
+
     public function logout()
     {
         $this->session->sess_destroy();
@@ -178,7 +190,11 @@ class Student extends CI_Controller
 
 
     public function dashboard(){
-        $this->load->view('Student/Dashboard');
+        $currentUser = $this->session->student_id;
+        $query = $this->Student_Model->loadLMSData($currentUser);
+        $module['lmsData'] = $query;
+
+        $this->load->view('Student/Dashboard', $module);
     }
 
     public function information(){
@@ -186,8 +202,15 @@ class Student extends CI_Controller
         $currentSY = $this->session->schoolyear;
         $currentSem = $this->session->semester;
 
+        $curriculum = $this->session->curriculum;
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
+
         $query = $this->Student_Model->loadStudentInfo($currentUser);
         $module['sfData'] = $query;
+
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
 
         $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
         $module['YLSData'] = $query;
@@ -278,6 +301,9 @@ class Student extends CI_Controller
 
         }
 
+        $curriculum = $this->session->curriculum;
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
 
         $module['sY'] = $currentSY;
         $module['seM'] = $currentSem;
@@ -287,6 +313,9 @@ class Student extends CI_Controller
 
         $query = $this->Student_Model->getYearLevelandSection($currentSY, $currentSem, $currentUser);
         $module['YLSData'] = $query;
+
+        $query = $this->Student_Model->getFacultyName();
+        $module['fData'] = $query;
 
         $this->load->view('Student/Subject', $module);
 
@@ -317,6 +346,10 @@ class Student extends CI_Controller
 
         }
 
+        $curriculum = $this->session->curriculum;
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
+
         $module['studentid'] = $currentUser;
         $module['schoolyear'] = $currentSY;
         $module['semester'] = $currentSem;
@@ -332,6 +365,10 @@ class Student extends CI_Controller
         $currentUser = $this->session->student_id;
         $currentSY = $this->session->schoolyear;
         $currentSem = $this->session->semester;
+
+        $curriculum = $this->session->curriculum;
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
 
         $query = $this->Student_Model->loadStudentSY($currentUser);
         $module['syData'] = $query;
@@ -358,6 +395,10 @@ class Student extends CI_Controller
         $currentUser = $this->session->student_id;
         $currentSY = $this->input->post('schoolyear', true);
         $currentSem = $this->input->post('semester', true);
+
+        $curriculum = $this->session->curriculum;
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
 
         $query = $this->Student_Model->loadStudentSY($currentUser);
         $module['syData'] = $query;

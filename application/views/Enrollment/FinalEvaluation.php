@@ -56,6 +56,10 @@
     <link href="<?php echo base_url();?>assets/plugins/build/css/custom.css" rel="stylesheet">
 
 
+    <!-- FullCalendar CSS -->
+    <link rel="stylesheet" href="<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.css">
+    <link rel="stylesheet" media='print' href="<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.print.css">
+
 
 </head>
 
@@ -152,63 +156,37 @@
                 <?php echo validation_errors('<div class="clearfix"></div><div class="alert alert-danger">','</div>');?>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Enrollment<small> Student Evaluation </small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Class Schedule</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
 
-                        <div class="card-body">
+                <?php
 
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/evaluationStudentPart" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                $currentSem = $this->session->semester;
+                if($currentSem=='FIRST') {
+                    $nextSchoolyear = $this->session->schoolyear;
+                    $nextSemester = 'SECOND';
+                } else {
+                    $nextSchoolyear = (intval(substr($this->session->schoolyear, 0, 4)) + 1) . "-" . (intval(substr($this->session->schoolyear, 5, 4)) + 1);
+                    $nextSemester = 'FIRST';
+                }
 
-                                <table id="" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Schedule Code</th>
-                                        <th>Subject Code</th>
-                                        <th>Subject Title</th>
-                                        <th>Units</th>
-                                        <th>School Year</th>
-                                        <th>Semester</th>
-                                    </tr>
-                                    </thead>
+                ?>
 
-                                    <tbody>
-                                    <?php
-                                    if($meData){
-                                        foreach ($meData as $rs) {
-                                            $schoolyear=$rs->schoolyear;
-                                            $semester=$rs->semester;
 
-                                            ?>
-                                            <tr>
-                                                <td><input type="text" name="schedcode[]"></td>
-                                                <td><?php echo $rs->subjectcode;?></td>
-                                                <?php foreach ($sdData as $sRow) { if($rs->subjectcode==$sRow->subjectcode){ ?>
-                                                    <td><?php echo $sRow->subjectTitle;?></td>
-                                                    <td><?php $totalUnits = intval($sRow->lectUnits) + intval($sRow->labunits); echo $totalUnits;?></td>
-                                                <?php } } ?>
-                                                <td><?php echo $rs->schoolyear;?></td>
-                                                <td><?php echo $rs->semester;?></td>
-                                            </tr>
-                                        <?php } }?>
-                                    </tbody>
-
-                                </table>
-                                <input style="display: none" type="text" name="status" value="<?php echo $status;?>">
-                                <input style="display: none" type="text" name="standingYear" value="<?php echo $standingYear;?>">
-                                <input style="display: none" type="text" name="schoolyear" value="<?php echo $schoolyear;?>">
-                                <input style="display: none" type="text" name="semester" value="<?php echo $semester;?>">
-                                <button type="submit" style="margin-top: 10px" class="btn btn-success col-md-3 pull-right">Submit Evaluation</button>
-                            </form>
-                        </div>
-
+                <div class="x_content">
+                    <div class="row">
+                        <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>enrollment/loadSchedulesEvaluation">
+                        <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $nextSchoolyear;?>">
+                        <input type='hidden' name ="semester" id = "semester" value="<?php echo $nextSemester;?>">
+                        <input type='hidden' name ="studentid" id = "studentid" value="<?php echo $this->session->student_id;?>">
+                        <div id='calendarsched' ></div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -284,6 +262,13 @@
 <!-- select2 -->
 <script src="<?php echo base_url();?>assets/plugins/select2/select2.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>assets/plugins/multi_select/multi_select.js" type="text/javascript"></script>
+
+
+<script src='<?php echo base_url();?>/assets/plugins/calendar/moment.min.js'></script>
+<script src='<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.js'></script>
+
+<script src='<?php echo base_url();?>assets/js/initCalendar.js'></script> <!-- Script with all important stuff-->
+
 
 
 <!-- Custom Theme Scripts -->

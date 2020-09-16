@@ -739,6 +739,93 @@ class Enrollment_Model extends CI_Model
         );
     }
 
+
+    public function addEvaluationStudentMode(){
+
+        $studentNumber = $this->session->student_id;
+        $schedcodes = $this->input->post('schedcode');
+        $schoolyear = $this->input->post('schoolyear');
+        $semester = $this->input->post('semester');
+
+        foreach($schedcodes AS $schedcode)
+        {
+            $data[] = array(
+                'studentNumber'     => $studentNumber,
+                'schedcode'         => $schedcode,
+                'schoolyear'        => $schoolyear,
+                'semester'          => $semester,
+                'dateEvaluated'     => date('Y-m-d H:i:s')
+
+            );
+        }
+
+        $result = $this->db->insert_batch('enrollment_evaluatedsubject', $data);
+        $result = ($this->db->affected_rows() > 0) ? true : false;
+
+        return array(
+            'result'    => $result
+        );
+
+    }
+
+    public function studentFinalEvaluation(){
+
+        $data = array();
+        $standingYear = $this->input->post('standingYear');
+        if($standingYear==4){
+            $studentNumber = $this->input->post('studentNumber');
+            $schedcodes = $this->input->post('schedcode');
+            $schoolyear = $this->input->post('schoolyear');
+            $semester = $this->input->post('semester');
+
+            foreach($schedcodes AS $schedcode)
+            {
+                $data[] = array(
+                    'studentNumber'     => $studentNumber,
+                    'schedcode'         => $schedcode,
+                    'schoolyear'        => $schoolyear,
+                    'semester'          => $semester,
+                    'dateEvaluated'     => date('Y-m-d H:i:s')
+
+                );
+            }
+
+            $result = $this->cvsu->insert_batch('enrollevaluatesubjectstbl', $data);
+            $result = ($this->cvsu->affected_rows() > 0) ? true : false;
+
+            return array(
+                'result'    => $result
+            );
+        } else {
+            $studentNumber = $this->input->post('studentNumber');
+            $schedcodes = $this->input->post('schedcode');
+            $schoolyear = $this->input->post('schoolyear');
+            $semester = $this->input->post('semester');
+
+            foreach($schedcodes AS $schedcode)
+            {
+                $data[] = array(
+                    'studentNumber'     => $studentNumber,
+                    'schedcode'         => $schedcode,
+                    'schoolyear'        => $schoolyear,
+                    'semester'          => $semester,
+                    'dateEvaluated'     => date('Y-m-d H:i:s')
+
+                );
+            }
+
+            $result = $this->db->insert_batch('enrollevaluatesubjectstbl', $data);
+            $result = ($this->db->affected_rows() > 0) ? true : false;
+
+            return array(
+                'result'    => $result
+            );
+        }
+
+    }
+
+
+
     public function deleteEvaluationListData($studentNumber){
         $this->db->where('studentNumber', $studentNumber);
         $this->db->delete('enrollment_evaluation');
@@ -830,6 +917,35 @@ class Enrollment_Model extends CI_Model
             $query = $this->cvsu->get();
             return $query->result();
         }
+
+    }
+
+
+    public function getScheduleBySectionWithTitleEvaluation($schoolyear, $semester, $studentNumber){
+        $db = 1;
+        if($db == 1){
+            $this->db->select('enrollscheduletbl.subjectcode, enrollscheduletbl.section, enrollscheduletbl.instructor, enrollscheduletbl.room1, enrollscheduletbl.room2, enrollscheduletbl.room3, enrollscheduletbl.room4, enrollscheduletbl.timein1, enrollscheduletbl.timeout1, enrollscheduletbl.day1, enrollscheduletbl.timein2, enrollscheduletbl.timeout2, enrollscheduletbl.day2, enrollscheduletbl.timein3, enrollscheduletbl.timeout3, enrollscheduletbl.day3, enrollscheduletbl.timein4, enrollscheduletbl.timeout4, enrollscheduletbl.day4, enrollsubjectstbl.subjectTitle');
+            $this->db->from('enrollscheduletbl');
+            $this->db->join('enrollment_evaluatedsubject', 'enrollment_evaluatedsubject.schedcode = enrollscheduletbl.schedcode');
+            $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+            $this->db->where('enrollscheduletbl.schoolyear', $schoolyear);
+            $this->db->where('enrollscheduletbl.semester', $semester);
+            $this->db->where('enrollment_evaluatedsubject.studentNumber', $studentNumber);
+            $query = $this->db->get();
+            return $query->result();
+        } else {
+            $this->cvsu->select('enrollscheduletbl.subjectcode, enrollscheduletbl.section, enrollscheduletbl.instructor, enrollscheduletbl.room1, enrollscheduletbl.room2, enrollscheduletbl.room3, enrollscheduletbl.room4, enrollscheduletbl.timein1, enrollscheduletbl.timeout1, enrollscheduletbl.day1, enrollscheduletbl.timein2, enrollscheduletbl.timeout2, enrollscheduletbl.day2, enrollscheduletbl.timein3, enrollscheduletbl.timeout3, enrollscheduletbl.day3, enrollscheduletbl.timein4, enrollscheduletbl.timeout4, enrollscheduletbl.day4, enrollsubjectstbl.subjectTitle');
+            $this->cvsu->from('enrollscheduletbl');
+            $this->cvsu->join('enrollment_evaluatedsubject', 'enrollment_evaluatedsubject.schedcode = enrollscheduletbl.schedcode');
+            $this->cvsu->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
+            $this->cvsu->where('enrollscheduletbl.schoolyear', $schoolyear);
+            $this->cvsu->where('enrollscheduletbl.semester', $semester);
+            $this->cvsu->where('enrollment_evaluatedsubject.studentNumber', $studentNumber);
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
+
 
     }
 
@@ -999,6 +1115,7 @@ class Enrollment_Model extends CI_Model
     public function addDivisionOfFeeData(){
 
         if($this->session->dbtype == 1){
+
             $data = array(
                 'studentnumber'      =>  $this->input->post('studentNumber', true),
                 'semester'           =>  $this->input->post('semester', true),
@@ -1237,7 +1354,21 @@ class Enrollment_Model extends CI_Model
     }
 
 
+    public function loadFEList(){
+        $this->db->select('*');
+        $this->db->from('enrollment_tracker');
+        $this->db->where('process', 'FINAL-EVALUATION');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function displaySEvaluation($studentNumber){
+        $this->db->select('*');
+        $this->db->from('enrollment_evaluatedsubject');
+        $this->db->where('studentNumber', $studentNumber);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 
 }

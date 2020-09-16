@@ -6,6 +6,7 @@ class Student_Model extends CI_Model
     function __construct(){
         parent::__construct();
         $this->cvsu = $this->load->database('cvsu', TRUE);
+        $this->hr = $this->load->database('hr', TRUE);
     }
 
 
@@ -395,7 +396,7 @@ class Student_Model extends CI_Model
     public function loadEnrolledSubject($currentSY, $currentSem, $currentUser){
 
         if($this->session->dbtype == 1){
-            $this->db->select('enrollsubjectenrolled.schedcode, enrollscheduletbl.subjectCode, enrollsubjectstbl.subjectTitle, enrollscheduletbl.units');
+            $this->db->select('enrollsubjectenrolled.schedcode, enrollscheduletbl.subjectCode, enrollsubjectstbl.subjectTitle, enrollscheduletbl.units, enrollscheduletbl.instructor');
             $this->db->from('enrollsubjectenrolled');
             $this->db->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrollsubjectenrolled.schedcode', 'left');
             $this->db->join('enrollsubjectstbl', 'enrollsubjectstbl.subjectcode = enrollscheduletbl.subjectCode');
@@ -405,7 +406,7 @@ class Student_Model extends CI_Model
             $query = $this->db->get();
             return $query->result();
         }else{
-            $this->cvsu->select('enrolledsubject.SchedCode as schedcode, enrollscheduletbl.subjectCode, coursecode.Title as subjectTitle, enrollscheduletbl.units');
+            $this->cvsu->select('enrolledsubject.SchedCode as schedcode, enrollscheduletbl.subjectCode, coursecode.Title as subjectTitle, enrollscheduletbl.units, enrollscheduletbl.instructor');
             $this->cvsu->from('enrolledsubject');
             $this->cvsu->join('enrollscheduletbl', 'enrollscheduletbl.schedcode = enrolledsubject.SchedCode', 'left');
             $this->cvsu->join('coursecode', 'coursecode.Code = enrollscheduletbl.subjectCode');
@@ -728,5 +729,39 @@ class Student_Model extends CI_Model
             'result'    => $result
         );
     }
+
+    public function getFacultyName(){
+        $this->hr->select('*');
+        $this->hr->from('employee');
+        $query = $this->hr->get();
+        return $query->result();
+    }
+
+    public function loadLMSData($currentUser){
+
+        if($this->session->dbtype == 1){
+            $this->db->select('*');
+            $this->db->from('cvsu_lmsinfo');
+            $this->db->where('profile_field_studentno', $currentUser);
+            $query = $this->db->get();
+            return $query->result();
+        } else {
+            $this->cvsu->select('*');
+            $this->cvsu->from('cvsu_lmsinfo');
+            $this->cvsu->where('profile_field_studentno', $currentUser);
+            $query = $this->cvsu->get();
+            return $query->result();
+        }
+
+    }
+
+    public function getYearCurriculumInfo($curriculum){
+        $this->db->select('*');
+        $this->db->from('enrollcurriculum');
+        $this->db->where('id', $curriculum);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
 }

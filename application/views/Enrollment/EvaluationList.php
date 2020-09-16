@@ -89,7 +89,7 @@
                         <ul class="nav side-menu">
                             <li><a href="<?php echo base_url();?>student/evaluation"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                         </ul>
-                        </ul>
+
                     </div>
 
                 </div>

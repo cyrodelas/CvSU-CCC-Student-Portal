@@ -251,11 +251,24 @@
                                         </tr>
                                         <tr>
                                             <th scope='row'>Year Level</th>
-                                            <td id=""><?php echo $YL;?> </td>
+                                            <td id=""><?php
+                                                if($status=='IRREGULAR') {
+                                                    echo $standingYear;
+                                                } else {
+                                                    echo $YL;
+                                                }
+                                                ?></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Section</th>
-                                            <td id=""><?php echo $Section;?></td>
+                                            <td id=""><?php
+                                                if($status=='IRREGULAR') {
+                                                    echo 'IRREGULAR';
+                                                } else {
+                                                    echo $Section;
+                                                }
+
+                                                ?></td>
                                         </tr>
                                         </thead>
                                     </table>

@@ -1,7 +1,3 @@
-<?php if (!isset($_SESSION['student_id'])) {
-    redirect('student', 'refresh');
-} ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,11 +71,11 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
+                        <img src="<?php echo base_url();?>/assets/images/user.png" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
-                        <h2><?php echo $this->session->student_course;?></h2>
+                        <h2 style="font-weight: 600">Evaluator<br>Profile</h2>
+                        <h2>MIS</h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -91,14 +87,7 @@
                     <div class="menu_section">
                         <h3>Navigation</h3>
                         <ul class="nav side-menu">
-                            <li><a href="<?php echo base_url();?>student/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
-                            <li><a href="<?php echo base_url();?>student/information"><i class="fa fa-user"></i> Student Information </a></li>
-                            <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
-                            <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
-                            <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <?php if ($this->session->enrollment == "OPEN") {?>
-                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
-                            <?php } ?>
+                            <li><a href="<?php echo base_url();?>student/evaluation"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                         </ul>
                         </ul>
                     </div>
@@ -126,7 +115,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
+                                <img src="<?php echo base_url();?>/assets/admin/img/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -163,49 +152,33 @@
                         </div>
 
                         <div class="card-body">
+                            <table id="datatable" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Student Number</th>
+                                    <th>Status</th>
+                                    <th>Standing Year</th>
+                                    <th>Option</th>
+                                </tr>
+                                </thead>
 
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/evaluationStudentPart" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                <tbody>
+                                <?php
+                                if($evalData){
+                                    foreach ($evalData as $rs) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $rs->studentNumber;?></td>
+                                            <td><?php echo $rs->status;?></td>
+                                            <td><?php echo $rs->standingYear;?></td>
+                                            <th>
+                                                <a href="<?php echo base_url();?>enrollment/displayEvaluation/<?php echo $rs->studentNumber;?>/<?php echo $rs->status;?>/<?php echo $rs->standingYear;?>"> Evaluate Student</a>
+                                            </th>
+                                        </tr>
+                                    <?php } }?>
+                                </tbody>
+                            </table>
 
-                                <table id="" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Schedule Code</th>
-                                        <th>Subject Code</th>
-                                        <th>Subject Title</th>
-                                        <th>Units</th>
-                                        <th>School Year</th>
-                                        <th>Semester</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <?php
-                                    if($meData){
-                                        foreach ($meData as $rs) {
-                                            $schoolyear=$rs->schoolyear;
-                                            $semester=$rs->semester;
-
-                                            ?>
-                                            <tr>
-                                                <td><input type="text" name="schedcode[]"></td>
-                                                <td><?php echo $rs->subjectcode;?></td>
-                                                <?php foreach ($sdData as $sRow) { if($rs->subjectcode==$sRow->subjectcode){ ?>
-                                                    <td><?php echo $sRow->subjectTitle;?></td>
-                                                    <td><?php $totalUnits = intval($sRow->lectUnits) + intval($sRow->labunits); echo $totalUnits;?></td>
-                                                <?php } } ?>
-                                                <td><?php echo $rs->schoolyear;?></td>
-                                                <td><?php echo $rs->semester;?></td>
-                                            </tr>
-                                        <?php } }?>
-                                    </tbody>
-
-                                </table>
-                                <input style="display: none" type="text" name="status" value="<?php echo $status;?>">
-                                <input style="display: none" type="text" name="standingYear" value="<?php echo $standingYear;?>">
-                                <input style="display: none" type="text" name="schoolyear" value="<?php echo $schoolyear;?>">
-                                <input style="display: none" type="text" name="semester" value="<?php echo $semester;?>">
-                                <button type="submit" style="margin-top: 10px" class="btn btn-success col-md-3 pull-right">Submit Evaluation</button>
-                            </form>
                         </div>
 
                     </div>
@@ -295,9 +268,7 @@
         $("#notif_fade").fadeOut(5000);
     });
 
-    function OnNotification() {
-        alert("Evaluation on progress.");
-    }
+
 
 </script>
 

@@ -1,6 +1,4 @@
-<?php if (!isset($_SESSION['student_id'])) {
-    redirect('student', 'refresh');
-} ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +54,10 @@
     <link href="<?php echo base_url();?>assets/plugins/build/css/custom.css" rel="stylesheet">
 
 
+    <!-- FullCalendar CSS -->
+    <link rel="stylesheet" href="<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.css">
+    <link rel="stylesheet" media='print' href="<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.print.css">
+
 
 </head>
 
@@ -75,7 +77,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt="..." class="img-circle profile_img">
+                        <img src="<?php echo base_url();?>/assets/images/user.png" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <h2 style="font-weight: 600"><?php echo $this->session->student_fn;?><br><?php echo $this->session->student_ln;?></h2 style="font-weight: 600">
@@ -91,16 +93,11 @@
                     <div class="menu_section">
                         <h3>Navigation</h3>
                         <ul class="nav side-menu">
-                            <li><a href="<?php echo base_url();?>student/dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
-                            <li><a href="<?php echo base_url();?>student/information"><i class="fa fa-user"></i> Student Information </a></li>
-                            <li><a href="<?php echo base_url();?>student/subject"><i class="fa fa-folder"></i> Enrolled Subjects </a></li>
-                            <li><a href="<?php echo base_url();?>student/schedule"><i class="fa fa-line-chart"></i> Class Schedule </a></li>
-                            <li><a href="<?php echo base_url();?>student/grades"><i class="fa fa-bar-chart"></i> Student Grades </a></li>
-                            <?php if ($this->session->enrollment == "OPEN") {?>
-                                <li><a href="<?php echo base_url();?>enrollment/process"><i class="fa fa-graduation-cap"></i> Enrollment Module </a></li>
-                            <?php } ?>
+                            <ul class="nav side-menu">
+                                <li><a href="<?php echo base_url();?>student/createSchedule"><i class="fa fa-dashboard"></i> Dashboard </a></li>
+                            </ul>
                         </ul>
-                        </ul>
+
                     </div>
 
                 </div>
@@ -153,63 +150,93 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-5">
+
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Enrollment<small> Student Evaluation </small></h2>
+                            <h2>Student Information</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <div class="row">
+                                <div id ="studentinformation" class="col-md-12">
+                                    <div class="col-md-12">
+                                        <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/finalEvaluation" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
+
+                                            <table id="" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Schedule Code</th>
+                                                    <th>School Year</th>
+                                                    <th>Semester</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <?php
+                                                if($seData){
+                                                    foreach ($seData as $rs) {
+
+                                                        $studentNumber = $rs->studentNumber;
+                                                        $schoolyear = $rs->schoolyear;
+                                                        $semester = $rs->semester;
+
+                                                        ?>
+                                                        <tr>
+                                                            <td>
+                                                                <input style="display: none" type="text" name="schedcode[]" value="<?php echo $rs->schedcode;?>">
+                                                                <?php echo $rs->schedcode;?>
+                                                            </td>
+                                                            <td><?php echo $rs->schoolyear;?></td>
+                                                            <td><?php echo $rs->semester;?></td>
+                                                        </tr>
+                                                    <?php } }?>
+                                                </tbody>
+                                            </table>
+
+                                            <input style="display: none" type="text" name="status" value="<?php echo $status;?>">
+                                            <input style="display: none" type="text" name="standingYear" value="<?php echo $standingYear;?>">
+                                            <input style="display: none" type="text" name="schoolyear" value="<?php echo $schoolyear;?>">
+                                            <input style="display: none" type="text" name="semester" value="<?php echo $semester;?>">
+                                            <input style="display: none" type="text" name="studentNumber" value="<?php echo $studentNumber;?>">
+                                            <button type="submit" style="margin-top: 10px" class="btn btn-success col-md-6 pull-right">Submit Evaluation</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-7">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Class Schedule</h2>
                             <ul class="nav navbar-right panel_toolbox">
                             </ul>
                             <div class="clearfix"></div>
                         </div>
 
-                        <div class="card-body">
+                        <div class="x_content">
+                            <div class="row">
+                                <input type='hidden' name ="loadschedule" id = "loadschedule" value="<?php echo base_url();?>enrollment/loadSchedulesEvaluation">
+                                <input type='hidden' name ="schoolyear" id = "schoolyear" value="<?php echo $schoolyear;?>">
+                                <input type='hidden' name ="semester" id = "semester" value="<?php echo $semester;?>">
+                                <input type='hidden' name ="studentid" id = "studentid" value="<?php echo $studentNumber;?>">
+                                <div id='calendarsched' ></div>
+                            </div>
 
-                            <form method="post" id="frm_validation" action="<?php echo base_url();?>enrollment/evaluationStudentPart" data-toggle="validator" class="form-horizontal form-label-left" enctype="multipart/form-data">
-
-                                <table id="" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Schedule Code</th>
-                                        <th>Subject Code</th>
-                                        <th>Subject Title</th>
-                                        <th>Units</th>
-                                        <th>School Year</th>
-                                        <th>Semester</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <?php
-                                    if($meData){
-                                        foreach ($meData as $rs) {
-                                            $schoolyear=$rs->schoolyear;
-                                            $semester=$rs->semester;
-
-                                            ?>
-                                            <tr>
-                                                <td><input type="text" name="schedcode[]"></td>
-                                                <td><?php echo $rs->subjectcode;?></td>
-                                                <?php foreach ($sdData as $sRow) { if($rs->subjectcode==$sRow->subjectcode){ ?>
-                                                    <td><?php echo $sRow->subjectTitle;?></td>
-                                                    <td><?php $totalUnits = intval($sRow->lectUnits) + intval($sRow->labunits); echo $totalUnits;?></td>
-                                                <?php } } ?>
-                                                <td><?php echo $rs->schoolyear;?></td>
-                                                <td><?php echo $rs->semester;?></td>
-                                            </tr>
-                                        <?php } }?>
-                                    </tbody>
-
-                                </table>
-                                <input style="display: none" type="text" name="status" value="<?php echo $status;?>">
-                                <input style="display: none" type="text" name="standingYear" value="<?php echo $standingYear;?>">
-                                <input style="display: none" type="text" name="schoolyear" value="<?php echo $schoolyear;?>">
-                                <input style="display: none" type="text" name="semester" value="<?php echo $semester;?>">
-                                <button type="submit" style="margin-top: 10px" class="btn btn-success col-md-3 pull-right">Submit Evaluation</button>
-                            </form>
                         </div>
-
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -284,6 +311,13 @@
 <!-- select2 -->
 <script src="<?php echo base_url();?>assets/plugins/select2/select2.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>assets/plugins/multi_select/multi_select.js" type="text/javascript"></script>
+
+
+<script src='<?php echo base_url();?>/assets/plugins/calendar/moment.min.js'></script>
+<script src='<?php echo base_url();?>/assets/plugins/calendar/fullcalendar.min.js'></script>
+
+<script src='<?php echo base_url();?>assets/js/initCalendar.js'></script> <!-- Script with all important stuff-->
+
 
 
 <!-- Custom Theme Scripts -->

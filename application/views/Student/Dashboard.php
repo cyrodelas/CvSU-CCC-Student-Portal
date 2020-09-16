@@ -141,7 +141,7 @@ if($this->session->defaultPass==1){
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo base_url();?>/assets/admin/img/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
+                                <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -194,16 +194,32 @@ if($this->session->defaultPass==1){
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-<!--                                        <article class="media event">-->
-<!--                                            <a class="pull-left date">-->
-<!--                                                <p class="month">April</p>-->
-<!--                                                <p class="day">23</p>-->
-<!--                                            </a>-->
-<!--                                            <div class="media-body">-->
-<!--                                                <a class="title" href="#">Item One Title</a>-->
-<!--                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                            </div>-->
-<!--                                        </article>-->
+                                        <article class="media event">
+
+                                            <?php
+                                                $email='';
+                                                $pass='';
+                                                foreach ($lmsData as $rs) {
+                                                    $email = $rs->email;
+                                                    $pass = $rs->password;
+                                                }
+                                            ?>
+
+                                            <div class="media-body">
+                                                <a class="title" href="https://elearning.cvsu.edu.ph/" target="_blank">Learning Management System</a>
+                                                <br>
+                                                <br>
+                                                <p style="font-weight: 600">Student CvSU Email</p><br>
+                                                <p style="font-weight: 600">Email Address:</p>
+                                                <?php echo $email; ?>
+                                                <p style="font-weight: 600">Password:</p>
+                                                <?php echo $pass; ?>
+                                                <br><br>
+                                                <a style="font-weight: 600" href="https://mail.google.com/" target="_blank">Link for Google Mail</a>
+                                                <a style="font-weight: 600" class="pull-right" href="https://elearning.cvsu.edu.ph/" target="_blank">Link for CvSU LMS</a>
+                                            </div>
+                                        </article>
+
 <!--                                        <article class="media event">-->
 <!--                                            <a class="pull-left date">-->
 <!--                                                <p class="month">April</p>-->

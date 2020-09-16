@@ -55,7 +55,10 @@ class Enrollment extends CI_Controller
             $this->load->view('Enrollment/Manual', $module);
 
 
-        }elseif($query['status'] == 'POST-EVALUATION') {
+        } elseif($query['status'] == 'FINAL-EVALUATION') {
+            $this->load->view('Enrollment/FinalEvaluation');
+
+        } elseif($query['status'] == 'POST-EVALUATION') {
             $currentUser = $this->session->student_id;
             $currentSem = $this->session->semester;
 
@@ -148,6 +151,10 @@ class Enrollment extends CI_Controller
         }elseif($query['status'] == 'REGISTRY') {
             $currentUser = $this->session->student_id;
             $currentSem = $this->session->semester;
+            
+            $curriculum = $this->session->curriculum;
+            $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+            $module['currData'] = $query;
 
             if($currentSem=='FIRST') {
                 $nextSchoolyear = $this->session->schoolyear;
@@ -441,6 +448,41 @@ class Enrollment extends CI_Controller
 
     }
 
+    public function evaluationStudentPart(){
+
+        $result = $this->Enrollment_Model->addEvaluationStudentMode();
+
+        if($result['result']==true){
+
+            $studentNumber = $this->session->student_id;
+            $process ='FINAL-EVALUATION';
+            $status = $this->input->post('status', true);
+            $standingYear = $this->input->post('standingYear', true);
+            $updateProcess = $this->Enrollment_Model->updateEvalProcess($studentNumber, $process, $status, $standingYear);
+        } else {
+            $this->session->set_flashdata("error", "Evaluation failed.");
+        }
+        redirect("enrollment/process", "refresh");
+
+    }
+
+    public function finalEvaluation(){
+        $result = $this->Enrollment_Model->studentFinalEvaluation();
+
+        if($result['result']==true){
+
+            $studentNumber = $this->input->post('studentNumber');
+            $process ='POST-EVALUATION';
+            $status = $this->input->post('status', true);
+            $standingYear = $this->input->post('standingYear', true);
+            $updateProcess = $this->Enrollment_Model->updateEvalProcess($studentNumber, $process, $status, $standingYear);
+        } else {
+            $this->session->set_flashdata("error", "Evaluation failed.");
+        }
+
+        redirect("student/createSchedule", "refresh");
+    }
+
 
 
 
@@ -564,6 +606,67 @@ class Enrollment extends CI_Controller
 
     }
 
+    public function loadSchedulesEvaluation(){
+
+        $schoolyear = $this->input->post('schoolyear1');
+        $semester = $this->input->post('semester1');
+        $studentNumber = $this->input->post('studentid1');
+
+        $fresult = array();
+        $result = $this->Enrollment_Model->getScheduleBySectionWithTitleEvaluation($schoolyear, $semester, $studentNumber);
+        $i1=0;
+
+        $decodeData = json_decode(json_encode($result), true);
+
+        foreach($decodeData as $res){
+            $subj = array();
+            $subj['title'] = $res['subjectcode'];
+            $subj['subjtitle'] =$res['subjectTitle'];
+            $subj['allday'] = false;
+            $subj['color'] = $this->color($i1);
+            $subj['schedules'] = array();
+            if($res['day1'] != 'N/A'){
+                $s1['room'] = $res['room1'];
+                $s1['instructor'] = $res['instructor'];
+                $s1['day'] = $res['day1'];
+                $s1['start'] = $res['timein1'].':00';
+                $s1['end'] = $res['timeout1'].':00';
+                array_push($subj['schedules'],$s1);
+            }
+            if($res['day2'] != 'N/A'){
+                $s1['room'] = $res['room2'];
+                $s1['instructor'] = $res['instructor'];
+                $s1['day'] = $res['day2'];
+                $s1['start'] = $res['timein2'].':00';
+                $s1['end'] = $res['timeout2'].':00';
+                array_push($subj['schedules'],$s1);
+            }
+            if($res['day3'] != 'N/A'){
+                $s1['room'] = $res['room3'];
+                $s1['instructor'] = $res['instructor'];
+                $s1['day'] = $res['day3'];
+                $s1['start'] = $res['timein3'].':00';
+                $s1['end'] = $res['timeout3'].':00';
+                array_push($subj['schedules'],$s1);
+            }
+            if($res['day4'] != 'N/A'){
+                $s1['room'] = $res['room4'];
+                $s1['instructor'] = $res['instructor'];
+                $s1['day'] = $res['day4'];
+                $s1['start'] = $res['timein4'].':00';
+                $s1['end'] = $res['timeout4'].':00';
+                array_push($subj['schedules'],$s1);
+            }
+            array_push($fresult,$subj);
+
+            $i1 ++;
+        }
+
+        echo json_encode($fresult);
+
+
+    }
+
     public function color($i){
         $color = array("#06214c","#ff8000","#00b33c","#002db3","#cc8800","#0000cc","#803300","#00802b","#990099","#34d26");
         return $color[$i];
@@ -632,6 +735,10 @@ class Enrollment extends CI_Controller
         $currentUser = $this->session->student_id;
         $currentSem = $this->session->semester;
 
+        $curriculum = $this->session->curriculum;
+        $query = $this->Student_Model->getYearCurriculumInfo($curriculum);
+        $module['currData'] = $query;
+
         if($currentSem=='FIRST') {
             $nextSchoolyear = $this->session->schoolyear;
             $nextSemester = 'SECOND';
@@ -661,6 +768,16 @@ class Enrollment extends CI_Controller
         $this->load->view('Enrollment/RegForm', $module);
     }
 
+    public function displayEvaluation($studentNumber, $status, $standingYear){
 
+        $query = $this->Enrollment_Model->displaySEvaluation($studentNumber);
+        $module['seData'] = $query;
+        $module['status'] = $status;
+        $module['standingYear'] = $standingYear;
+
+
+        $this->load->view('Enrollment/StudentAssessment', $module);
+
+    }
 
 }

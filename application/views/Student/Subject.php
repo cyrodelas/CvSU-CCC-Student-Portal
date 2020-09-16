@@ -138,7 +138,7 @@ if($this->session->defaultPass==1){
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo base_url();?>/assets/admin/img/<?php echo $this->session->user_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
+                                <img src="<?php echo base_url();?>/assets/images/<?php echo $this->session->student_image;?>" alt=""><?php echo $this->session->user_fn;?> <?php echo $this->session->user_ln;?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -199,17 +199,49 @@ if($this->session->defaultPass==1){
                                                     <th scope='row'>Semester</th>
                                                     <td id=""><?php echo $seM;?> SEMESTER</td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope='row'>Course</th>
-                                                    <?php $sectioncount=0;
-                                                    foreach ($YLSData as $ylsData){
-                                                        $sectioncount ++;
-                                                        $Course = '';
-                                                        $Major = '';
-                                                        $Section = '';
-                                                        $courseName = '';
 
-                                                        if($this->session->dbtype == 1){
+                                                <?php $sectioncount=0;
+                                                foreach ($YLSData as $ylsData){
+                                                    $sectioncount ++;
+                                                    $Course = '';
+                                                    $Major = '';
+                                                    $Section = '';
+                                                    $courseName = '';
+
+                                                    if($this->session->dbtype == 1){
+                                                        $Course = substr($ylsData->section, 0, 2);
+                                                        if($Course == "SE"){
+
+                                                            $YL = substr($ylsData->section, 2, 1);
+                                                            $Section = substr($ylsData->section, 3, 1);
+
+                                                            $MI = $Course = substr($ylsData->section, 4, 1);
+                                                            if($MI == 'M'){
+                                                                $Major = " - MATHEMATICS";
+                                                            }else {
+                                                                $Major = " - ENGLISH";
+                                                            }
+
+
+                                                        }
+
+                                                        elseif($Course == "BE"){
+                                                            $courseName = substr($ylsData->section, 0, 5);
+                                                            $YL = substr($ylsData->section, 5, 1);
+                                                            $Section = substr($ylsData->section, 6, 1);
+                                                        }
+
+                                                        else{
+                                                            $courseName = 'BS'. $Course;
+                                                            $YL = substr($ylsData->section, 2, 1);
+                                                            $Section = substr($ylsData->section, 3, 1);
+                                                        }
+                                                    } else {
+                                                        if($courseName == 'IRREG') {
+                                                            $courseName = $this->session->student_course;
+                                                            $YL = $ylsData->section;
+                                                            $Section = $ylsData->section;
+                                                        } else {
                                                             $Course = substr($ylsData->section, 0, 2);
                                                             if($Course == "SE"){
 
@@ -233,84 +265,53 @@ if($this->session->defaultPass==1){
                                                             }
 
                                                             else{
-                                                                $courseName = 'BS'. $Course;
-                                                                $YL = substr($ylsData->section, 2, 1);
-                                                                $Section = substr($ylsData->section, 3, 1);
-                                                            }
-                                                        } else {
-                                                            if($courseName == 'IRREG') {
-                                                                $courseName = $this->session->student_course;
-                                                                $YL = $ylsData->section;
-                                                                $Section = $ylsData->section;
-                                                            } else {
-                                                                $Course = substr($ylsData->section, 0, 2);
-                                                                if($Course == "SE"){
 
-                                                                    $YL = substr($ylsData->section, 2, 1);
-                                                                    $Section = substr($ylsData->section, 3, 1);
+                                                                if($ylsData->section == 'IRREG') {
+                                                                    $courseName = $this->session->student_course;
+                                                                    $YL = $ylsData->section;
+                                                                    $Section = $ylsData->section;
+                                                                } else {
+                                                                    $Course = substr($ylsData->section, 0, 2);
+                                                                    if($Course == "SE"){
 
-                                                                    $MI = $Course = substr($ylsData->section, 4, 1);
-                                                                    if($MI == 'M'){
-                                                                        $Major = " - MATHEMATICS";
-                                                                    }else {
-                                                                        $Major = " - ENGLISH";
+                                                                        $YL = substr($ylsData->section, 2, 1);
+                                                                        $Section = substr($ylsData->section, 3, 1);
+
+                                                                        $MI = $Course = substr($ylsData->section, 4, 1);
+                                                                        if($MI == 'M'){
+                                                                            $Major = " - MATHEMATICS";
+                                                                        }else {
+                                                                            $Major = " - ENGLISH";
+                                                                        }
+
+
                                                                     }
 
+                                                                    elseif($Course == "BE"){
+                                                                        $courseName = substr($ylsData->section, 0, 5);
+                                                                        $YL = substr($ylsData->section, 5, 1);
+                                                                        $Section = substr($ylsData->section, 6, 1);
+                                                                    }
 
-                                                                }
-
-                                                                elseif($Course == "BE"){
-                                                                    $courseName = substr($ylsData->section, 0, 5);
-                                                                    $YL = substr($ylsData->section, 5, 1);
-                                                                    $Section = substr($ylsData->section, 6, 1);
-                                                                }
-
-                                                                else{
-
-                                                                    if($ylsData->section == 'IRREG') {
-                                                                        $courseName = $this->session->student_course;
-                                                                        $YL = $ylsData->section;
-                                                                        $Section = $ylsData->section;
-                                                                    } else {
-                                                                        $Course = substr($ylsData->section, 0, 2);
-                                                                        if($Course == "SE"){
-
-                                                                            $YL = substr($ylsData->section, 2, 1);
-                                                                            $Section = substr($ylsData->section, 3, 1);
-
-                                                                            $MI = $Course = substr($ylsData->section, 4, 1);
-                                                                            if($MI == 'M'){
-                                                                                $Major = " - MATHEMATICS";
-                                                                            }else {
-                                                                                $Major = " - ENGLISH";
-                                                                            }
-
-
-                                                                        }
-
-                                                                        elseif($Course == "BE"){
-                                                                            $courseName = substr($ylsData->section, 0, 5);
-                                                                            $YL = substr($ylsData->section, 5, 1);
-                                                                            $Section = substr($ylsData->section, 6, 1);
-                                                                        }
-
-                                                                        else{
-                                                                            $courseName = 'BS'. $Course;
-                                                                            $YL = substr($ylsData->section, 2, 1);
-                                                                            $Section = substr($ylsData->section, 3, 1);
-                                                                        }
+                                                                    else{
+                                                                        $courseName = 'BS'. $Course;
+                                                                        $YL = substr($ylsData->section, 2, 1);
+                                                                        $Section = substr($ylsData->section, 3, 1);
                                                                     }
                                                                 }
                                                             }
                                                         }
+                                                    }
 
 
 
-                                                    } ?>
+                                                } ?>
 
-                                                    <td id=""><?php echo $courseName; ?>  <?php echo $Major; ?></td>
+                                                <?php $courseN = ''; $majorN = '';  foreach ($currData as $cRow) { $courseN = $cRow->course; $majorN = $cRow->coursemajor;} ?>
 
-
+                                                <tr>
+                                                    <th scope='row'>Course</th>
+                                                    <td id=""><?php echo $courseN; ?> - <?php echo $majorN; ?></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope='row'>Year Level</th>
@@ -355,6 +356,7 @@ if($this->session->defaultPass==1){
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Units</th>
+                                            <th>Instructor</th>
                                         </tr>
                                         </thead>
                                         <tbody id="gradetablebody">
@@ -367,6 +369,7 @@ if($this->session->defaultPass==1){
                                                     <td><?php echo $rs->subjectCode;?></td>
                                                     <td><?php echo $rs->subjectTitle;?></td>
                                                     <td><?php echo number_format($rs->units, 2);?></td>
+                                                    <td><?php foreach ($fData as $fRow){ if($fRow->employeecode == $rs->instructor){ echo $fRow->employeefirstname . ' ' .$fRow->employeelastname;} };?></td>
                                                 </tr>
                                             <?php }}?>
                                         </tbody>
